@@ -15,7 +15,7 @@ var funcs = {
    * get connected mongoose object.
    */
   getMongoose: function(){
-    mongoose.connect("mongoosedb:" + host + "/" + db);
+    mongoose.connect("mongodb://" + host + "/" + db);
     return mongoose;
   }
 };
