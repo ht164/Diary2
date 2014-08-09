@@ -35,9 +35,9 @@ var funcs = {
     var onGetModel = function(diaries) {
     	  var diaryModels = [];
     	  for (var i = 0; i < diaries.length; i++) {
-    	  	diaryModels.push(diaries[i]);
+    	  	diaryModels.push(me.createModel(diaries[i]));
     	  }
-    	  callback(diaries);
+    	  callback(diaryModels);
     };
 
     me.getModelFromStorage(cond, onGetModel);
