@@ -3,6 +3,7 @@
  */
 var storage = require('../mymodules/storage');
 var mongoose = require('mongoose');
+var marked = require('marked');
 
 function DiaryModel(){
   // properties.
@@ -72,7 +73,7 @@ var funcs = {
     _diary.date = diary.date;
     _diary.createDate = diary.createDate;
     // convert markdown to HTML.
-    _diary.content = diary.content;
+    _diary.content = marked(diary.content);
 
     return _diary;
   }
