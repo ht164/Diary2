@@ -1,6 +1,7 @@
 /**
  * DiaryModel
  */
+var storage = require('../mymodules/storage');
 
 function DiaryModel(){
   // properties.
@@ -38,6 +39,17 @@ var funcs = {
   	  model
   	];
   	return res;
+  },
+
+  /**
+   * create DiaryModel instance.
+   *
+   * @param cond
+   *   @param cond.date
+   * @return DiaryModel
+   */
+  createModel: function(cond){
+    
   }
   
 };
