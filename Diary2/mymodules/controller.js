@@ -33,8 +33,7 @@ Controller.prototype = {
    * @param callback callback function. function(Array<DiaryModel>)
    */
   getDiaryModels: function(cond, callback){
-  	var models = DiaryFuncs.createModels(cond);
-  	callback(models);
+  	DiaryFuncs.createModels(cond, callback);
   },
 };
 
