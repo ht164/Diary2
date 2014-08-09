@@ -37,7 +37,7 @@ var funcs = {
     	  for (var i = 0; i < diaries.length; i++) {
     	  	diaryModels.push(diaries[i]);
     	  }
-    	  callback(diaryModels);
+    	  callback(diaries);
     };
 
     me.getModelFromStorage(cond, onGetModel);
