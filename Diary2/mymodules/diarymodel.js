@@ -31,13 +31,16 @@ var funcs = {
    * @param callback callback function. function(Array<DiaryModel>)
    */
   createModels: function(cond, callback){
+    var me = this;
     var onGetModel = function(diaries) {
     	  var diaryModels = [];
     	  for (var i = 0; i < diaries.length; i++) {
     	  	diaryModels.push(diaries[i]);
     	  }
     	  callback(diaryModels);
-    }
+    };
+
+    me.getModelFromStorage(cond, onGetModel);
   },
 
   /**
