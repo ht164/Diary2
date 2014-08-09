@@ -17,10 +17,11 @@ Controller.prototype = {
    */
   get: function(req, res){
     var me = this;
-    var models = me.getDiaryModels();
-
-    // return json, so don't use view object.
-    res.json(models);
+    var onGetDiaryModels = function(models){
+      // return json, so don't use view object.
+    	  res.json(models);
+    }
+    me.getDiaryModels({}, onGetDiaryModels);
   },
 
   /**
@@ -29,11 +30,11 @@ Controller.prototype = {
    * @param cond condition.
    *   @param cond.startDate
    *   @param cond.endDate
-   * @return Array<DiaryModel>
+   * @param callback callback function. function(Array<DiaryModel>)
    */
-  getDiaryModels: function(cond){
+  getDiaryModels: function(cond, callback){
   	var models = DiaryFuncs.createModels(cond);
-  	return models;
+  	callback(models);
   },
 };
 
