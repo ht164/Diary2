@@ -22,7 +22,7 @@ Controller.prototype = {
       // return json, so don't use view object.
     	  res.json(models);
     }
-    me.getDiaryModels({}, onGetDiaryModels);
+    me.getDiaryModels(me.createCondition(req.query), onGetDiaryModels);
   },
 
   /**
@@ -62,6 +62,8 @@ Controller.prototype = {
     	  cond.startDate = cond.startDate || new Date(startYearStr + "-" + startMonthStr + "-" + startDateStr);
     	  cond.endDate = new Date(endYearStr + "-" + endMonthStr + "-" + endDateStr);
     }
+
+    return cond;
   },
 
   /**
