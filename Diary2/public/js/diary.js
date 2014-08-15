@@ -29,17 +29,8 @@ define([], function(){
          * @param errCallback callback function if failure.
          */
         getRecentDiaries: function(cond, callback, errCallback){
-            // dummy data.
-            var d1 = new Diary();
-            d1.title = "title1",
-            d1.content = "<p>content1.</p>";
-            d1.date = new Date("2014-08-01");
-            var d2 = new Diary();
-            d2.title = "title2";
-            d2.content = "<p>content2.</p>";
-            d2.date = new Date("2014-08-02");
-
-            callback([ d2, d1 ]);
+            var me = this;
+            me.getDiariesFromServer(cond, callback, errCallback);
         },
 
         /**
