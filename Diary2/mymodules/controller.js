@@ -50,12 +50,14 @@ Controller.prototype = {
     	  if (dateStr.length > 4) {
     	    endMonthStr = startMonthStr = dateStr.substr(4, 2);
     	  } else {
+    	    startMonthStr = "01";
     	    endMonthStr = "12";
     	  }
     	  // date
     	  if (dateStr.length > 6) {
     	    endDateStr = startDateStr = dateStr.substr(6, 2);
     	  } else {
+    	    startDateStr = "01";
     	    endDateStr = util.getLastDayOfMonth(endYearStr, endMonthStr);
     	  }
 
