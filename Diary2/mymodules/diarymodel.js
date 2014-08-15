@@ -56,8 +56,8 @@ var funcs = {
     var condition = {};
     if (cond.startDate || cond.endDate) {
       var condition_date = {};
-      if (cond.startDate) condition_date["$gt"] = cond.startDate;
-      if (cond.endDate) condition_date["$lt"] = cond.endDate;
+      if (cond.startDate) condition_date["$gte"] = cond.startDate;
+      if (cond.endDate) condition_date["$lte"] = cond.endDate;
       condition.date = condition_date;
     }
     console.log(condition);
