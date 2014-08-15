@@ -8,9 +8,14 @@ define(["view", "diary"], function(view, diary){
          * show recent diaries.
          */
         showRecentDiaries: function(){
+            var onLoad = function(diaries){
+                view.showDiaries(diaries);
+            };
+            var onFail = function(){
+
+            };
             // get recent diaryies.
-            var diaries = diary.getRecentDiaries();
-            view.showDiaries(diaries);
+            diary.getRecentDiaries({}, onLoad, onFail);
         }
     };
 });
