@@ -80,8 +80,7 @@ var funcs = {
     _diary.title = diary.title;
     _diary.date = diary.date;
     _diary.createDate = diary.createDate;
-    // convert markdown to HTML.
-    _diary.content = marked(diary.content);
+    _diary.content = diary.content;
 
     return _diary;
   }
@@ -94,6 +93,7 @@ var funcs = {
 var DiaryMongooseModel = mongoose.model("Diary", mongoose.Schema({
 	title: String,
 	content: String,
+	contentMarkdown: String,
 	date: Date,
 	createDate: Date
 }));
