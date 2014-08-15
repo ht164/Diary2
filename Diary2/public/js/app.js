@@ -9,10 +9,10 @@ requirejs.config({
     baseUrl: "js/",
     paths: {
         jquery: [
-            "components/jquery/dist/jquery.min"
+            "../components/jquery/dist/jquery.min"
         ],
         underscore: [
-            "components/underscore/underscore"
+            "../components/underscore/underscore"
         ]
     },
 
@@ -26,5 +26,7 @@ requirejs.config({
 /**
  * application module
  */
-define();
-
+define(["controller"], function(controller){
+    // initial processing.
+    controller.showRecentDiaries();
+});
