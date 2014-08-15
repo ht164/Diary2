@@ -19,19 +19,28 @@ define(["jquery", "underscore"], function(jquery, _){
         showDiaries: function(diaries){
             var me = this;
             _.each(diaries, function(diary) {
-                var fragments = "<div class='" + me.DIARY_CLASS + "'>";
-                fragments += "<div class='" + me.DIARY_TITLE_CLASS + "'>";
-                fragments += "<div class='" + me.DIARY_DATE_CLASS + "'>";
-                fragments += diary.date.getFullYear() + "/" + (diary.date.getMonth() + 1) + "/" + diary.date.getDate();
-                fragments += "</div>";
-                fragments += diary.title;
-                fragments += "</div>";
-                fragments += "<div class='" + me.DIARY_CONTENT_CLASS + "'>";
-                fragments += diary.content;
-                fragments += "</div>";
-                fragments += "</div>";
-                $(fragments).appendTo("#" + me.DIARY_SHOWING_BLOCK_ID);
+                var fragment = me.createDiaryFragment(diary);
+                $(fragment).appendTo("#" + me.DIARY_SHOWING_BLOCK_ID);
             });
+        },
+
+        /**
+         * create diary html fragment.
+         */
+        createDiaryFragment: function(diary) {
+            var me = this;
+            var fragment = "<div class='" + me.DIARY_CLASS + "'>";
+            fragment += "<div class='" + me.DIARY_TITLE_CLASS + "'>";
+            fragment += "<div class='" + me.DIARY_DATE_CLASS + "'>";
+            fragment += diary.date.getFullYear() + "/" + (diary.date.getMonth() + 1) + "/" + diary.date.getDate();
+            fragment += "</div>";
+            fragment += diary.title;
+            fragment += "</div>";
+            fragment += "<div class='" + me.DIARY_CONTENT_CLASS + "'>";
+            fragment += diary.content;
+            fragment += "</div>";
+            fragment += "</div>";
+            return fragment;
         }
     };
 });
