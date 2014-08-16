@@ -49,6 +49,12 @@ module.exports = function (grunt) {
           livereload: reloadPort
         }
       }
+    },
+    cssmin: {
+      minify: {
+        src: ['public/css/*.css'],
+        dest: 'release/public/css/style.css'
+      }
     }
   });
 
@@ -69,6 +75,10 @@ module.exports = function (grunt) {
           done(reloaded);
         });
     }, 500);
+  });
+
+  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', function(){
+
   });
 
   grunt.registerTask('default', ['develop', 'watch']);
