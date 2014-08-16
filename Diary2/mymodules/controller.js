@@ -77,8 +77,34 @@ Controller.prototype = {
    * @param callback callback function. function(Array<DiaryModel>)
    */
   getDiaryModels: function(cond, callback){
-  	DiaryFuncs.createModels(cond, callback);
+    	DiaryFuncs.createModels(cond, callback);
   },
+
+  /**
+   * call when client requests "post".
+   */
+  post: function(req, res){
+    // create diary model
+    var diary = new DiaryModel();
+    diary.title = req.param("title");
+    diary.contentMarkdown = req.param("contents");
+    diary.date = new Date(req.param("date"));
+
+    // create callback
+    var onSuccess = function(){
+      // created response
+      res.status(201);
+      res.send();
+    };
+    var onFailure = function(){
+      // error response
+      res.status(500);
+      res.send();
+    };
+
+    // save it.
+    diary.save(onSuccess, onFailure);
+  }
 };
 
 

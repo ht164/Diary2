@@ -10,13 +10,42 @@ function DiaryModel(){
   this.title = "",
   this.content = "",
   this.date = null,
-  this.createDate = null
+  this.createDate = null,
+  this.contentMarkdown = ""
 }
 
 /**
  * Diary Model functions.
  */
 DiaryModel.prototype = {
+  /**
+   * save my properties to storage.
+   *
+   * @param callback callback function if success.
+   * @param errCallback callback function if failed.
+   */
+  save: function(callback, errCallback) {
+    var me = this;
+    // create content property from contentMarkdown.
+    me.content = marked(me.contentMarkdown);
+
+    // create DiaryMongooseModel instance.
+    var mongooseModel = new DiaryMongooseModel({
+      title: me.title,
+      date: me.date,
+      content: me.content,
+      contentMarkdown: me.contentMarkdown,
+      // TODO: createDate
+      createDate: new Date()
+    });
+    mongooseModel.save(function(err) {
+      if (err) {
+        errCallback();
+      } else {
+        callback();
+      }
+    });
+  }
 };
 
 /**
@@ -81,6 +110,7 @@ var funcs = {
     _diary.date = diary.date;
     _diary.createDate = diary.createDate;
     _diary.content = diary.content;
+    _diary.contentMarkdown = diary.contentMarkdown;
 
     return _diary;
   }
