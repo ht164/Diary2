@@ -13,6 +13,9 @@ requirejs.config({
         ],
         underscore: [
             "../components/underscore/underscore"
+        ],
+        bootstrap: [
+            "../components/bootstrap/dist/js/bootstrap.min"
         ]
     },
 
@@ -20,6 +23,9 @@ requirejs.config({
         underscore: {
             exports: "_"
         },
+        bootstrap: {
+            deps: [ "jquery" ]
+        }
     }
 });
 
