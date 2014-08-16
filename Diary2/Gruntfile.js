@@ -55,6 +55,16 @@ module.exports = function (grunt) {
         src: ['public/css/*.css'],
         dest: 'release/public/css/style.css'
       }
+    },
+    uglify: {
+      minify: {
+        files: [{
+          expand: true,
+          cwd: 'public/js',
+          src: '**/*.js',
+          dest: 'release/public/js'
+        }]
+      }
     }
   });
 
