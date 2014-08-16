@@ -2,6 +2,7 @@
  * Controller
  */
 
+var _ = require('underscore');
 var DiaryModel = require('../mymodules/diarymodel').model;
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var util = require('../mymodules/util');
@@ -19,6 +20,11 @@ Controller.prototype = {
   get: function(req, res){
     var me = this;
     var onGetDiaryModels = function(models){
+      // delete unnecessary properties.
+      _.each(models, function(model){
+        delete model.createDate;
+        delete model.contentMarkdown;
+      });
       // return json, so don't use view object.
     	  res.json(models);
     }
