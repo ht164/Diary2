@@ -34,6 +34,7 @@ define(["jquery", "underscore"], function(jquery, _){
             var me = this;
             var diaryDate = new Date(diary.date);
             var fragment = "";
+            fragment += "<div class='" + me.DIARY_CLASS + "'>";
             fragment += me.createDateFragment(diaryDate);
             fragment += "<h2>";
             fragment += diary.title;
@@ -41,6 +42,7 @@ define(["jquery", "underscore"], function(jquery, _){
             fragment += "<hr>";
             fragment += "<div class='" + me.DIARY_CONTENT_CLASS + "'>";
             fragment += diary.content;
+            fragment += "</div>";
             fragment += "</div>";
             return fragment;
         },
