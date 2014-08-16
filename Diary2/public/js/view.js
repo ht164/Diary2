@@ -30,16 +30,14 @@ define(["jquery", "underscore"], function(jquery, _){
         createDiaryFragment: function(diary) {
             var me = this;
             var diaryDate = new Date(diary.date);
-            var fragment = "<div class='" + me.DIARY_CLASS + "'>";
-            fragment += "<div class='" + me.DIARY_TITLE_CLASS + "'>";
-            fragment += "<div class='" + me.DIARY_DATE_CLASS + "'>";
+            var fragment = "<h2>";
             fragment += diaryDate.getFullYear() + "/" + (diaryDate.getMonth() + 1) + "/" + diaryDate.getDate();
-            fragment += "</div>";
+            fragment += "<br>";
             fragment += diary.title;
-            fragment += "</div>";
+            fragment += "</h2>";
+            fragment += "<hr>";
             fragment += "<div class='" + me.DIARY_CONTENT_CLASS + "'>";
             fragment += diary.content;
-            fragment += "</div>";
             fragment += "</div>";
             return fragment;
         }
