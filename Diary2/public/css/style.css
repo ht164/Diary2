@@ -46,3 +46,8 @@ div.diary-date-date {
 div.diary-date-year {
     font-size: 10px;
 }
+
+div.sidebar-widget h2 {
+    font-size: 20px;
+    line-height: 22px;
+}
