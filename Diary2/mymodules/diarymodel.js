@@ -90,7 +90,11 @@ var funcs = {
       condition.date = condition_date;
     }
     console.log(condition);
-    DiaryMongooseModel.find(condition, function(err, diaries){
+    DiaryMongooseModel
+    .find(condition)
+    .limit(cond.num || 10)   // default num is 10.
+    .sort({ date: "desc" })
+    .exec(function(err, diaries){
     	  if (err) {
     	  	return console.error(err);
     	  }
