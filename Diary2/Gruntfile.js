@@ -81,7 +81,7 @@ module.exports = function (grunt) {
       server: {
         files: [{
           expand: true,
-          src: ['app.js', 'bin/**', 'mymodules/**', 'node_modules/**', 'routes/**', 'views/**'],
+          src: ['app.js', 'bin/**', 'config/**', 'log/', 'mymodules/**', 'node_modules/**', 'routes/**', 'views/**'],
           dest: 'release/'
         }]
       }
