@@ -90,8 +90,20 @@ Controller.prototype = {
     diary.contentMarkdown = req.param("contents");
     diary.date = new Date(req.param("date"));
 
+    // create callback
+    var onSuccess = function(){
+      // created response
+      res.status(201);
+      res.send();
+    };
+    var onFailure = function(){
+      // error response
+      res.status(500);
+      res.send();
+    };
+
     // save it.
-    diary.save();
+    diary.save(onSuccess, onFailure);
   }
 };
 
