@@ -1,8 +1,53 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    /* for navbar */
+    padding-top: 60px;
 }
 
-a {
-  color: #00B7FF;
+div.diary {
+    display: block;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 10px;
+    margin: 10px 0px;
+    background-color: white;
+}
+
+div.diary-date {
+    display: block;
+    width: 4em;
+    height: 4em;
+    float: left;
+    border: solid 1px #357ebd;
+    border-radius: 4px;
+    margin: 0px 8px 4px 2px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #428bca;
+    color: white;
+}
+
+div.diary-date div {
+    padding: 0px;
+    margin: 0px;
+    line-height: 1.1;
+}
+
+div.diary-date-month {
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+}
+
+div.diary-date-date {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+div.diary-date-year {
+    font-size: 10px;
+}
+
+div.sidebar-widget h2 {
+    font-size: 20px;
+    line-height: 22px;
 }

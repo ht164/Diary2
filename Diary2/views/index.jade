@@ -1,5 +1,31 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+    div.container
+      div.navbar-header
+        span.navbar-brand=title
+      div.collapse-navbar-collapse
+        ul.nav.navbar-nav
+          li
+            a Home
+          li
+            a Contact
+  div.container
+    div.row
+      div.col-md-9(role='main')
+        h1.page-header=title
+          br
+          small=subTitle
+        div#mainBlock
+
+      div.col-md-3
+        div.well.well-sm.sidebar-widget
+          h2=siteIntroductionTitle
+          p=siteIntroduction
+        div.well.well-sm.sidebar-widget
+          p ここにカレンダーを表示する予定
+        div.well.well-sm.sidebar-widget
+          h2=recentEntryTitle
+          p 最新の日記を表示する予定
+

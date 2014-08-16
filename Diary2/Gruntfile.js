@@ -26,7 +26,8 @@ module.exports = function (grunt) {
         files: [
           'bin/www',
           'app.js',
-          'routes/*.js'
+          'routes/*.js',
+          'mymodules/*.js'
         ],
         tasks: ['develop', 'delayed-livereload']
       },
@@ -47,6 +48,42 @@ module.exports = function (grunt) {
         options: {
           livereload: reloadPort
         }
+      }
+    },
+    cssmin: {
+      minify: {
+        src: ['public/css/*.css'],
+        dest: 'release/public/css/style.css'
+      }
+    },
+    uglify: {
+      minify: {
+        files: [{
+          expand: true,
+          cwd: 'public/js',
+          src: '**/*.js',
+          dest: 'release/public/js'
+        }]
+      }
+    },
+    copy: {
+      frontend: {
+        files: [{
+          expand: true,
+          src: ['public/img/**', 'public/html/**'],
+          dest: 'release/'
+        }, {
+          expand: true,
+          src: ['public/components/bootstrap/dist/**', 'public/components/jquery/dist/**', 'public/components/requirejs/*.js', 'public/components/underscore/*.js'],
+          dest: 'release/'
+        }]
+      },
+      server: {
+        files: [{
+          expand: true,
+          src: ['app.js', 'bin/**', 'config/**', 'log/', 'mymodules/**', 'node_modules/**', 'routes/**', 'views/**'],
+          dest: 'release/'
+        }]
       }
     }
   });
@@ -69,6 +106,8 @@ module.exports = function (grunt) {
         });
     }, 500);
   });
+
+  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'uglify', 'copy']);
 
   grunt.registerTask('default', ['develop', 'watch']);
 };
