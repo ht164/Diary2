@@ -77,8 +77,22 @@ Controller.prototype = {
    * @param callback callback function. function(Array<DiaryModel>)
    */
   getDiaryModels: function(cond, callback){
-  	DiaryFuncs.createModels(cond, callback);
+    	DiaryFuncs.createModels(cond, callback);
   },
+
+  /**
+   * call when client requests "post".
+   */
+  post: function(req, res){
+    // create diary model
+    var diary = new DiaryModel();
+    diary.title = req.param("title");
+    diary.contentMarkdown = req.param("contents");
+    diary.date = req.param("date");
+
+    // save it.
+    diary.save();
+  }
 };
 
 
