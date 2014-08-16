@@ -1,4 +1,24 @@
 extends layout
 
 block content
-  div#mainBlock
+  nav.navbar.navbar-default(role='navigation')
+    div.container
+      div.navbar-header
+        span.navbar-brand=title
+      div.collapse-navbar-collapse
+        ul.nav.navbar-nav
+          li
+            a Home
+          li
+            a Contact
+  div.container
+    div.row
+      div.col-md-9(role='main')
+        h1=title
+          br
+          small hoge
+
+      div.col-md-3
+        div.well.well-sm
+          p introduction of sites.
+
