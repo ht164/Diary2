@@ -28,17 +28,12 @@ DiaryModel.prototype = {
     var me = this;
     // create content property from contentMarkdown.
     me.content = marked(me.contentMarkdown);
+    // set create date.
+    me.createDate = new Date();
 
-    // create DiaryMongooseModel instance.
-    var mongooseModel = new DiaryMongooseModel({
-      title: me.title,
-      date: me.date,
-      content: me.content,
-      contentMarkdown: me.contentMarkdown,
-      // TODO: createDate
-      createDate: new Date()
-    });
-    mongooseModel.save(function(err) {
+    // find diary entry that have same date.
+    // if diary entry doesn't exist, create new.
+    DiaryMongooseModel.findOneAndUpdate({ date: me.date }, me, { upsert: true }, function(err) {
       if (err) {
         errCallback();
       } else {
