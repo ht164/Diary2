@@ -65,6 +65,26 @@ module.exports = function (grunt) {
           dest: 'release/public/js'
         }]
       }
+    },
+    copy: {
+      frontend: {
+        files: [{
+          expand: true,
+          src: ['public/img/**', 'public/html/**'],
+          dest: 'release/'
+        }, {
+          expand: true,
+          src: ['public/components/bootstrap/dist/**', 'public/components/jquery/dist/**', 'public/components/requirejs/*.js', 'public/components/underscore/*.js'],
+          dest: 'release/'
+        }]
+      },
+      server: {
+        files: [{
+          expand: true,
+          src: ['bin/**', 'mymodules/**', 'node_modules/**', 'routes/**', 'views/**'],
+          dest: 'release/'
+        }]
+      }
     }
   });
 
@@ -87,9 +107,7 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', function(){
-
-  });
+  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'uglify', 'copy']);
 
   grunt.registerTask('default', ['develop', 'watch']);
 };
