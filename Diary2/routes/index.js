@@ -6,6 +6,7 @@ var consts = require('../mymodules/consts');
 router.get('/', function(req, res) {
   res.render('index', {
     title: consts.siteTitle,
+    subTitle: consts.siteSubTitle,
     siteIntroductionTitle: consts.siteIntroductionTitle,
     siteIntroduction: consts.siteIntroduction
   });
