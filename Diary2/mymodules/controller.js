@@ -88,7 +88,7 @@ Controller.prototype = {
     var diary = new DiaryModel();
     diary.title = req.param("title");
     diary.contentMarkdown = req.param("contents");
-    diary.date = req.param("date");
+    diary.date = new Date(req.param("date"));
 
     // save it.
     diary.save();
