@@ -10,7 +10,7 @@ var consts = {
     recentEntryTitle: "最新の日記",
 
     appVer: "0.0.2",
-    maxAgeMsec: 604800000    // 7days.
+    maxAgeMsec: 0
 };
 
 module.exports = consts;
