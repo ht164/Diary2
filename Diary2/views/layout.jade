@@ -5,10 +5,10 @@ html(lang='ja')
     meta(name='viewport', content='width=device-width')
     title= title
     block css
-      link(rel='stylesheet', href='css/style.css')
-      link(rel='stylesheet', href='components/bootstrap/dist/css/bootstrap.min.css')
+      link(rel='stylesheet', href='css/style.css?v=#{appVer}')
+      link(rel='stylesheet', href='components/bootstrap/dist/css/bootstrap.min.css?v=#{appVer}')
     block js
       script(src='http://localhost:35729/livereload.js')
-      script(data-main='js/app.js', src='components/requirejs/require.js')
+      script(data-main='js/app.js?v=#{appVer}', src='components/requirejs/require.js?v=#{appVer}')
   body
     block content

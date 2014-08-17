@@ -9,7 +9,8 @@ router.get('/', function(req, res) {
     subTitle: consts.siteSubTitle,
     siteIntroductionTitle: consts.siteIntroductionTitle,
     siteIntroduction: consts.siteIntroduction,
-    recentEntryTitle: consts.recentEntryTitle
+    recentEntryTitle: consts.recentEntryTitle,
+    appVer: consts.appVer
   });
 });
 
