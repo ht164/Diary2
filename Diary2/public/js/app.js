@@ -26,7 +26,10 @@ requirejs.config({
         bootstrap: {
             deps: [ "jquery" ]
         }
-    }
+    },
+
+    // TODO: appVer.
+    urlArgs: "v=0.0.2"
 });
 
 /**

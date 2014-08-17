@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var logger = require('./mymodules/logger');
+var consts = require('./mymodules/consts');
 
 var routes = require('./routes/index');
 var users = require('./routes/user');
@@ -24,7 +25,9 @@ app.use(logger.loggerHttp);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+    maxAge: consts.maxAgeMsec
+}));
 
 app.use('/', routes);
 app.use('/users', users);
