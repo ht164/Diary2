@@ -4,8 +4,12 @@ block content
   nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
     div.container
       div.navbar-header
+        button.navbar-toggle(data-toggle='collapse', data-target='.toggleTarget')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
         span.navbar-brand=title
-      div.collapse-navbar-collapse
+      div.collapse-navbar-collapse.collapse.toggleTarget
         ul.nav.navbar-nav
           li
             a Home

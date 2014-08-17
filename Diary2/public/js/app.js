@@ -32,6 +32,9 @@ requirejs.config({
     urlArgs: "v=0.0.2"
 });
 
+// load bootstrap so that navbar toggle works.
+require(["jquery", "bootstrap"]);
+
 /**
  * application module
  */
