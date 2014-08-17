@@ -9,7 +9,8 @@ var consts = {
     siteIntroduction: "ht164が日記を書き連ねていくだけのサイトです。",
     recentEntryTitle: "最新の日記",
 
-    appVer: "0.0.2"
+    appVer: "0.0.2",
+    maxAgeMsec: 604800000    // 7days.
 };
 
 module.exports = consts;
