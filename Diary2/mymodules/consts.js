@@ -10,7 +10,10 @@ var consts = {
     recentEntryTitle: "最新の日記",
 
     appVer: "0.0.2",
-    maxAgeMsec: 0
+    maxAgeMsec: 0,
+
+    condMaxNum: 20,
+    condDefaultNum: 10
 };
 
 module.exports = consts;
