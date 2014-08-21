@@ -49,6 +49,8 @@ div.diary-date-year {
 
 div.loading {
     text-align: center;
+}
+div.loading-hidden {
     display: none;
 }
 
