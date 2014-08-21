@@ -2,7 +2,7 @@
  * front-end side view.
  */
 
-define(["jquery", "underscore"], function(jquery, _){
+define(["jquery", "underscore"], function($, _){
     return {
         /**
          * consts.
@@ -15,6 +15,9 @@ define(["jquery", "underscore"], function(jquery, _){
         DIARY_DATE_MONTH_CLASS: "diary-date-month",
         DIARY_DATE_DATE_CLASS: "diary-date-date",
         DIARY_SHOWING_BLOCK_ID: "mainBlock",
+
+        LOADING_CLASS: "loading",
+        LOADING_HIDDEN_CLASS: "loading-hidden",
 
         /**
          * show diaries newly.
@@ -68,6 +71,24 @@ define(["jquery", "underscore"], function(jquery, _){
             fragment += date.getFullYear();
             fragment += "</div></div>";
             return fragment;
+        },
+
+        /**
+         * start loading style.
+         * show loading image.
+         */
+        startLoading: function() {
+            var me = this;
+            $("." + me.LOADING_CLASS).removeClass(me.LOADING_HIDDEN_CLASS);
+        },
+
+        /**
+         * end loading style.
+         * hide loading image.
+         */
+        endLoading: function() {
+            var me = this;
+            $("." + me.LOADING_CLASS).addClass(me.LOADING_HIDDEN_CLASS);
         }
     };
 });
