@@ -10,10 +10,13 @@ define(["view", "diary"], function(view, diary){
         showRecentDiaries: function(){
             var onLoad = function(diaries){
                 view.showDiaries(diaries);
+                view.endLoading();
             };
             var onFail = function(){
-
+                view.endLoading();
             };
+            // show loading.
+            view.startLoading();
             // get recent diaryies.
             diary.getRecentDiaries({}, onLoad, onFail);
         }
