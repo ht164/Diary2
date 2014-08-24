@@ -2,7 +2,7 @@
  * front-end side view.
  */
 
-define(["jquery", "underscore"], function($, _){
+define(["jquery", "underscore", "jquery_infinitescroll"], function($, _){
     return {
         /**
          * consts.
@@ -89,6 +89,26 @@ define(["jquery", "underscore"], function($, _){
         endLoading: function() {
             var me = this;
             $("." + me.LOADING_CLASS).addClass(me.LOADING_HIDDEN_CLASS);
+        },
+
+        /**
+         * set infinite scroll.
+         *
+         * @param callback callback when next data is loaded.
+         */
+        setInfiniteScroll: function(callback) {
+            var me = this;
+            // target is div#DIARY_SHOWING_BLOCK_ID
+            $("." + me.DIARY_SHOWING_BLOCK_ID).infinitescroll({
+                navSelector: "div.is-nav",
+                nextSelector: "div.is-nav a.next-page",
+                itemSelector: "div.diary-container",
+                dataType: "json",
+                appendCallback: false,
+                debug: true
+            }, function(json, opts) {
+                callback(json);
+            }
         }
     };
 });

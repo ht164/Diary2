@@ -11,6 +11,9 @@ requirejs.config({
         jquery: [
             "../components/jquery/dist/jquery.min"
         ],
+        jquery_infinitescroll: [
+            "../components/jquery-infinite-scroll/jquery.infinitescroll.min"
+        ],
         underscore: [
             "../components/underscore/underscore"
         ],
