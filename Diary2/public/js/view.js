@@ -97,12 +97,12 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
          * set infinite scroll.
          * 
          * trigger is div#infinite-scroll-trigger.
-         * when div appeares, load next data.
+         * when div appeares, call callback.
          */
-        setInfiniteScroll: function() {
+        setInfiniteScroll: function(callback) {
             var me = this;
             $("div#" + me.INFINITE_SCROLL_TRIGGER_ID).on("inview", function(){
-                console.log("show!!");
+                if (typeof callback === "function") callback();
             });
         }
     };
