@@ -54,6 +54,10 @@ div.loading-hidden {
     display: none;
 }
 
+div#infiniteScrollTrigger {
+    height: 1px;
+}
+
 div.sidebar-widget h2 {
     font-size: 20px;
     line-height: 22px;

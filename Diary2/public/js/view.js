@@ -2,7 +2,7 @@
  * front-end side view.
  */
 
-define(["jquery", "underscore"], function($, _){
+define(["jquery", "underscore", "jquery_inview"], function($, _){
     return {
         /**
          * consts.
@@ -18,6 +18,8 @@ define(["jquery", "underscore"], function($, _){
 
         LOADING_CLASS: "loading",
         LOADING_HIDDEN_CLASS: "loading-hidden",
+
+        INFINITE_SCROLL_TRIGGER_ID: "infiniteScrollTrigger",
 
         /**
          * show diaries newly.
@@ -89,6 +91,19 @@ define(["jquery", "underscore"], function($, _){
         endLoading: function() {
             var me = this;
             $("." + me.LOADING_CLASS).addClass(me.LOADING_HIDDEN_CLASS);
+        },
+
+        /**
+         * set infinite scroll.
+         * 
+         * trigger is div#infinite-scroll-trigger.
+         * when div appeares, load next data.
+         */
+        setInfiniteScroll: function() {
+            var me = this;
+            $("div#" + me.INFINITE_SCROLL_TRIGGER_ID).on("inview", function(){
+                console.log("show!!");
+            });
         }
     };
 });

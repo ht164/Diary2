@@ -19,6 +19,13 @@ define(["view", "diary"], function(view, diary){
             view.startLoading();
             // get recent diaryies.
             diary.getRecentDiaries({}, onLoad, onFail);
+        },
+
+        /**
+         * set infinite scroll.
+         */
+        setInfiniteScroll: function(){
+            view.setInfiniteScroll();
         }
     };
 });
