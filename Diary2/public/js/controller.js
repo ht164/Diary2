@@ -28,7 +28,7 @@ define(["view", "diary"], function(view, diary){
             var me = this;
             var onPageEnd = function(){
                 // TODO load next diaries.
-                console.log("load next diaries.");
+                me.showRecentDiaries();
             };
             view.setInfiniteScroll(onPageEnd);
         }
