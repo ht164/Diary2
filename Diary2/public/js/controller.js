@@ -26,11 +26,11 @@ define(["view", "diary"], function(view, diary){
          */
         setInfiniteScroll: function(){
             var me = this;
-            var onPageEnd = function(){
+            view.onFireLoadingNextData = function(){
                 // TODO load next diaries.
                 me.showRecentDiaries();
             };
-            view.setInfiniteScroll(onPageEnd);
+            view.setInfiniteScroll();
         }
     };
 });
