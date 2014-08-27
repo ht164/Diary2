@@ -47,7 +47,7 @@ define(["view", "diary"], function(view, diary){
             view.onFireLoadingNextData = function(){
                 // startdate is _lastDiaryDate - 1day.
                 // 1day is 86,400,000 msec.
-                var startDate = new Date((new Date(me._lastDiaryDate)).getTime() - 864000000);
+                var startDate = new Date((new Date(me._lastDiaryDate)).getTime() - 86400000);
                 me.showDiaries({
                     startDate: startDate
                 });
