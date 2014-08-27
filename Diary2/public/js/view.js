@@ -53,18 +53,22 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
             });
 
             var displayScrollToTopButton = function(){
+                var button = $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS);
                 if ($("html").scrollTop() > me.BUTTON_SCROLL_TO_TOP_DISPLAYING_THRESHOLD){
                     if (!me._displayingScrollToTopButton) {
-                        $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS).animate({
+                        button.css("visibility", "visible");
+                        button.animate({
                             opacity: 1.0
                         }, "slow");
                         me._displayingScrollToTopButton = true;
                     }
                 } else {
                     if (me._displayingScrollToTopButton) {
-                        $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS).animate({
+                        button.animate({
                             opacity: 0.0
-                        }, "slow");
+                        }, "slow", function(){
+                            button.css("visibility", "hidden");
+                        });
                         me._displayingScrollToTopButton = false;
                     }
                 }
