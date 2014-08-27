@@ -32,7 +32,6 @@ define(["view", "diary"], function(view, diary){
                 // TODO load next diaries.
                 me.showRecentDiaries();
             };
-            view.setInfiniteScroll();
         }
     };
 });
