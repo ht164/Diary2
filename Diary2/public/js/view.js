@@ -16,10 +16,8 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         DIARY_DATE_DATE_CLASS: "diary-date-date",
         DIARY_SHOWING_BLOCK_ID: "mainBlock",
 
-        LOADING_CLASS: "loading",
-        LOADING_HIDDEN_CLASS: "loading-hidden",
-
         INFINITE_SCROLL_TRIGGER_ID: "infiniteScrollTrigger",
+        INFINITE_SCROLL_LOADINGIMG_ID: "loadingImage",
 
         /**
          * initialize.
@@ -31,7 +29,7 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
             $("div#" + me.INFINITE_SCROLL_TRIGGER_ID)
             .on("inview", function(event, isInView, visiblePartX, visiblePartY){
                 if (visiblePartX == "both" && visiblePartY == "both") {
-                    //divTrigger.css("display", "none");
+                    $("div#" + me.INFINITE_SCROLL_LOADINGIMG_ID).css("visibility", "visible");
                     me.onFireLoadingNextData();
                 }
             });
@@ -118,6 +116,14 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         setInfiniteScroll: function() {
             var me = this;
             $("div#" + me.INFINITE_SCROLL_TRIGGER_ID).css("display", "block");
+        },
+
+        /**
+         * notify the end of loading to view after onFireLoadingNextData event.
+         */
+        notifyEndOfLoading: function() {
+            var me = this;
+            $("div#" + me.INFINITE_SCROLL_LOADINGIMG_ID).css("visibility", "hidden");
         },
 
         /**
