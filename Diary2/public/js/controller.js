@@ -25,6 +25,9 @@ define(["view", "diary"], function(view, diary){
                     // store last loaded diary's date.
                     me._lastDiaryDate = diaries[diaries.length - 1].date;
                     view.showDiaries(diaries);
+                } else {
+                    // all data is loaded. disable infinite scroll.
+                    view.disableInfiniteScroll();
                 }
                 // notify the end of loading to view.
                 view.notifyEndOfLoading();
