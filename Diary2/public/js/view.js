@@ -3,7 +3,7 @@
  */
 
 define(["jquery", "underscore", "jquery_inview"], function($, _){
-    return {
+    var _c = {
         /**
          * consts.
          */
@@ -20,6 +20,22 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         LOADING_HIDDEN_CLASS: "loading-hidden",
 
         INFINITE_SCROLL_TRIGGER_ID: "infiniteScrollTrigger",
+
+        /**
+         * initialize.
+         *
+         * set infinite scroll event.
+         */
+        _initialize: function() {
+            var me = this;
+            $("div#" + me.INFINITE_SCROLL_TRIGGER_ID)
+            .on("inview", function(event, isInView, visiblePartX, visiblePartY){
+                if (visiblePartX == "both" && visiblePartY == "both") {
+                    //divTrigger.css("display", "none");
+                    me.onFireLoadingNextData();
+                }
+            });
+        },
 
         /**
          * show diaries newly.
@@ -101,14 +117,7 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
          */
         setInfiniteScroll: function() {
             var me = this;
-            var divTrigger = $("div#" + me.INFINITE_SCROLL_TRIGGER_ID);
-            divTrigger.css("display", "block")
-            .on("inview", function(event, isInView, visiblePartX, visiblePartY){
-                if (visiblePartX == "both" && visiblePartY == "both") {
-                    divTrigger.css("display", "none");
-                    me.onFireLoadingNextData();
-                }
-            });
+            $("div#" + me.INFINITE_SCROLL_TRIGGER_ID).css("display", "block");
         },
 
         /**
@@ -124,4 +133,9 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         }
 
     };
+
+    // initialize.
+    _c._initialize();
+
+    return _c;
 });
