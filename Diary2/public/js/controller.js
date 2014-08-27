@@ -17,8 +17,6 @@ define(["view", "diary"], function(view, diary){
                 // notify the end of loading to view.
                 view.notifyEndOfLoading();
             };
-            // show loading.
-            view.startLoading();
             // get recent diaryies.
             diary.getRecentDiaries({}, onLoad, onFail);
         },
