@@ -101,6 +101,16 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         },
 
         /**
+         * set infinite scroll disabled.
+         *
+         * let trigger div be invisible (display: hidden).
+         */
+        disableInfiniteScroll: function() {
+            var me = this;
+            $("div#" + me.INFINITE_SCROLL_TRIGGER_ID).css("display", "none");
+        },
+
+        /**
          * notify the end of loading to view after onFireLoadingNextData event.
          */
         notifyEndOfLoading: function() {
