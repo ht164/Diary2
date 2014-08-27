@@ -19,13 +19,17 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         INFINITE_SCROLL_TRIGGER_ID: "infiniteScrollTrigger",
         INFINITE_SCROLL_LOADINGIMG_ID: "loadingImage",
 
+        BUTTON_SCROLL_TO_TOP_CLASS: "scroll-to-top",
+
         /**
          * initialize.
          *
          * set infinite scroll event.
+         * set scroll-to-top button.
          */
         _initialize: function() {
             var me = this;
+
             $("div#" + me.INFINITE_SCROLL_TRIGGER_ID)
             .on("inview", function(event, isInView, visiblePartX, visiblePartY){
                 if (visiblePartX == "both" && visiblePartY == "both") {
@@ -33,6 +37,15 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
                     me.onFireLoadingNextData();
                 }
             });
+
+            $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS).on("click", function(event){
+                event.preventDefault();
+                $("html").animate({
+                    scrollTop: 0
+                }, "fast");
+
+            });
+
         },
 
         /**
