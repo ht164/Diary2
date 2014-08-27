@@ -90,24 +90,6 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         },
 
         /**
-         * start loading style.
-         * show loading image.
-         */
-        startLoading: function() {
-            var me = this;
-            $("." + me.LOADING_CLASS).removeClass(me.LOADING_HIDDEN_CLASS);
-        },
-
-        /**
-         * end loading style.
-         * hide loading image.
-         */
-        endLoading: function() {
-            var me = this;
-            $("." + me.LOADING_CLASS).addClass(me.LOADING_HIDDEN_CLASS);
-        },
-
-        /**
          * set infinite scroll.
          * 
          * trigger is div#infinite-scroll-trigger.
