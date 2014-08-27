@@ -66,7 +66,7 @@ define([], function(){
             $.ajax({
                 type: "GET",
                 url: "/get",
-                date: condition
+                data: condition
             }).done(function(data){
                 callback(data);
             }).fail(function(){
