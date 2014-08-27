@@ -18,7 +18,7 @@ define(["view", "diary"], function(view, diary){
                 view.notifyEndOfLoading();
             };
             // get recent diaryies.
-            diary.getRecentDiaries({}, onLoad, onFail);
+            diary.getRecentDiaries({ num: 1 }, onLoad, onFail);
         },
 
         /**
