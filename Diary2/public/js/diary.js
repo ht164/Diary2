@@ -58,9 +58,13 @@ define([], function(){
                 }
             }
             if (cond.startDate) {
-                condition.startDate = cond.startDate.getFullYear()
-                    + "0" + (cond.startDate.getMonth() + 1)
-                    + cond.startDate.getDate();
+                condition.startDate = (function(){
+                    var y = cond.startDate.getFullYear();
+                    var m = cond.startDate.getMonth() + 1;
+                    var d = cond.startDate.getDate();
+
+                    return y + (m < 10 ? "0" + m : m) + (d < 10 ? "0" + d : d);
+                })();
             }
 
             $.ajax({
