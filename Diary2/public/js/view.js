@@ -2,8 +2,8 @@
  * front-end side view.
  */
 
-define(["jquery", "underscore"], function($, _){
-    return {
+define(["jquery", "underscore", "jquery_inview"], function($, _){
+    var _c = {
         /**
          * consts.
          */
@@ -16,8 +16,24 @@ define(["jquery", "underscore"], function($, _){
         DIARY_DATE_DATE_CLASS: "diary-date-date",
         DIARY_SHOWING_BLOCK_ID: "mainBlock",
 
-        LOADING_CLASS: "loading",
-        LOADING_HIDDEN_CLASS: "loading-hidden",
+        INFINITE_SCROLL_TRIGGER_ID: "infiniteScrollTrigger",
+        INFINITE_SCROLL_LOADINGIMG_ID: "loadingImage",
+
+        /**
+         * initialize.
+         *
+         * set infinite scroll event.
+         */
+        _initialize: function() {
+            var me = this;
+            $("div#" + me.INFINITE_SCROLL_TRIGGER_ID)
+            .on("inview", function(event, isInView, visiblePartX, visiblePartY){
+                if (visiblePartX == "both" && visiblePartY == "both") {
+                    $("div#" + me.INFINITE_SCROLL_LOADINGIMG_ID).css("visibility", "visible");
+                    me.onFireLoadingNextData();
+                }
+            });
+        },
 
         /**
          * show diaries newly.
@@ -74,21 +90,40 @@ define(["jquery", "underscore"], function($, _){
         },
 
         /**
-         * start loading style.
-         * show loading image.
+         * set infinite scroll.
+         * 
+         * trigger is div#infinite-scroll-trigger.
+         * when div appeares, fire onFireLoadingNextData event.
          */
-        startLoading: function() {
+        setInfiniteScroll: function() {
             var me = this;
-            $("." + me.LOADING_CLASS).removeClass(me.LOADING_HIDDEN_CLASS);
+            $("div#" + me.INFINITE_SCROLL_TRIGGER_ID).css("display", "block");
         },
 
         /**
-         * end loading style.
-         * hide loading image.
+         * notify the end of loading to view after onFireLoadingNextData event.
          */
-        endLoading: function() {
+        notifyEndOfLoading: function() {
             var me = this;
-            $("." + me.LOADING_CLASS).addClass(me.LOADING_HIDDEN_CLASS);
+            $("div#" + me.INFINITE_SCROLL_LOADINGIMG_ID).css("visibility", "hidden");
+        },
+
+        /**
+         * events
+         */
+        /**
+         * onFireLoadingNextData
+         * 
+         * fire when infinite-scroll emelent appears.
+         * after event fired, infinite-scroll element goes to be disabled.
+         */
+        onFireLoadingNextData: function() {
         }
+
     };
+
+    // initialize.
+    _c._initialize();
+
+    return _c;
 });

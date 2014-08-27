@@ -11,6 +11,9 @@ requirejs.config({
         jquery: [
             "../components/jquery/dist/jquery.min"
         ],
+        jquery_inview: [
+            "../components/jquery.inview/jquery.inview.min"
+        ],
         underscore: [
             "../components/underscore/underscore"
         ],
@@ -39,6 +42,8 @@ require(["jquery", "bootstrap"]);
  * application module
  */
 define(["controller"], function(controller){
+    // set infinite scroll.
+    controller.setInfiniteScroll();
     // initial processing.
     controller.showRecentDiaries();
 });
