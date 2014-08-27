@@ -53,7 +53,6 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
             });
 
             var displayScrollToTopButton = function(){
-                console.log($("html").scrollTop());
                 if ($("html").scrollTop() > me.BUTTON_SCROLL_TO_TOP_DISPLAYING_THRESHOLD){
                     if (!me._displayingScrollToTopButton) {
                         $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS).animate({
