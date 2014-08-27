@@ -20,6 +20,13 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         INFINITE_SCROLL_LOADINGIMG_ID: "loadingImage",
 
         BUTTON_SCROLL_TO_TOP_CLASS: "scroll-to-top",
+        BUTTON_SCROLL_TO_TOP_DISPLAYING_THRESHOLD: 100,
+
+        /**
+         * properties
+         */
+        _displayingScrollToTopButton: false,
+
 
         /**
          * initialize.
@@ -43,9 +50,31 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
                 $("html").animate({
                     scrollTop: 0
                 }, "fast");
-
             });
 
+            var displayScrollToTopButton = function(){
+                console.log($("html").scrollTop());
+                if ($("html").scrollTop() > me.BUTTON_SCROLL_TO_TOP_DISPLAYING_THRESHOLD){
+                    if (!me._displayingScrollToTopButton) {
+                        $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS).animate({
+                            opacity: 1.0
+                        }, "slow");
+                        me._displayingScrollToTopButton = true;
+                    }
+                } else {
+                    if (me._displayingScrollToTopButton) {
+                        $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS).animate({
+                            opacity: 0.0
+                        }, "slow");
+                        me._displayingScrollToTopButton = false;
+                    }
+                }
+            };
+            $(window).scroll(function(event){
+                displayScrollToTopButton();
+            });
+
+            displayScrollToTopButton();
         },
 
         /**

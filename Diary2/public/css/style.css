@@ -66,3 +66,6 @@ div.scroll-to-top {
     background-image: url('/img/back-to-top.png');
     border-radius: 10px;
 }
+div.scroll-to-top-init {
+    opacity: 0;
+}
