@@ -65,6 +65,7 @@ div.scroll-to-top {
     background-color: #49e;
     background-image: url('/img/back-to-top.png');
     border-radius: 10px;
+    cursor: pointer;
 }
 div.scroll-to-top-init {
     opacity: 0;

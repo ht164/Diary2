@@ -45,7 +45,10 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
                 }
             });
 
-            $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS).on("click", function(event){
+            // if touch device (ontouchstart event exists), use toucnend event.
+            // otherwise, use click event.
+            var evtClick = ("ontouchstart" in window) ? "touchend" : "click";
+            $("div." + me.BUTTON_SCROLL_TO_TOP_CLASS).on(evtClick, function(event){
                 event.preventDefault();
                 $("html").animate({
                     scrollTop: 0
