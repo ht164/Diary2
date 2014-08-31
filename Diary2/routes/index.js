@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 var consts = require('../mymodules/consts');
 
-/* GET home page. */
-router.get('/', function(req, res) {
+/**
+ * handler
+ */
+var handler = function(req, res) {
   res.render('index', {
     title: consts.siteTitle,
     subTitle: consts.siteSubTitle,
@@ -13,6 +15,11 @@ router.get('/', function(req, res) {
     recentEntryTitle: consts.recentEntryTitle,
     appVer: consts.appVer
   });
-});
+};
+
+router.get('/', handler);
+router.get(/diary\/[0-9]{4}/, handler);
+router.get(/diary\/[0-9]{4}\/[0-9]{2}/, handler);
+router.get(/diary\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/, handler);
 
 module.exports = router;
