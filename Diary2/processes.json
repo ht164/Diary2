@@ -1,0 +1,8 @@
+[{
+  "name": "diary",
+  "script": "./bin/www",
+  "instances": "max",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}]
