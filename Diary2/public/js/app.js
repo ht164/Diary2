@@ -6,19 +6,19 @@
 
 // configure require.js
 requirejs.config({
-    baseUrl: "js/",
+    baseUrl: "/js/",
     paths: {
         jquery: [
-            "../components/jquery/dist/jquery.min"
+            "/components/jquery/dist/jquery.min"
         ],
         jquery_inview: [
-            "../components/jquery.inview/jquery.inview.min"
+            "/components/jquery.inview/jquery.inview.min"
         ],
         underscore: [
-            "../components/underscore/underscore"
+            "/components/underscore/underscore"
         ],
         bootstrap: [
-            "../components/bootstrap/dist/js/bootstrap.min"
+            "/components/bootstrap/dist/js/bootstrap.min"
         ]
     },
 
@@ -45,5 +45,10 @@ define(["controller"], function(controller){
     // set infinite scroll.
     controller.setInfiniteScroll();
     // initial processing.
-    controller.showRecentDiaries();
+    var ret = location.toString().match(/diary(\/.*)/);
+    if (ret) {
+        controller.showSpecifiedDiaries(ret[1]);
+    } else {
+        controller.showRecentDiaries();
+    }
 });
