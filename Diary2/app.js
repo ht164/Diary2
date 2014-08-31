@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var users = require('./routes/user');
 var get = require('./routes/get');
 var post = require('./routes/post');
+var diary = require('./routes/diary');
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/get', get);
 app.use('/post', post);
+app.use('/diary', diary);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
