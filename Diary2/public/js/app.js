@@ -45,5 +45,10 @@ define(["controller"], function(controller){
     // set infinite scroll.
     controller.setInfiniteScroll();
     // initial processing.
-    controller.showRecentDiaries();
+    var ret = location.toString().match(/diary(\/.*)/);
+    if (ret) {
+        controller.showSpecifiedDiaries(ret[1]);
+    } else {
+        controller.showRecentDiaries();
+    }
 });

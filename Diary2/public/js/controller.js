@@ -16,6 +16,24 @@ define(["view", "diary"], function(view, diary){
         },
 
         /**
+         * show specified diaries.
+         *
+         * @param restUrl
+         */
+        showSpecifiedDiaries: function(restUrl) {
+            var me = this;
+            // get year, month and date from url.
+            var ret = restUrl.match(/\/([0-9]{4})($|\/([0-9]{2})($|\/([0-9]{2})))/);
+            if (!ret) return;
+            var cond = {
+                year: ret[1],
+                month: ret[3],
+                date: ret[5]
+            };
+            me.showDiaries(cond);
+        },
+
+        /**
          * show diaries.
          */
         showDiaries: function(cond) {
