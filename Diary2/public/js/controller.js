@@ -2,8 +2,10 @@
  * front-end side controller.
  */
 
-define(["view", "diary"], function(view, diary){
+define(["view", "diary", "underscore"], function(view, diary, _){
     return {
+        // loading date.
+        _loadingDate: null,
         // last loaded diary's date.
         _lastDiaryDate: null,
         // end date.
@@ -33,6 +35,13 @@ define(["view", "diary"], function(view, diary){
                 date: ret[5]
             };
             me.showDiaries(cond);
+
+            // set loading date.
+            me._loadingDate = {
+                year: ret[1],
+                month: ret[3],
+                date: ret[5]
+            };
             // set end date.
             var endYear = ret[1];
             var endMonth = ret[3] || "01";
@@ -80,9 +89,9 @@ define(["view", "diary"], function(view, diary){
                 // startdate is _lastDiaryDate - 1day.
                 // 1day is 86,400,000 msec.
                 var startDate = new Date((new Date(me._lastDiaryDate)).getTime() - 86400000);
-                me.showDiaries({
+                me.showDiaries(_.extend({
                     startDate: startDate
-                });
+                }, me._loadingDate));
             };
         }
     };
