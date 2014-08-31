@@ -39,7 +39,7 @@ define(["view", "diary"], function(view, diary){
             // get recent diaryies.
             cond = cond || {};
             cond.num = 1;
-            diary.getRecentDiaries(cond, onLoad, onFail);
+            diary.getDiaries(cond, onLoad, onFail);
         },
 
         /**
