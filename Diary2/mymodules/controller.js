@@ -60,20 +60,20 @@ Controller.prototype = {
     	  var endYearStr, endMonthStr, endDateStr;
 
     	  // year
-    	  endYearStr = startYearStr = dateStr.substr(0, 4);
+    	  startYearStr = endYearStr = dateStr.substr(0, 4);
     	  // month
     	  if (dateStr.length > 4) {
-    	    endMonthStr = startMonthStr = dateStr.substr(4, 2);
+    	    startMonthStr = endMonthStr = dateStr.substr(4, 2);
     	  } else {
-    	    startMonthStr = "01";
-    	    endMonthStr = "12";
+    	    startMonthStr = "12";
+    	    endMonthStr = "01";
     	  }
     	  // date
     	  if (dateStr.length > 6) {
-    	    endDateStr = startDateStr = dateStr.substr(6, 2);
+    	    startDateStr = endDateStr = dateStr.substr(6, 2);
     	  } else {
-    	    startDateStr = "01";
-    	    endDateStr = util.getLastDayOfMonth(endYearStr, endMonthStr);
+         startDateStr = util.getLastDayOfMonth(endYearStr, endMonthStr);
+         endDateStr = "01";
     	  }
 
     	  cond.startDate = cond.startDate || new Date(startYearStr + "-" + startMonthStr + "-" + startDateStr);
