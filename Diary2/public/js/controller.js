@@ -6,6 +6,8 @@ define(["view", "diary"], function(view, diary){
     return {
         // last loaded diary's date.
         _lastDiaryDate: null,
+        // end date.
+        _endDate: null,
 
         /**
          * show recent diaries.
@@ -31,6 +33,11 @@ define(["view", "diary"], function(view, diary){
                 date: ret[5]
             };
             me.showDiaries(cond);
+            // set end date.
+            var endYear = ret[1];
+            var endMonth = ret[3] || "01";
+            var endDate = ret[5] || "01";
+            me._endDate = new Date(endYear + "-" + endMonth + "-" + endDate);
         },
 
         /**
@@ -43,6 +50,10 @@ define(["view", "diary"], function(view, diary){
                     // store last loaded diary's date.
                     me._lastDiaryDate = diaries[diaries.length - 1].date;
                     view.showDiaries(diaries);
+                    // if loaded diary comes to endDate, disable infinite scroll.
+                    if (me._endDate && me._endDate >= new Date(diaries[diaries.length - 1].date)) {
+                        view.disableInfiniteScroll();
+                    }
                 } else {
                     // all data is loaded. disable infinite scroll.
                     view.disableInfiniteScroll();
