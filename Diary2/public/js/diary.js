@@ -66,7 +66,7 @@ define([], function(){
                     var m = cond.startDate.getMonth() + 1;
                     var d = cond.startDate.getDate();
 
-                    return y + (m < 10 ? "0" + m : m) + (d < 10 ? "0" + d : d);
+                    return "" + y + (m < 10 ? "0" + m : m) + (d < 10 ? "0" + d : d);
                 })();
             }
 
