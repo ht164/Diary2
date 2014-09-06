@@ -2,6 +2,7 @@
  * DiaryModel
  */
 var storage = require('../mymodules/storage');
+var consts = require('../mymodules/consts');
 var mongoose = require('mongoose');
 var marked = require('marked');
 
@@ -80,14 +81,14 @@ var funcs = {
     var condition = {};
     if (cond.startDate || cond.endDate) {
       var condition_date = {};
-      if (cond.startDate) condition_date["$gte"] = cond.startDate;
-      if (cond.endDate) condition_date["$lte"] = cond.endDate;
+      if (cond.startDate) condition_date["$lte"] = cond.startDate;
+      if (cond.endDate) condition_date["$gte"] = cond.endDate;
       condition.date = condition_date;
     }
     console.log(condition);
     DiaryMongooseModel
     .find(condition)
-    .limit(cond.num || 10)   // default num is 10.
+    .limit(cond.num || consts.condDefaultNum)
     .sort({ date: "desc" })
     .exec(function(err, diaries){
     	  if (err) {

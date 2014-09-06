@@ -6,6 +6,7 @@ var _ = require('underscore');
 var DiaryModel = require('../mymodules/diarymodel').model;
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var util = require('../mymodules/util');
+var consts = require('../mymodules/consts');
 
 function Controller() {
 }
@@ -39,6 +40,14 @@ Controller.prototype = {
    */
   createCondition: function(query) {
     var cond = {};
+
+    if (query.num && !isNaN(query.num)) {
+      var num = parseInt(query.num, 10);
+      if (num < consts.condMaxNum) {
+        cond.num = num;
+      }
+    }
+    cond.num = cond.num || consts.condDefaultNum;
 
     if (query.startDate) {
     	  var startDateStr = query.startDate;

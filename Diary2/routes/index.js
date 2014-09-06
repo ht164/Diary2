@@ -7,6 +7,7 @@ router.get('/', function(req, res) {
   res.render('index', {
     title: consts.siteTitle,
     subTitle: consts.siteSubTitle,
+    siteUrl: consts.siteUrl,
     siteIntroductionTitle: consts.siteIntroductionTitle,
     siteIntroduction: consts.siteIntroduction,
     recentEntryTitle: consts.recentEntryTitle,

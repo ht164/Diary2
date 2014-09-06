@@ -8,7 +8,7 @@ block content
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        span.navbar-brand=title
+        a.navbar-brand(href='#{siteUrl}')=title
       div.navbar-collapse.collapse.toggleTarget
         ul.nav.navbar-nav
           li
@@ -22,6 +22,9 @@ block content
           br
           small=subTitle
         div#mainBlock
+        div#loadingImage(style='visibility: hidden;')
+          img(src='img/preloader.gif')
+        div#infiniteScrollTrigger
 
       div.col-md-3
         div.well.well-sm.sidebar-widget
@@ -32,4 +35,4 @@ block content
         div.well.well-sm.sidebar-widget
           h2=recentEntryTitle
           p 最新の日記を表示する予定
-
+  div.scroll-to-top.scroll-to-top-init
