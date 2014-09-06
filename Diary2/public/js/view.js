@@ -176,11 +176,15 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
                 var fragment = "<ul class='list-unstyled'>";
                 _.each(diaryList, function(diary){
                     var _date = new Date(diary.date)
-                    fragment += "<li>" + diary.title + " ("
-                        + _date.getFullYear() + "/"
-                        + (_date.getMonth() + 1) + "/"
-                        + _date.getDate()
-                        + ")</li>";
+                    var year = _date.getFullYear();
+                    var month = "" + ((_date.getMonth() + 1) < 10 ? "0" : "") + (_date.getMonth() + 1)
+                    var date = "" + (_date.getDate() < 10 ? "0" : "") + _date.getDate();
+                    var dateStr = year + "/" + month + "/" + date;
+                    var href = "/diary/" + year + "/" + month + "/" + date;
+                    fragment += "<li>"
+                        + "<a href='" + href + "'>"
+                        + diary.title + " (" + dateStr + ")"
+                        + "</a></li>";
                 });
                 fragment += "</ul>";
                 $("div#recentDiaryBlock").html(fragment);
