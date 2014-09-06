@@ -102,8 +102,10 @@ define(["jquery", "underscore"], function($, _){
                 fragment += "</tr>";
 
                 // days.
+                var strY = "" + me.year;
+                var strM = "" + (me.month < 10 ? "0" + me.month : me.month);
                 // what day is year/month/01 ?
-                var day = (new Date(me.year + "-" + (me.month < 10 ? "0" + me.month : me.month) + "-01")).getDay();
+                var day = (new Date(strY + "-" + strM + "-01")).getDay();
                 var currentDate = 0 - day + 1;
                 // last date of month?
                 var lastDate = me._getLastDate(me.year, me.month);
@@ -111,13 +113,14 @@ define(["jquery", "underscore"], function($, _){
                 while(currentDate <= lastDate) {
                     fragment += "<tr>";
                     for (var week = 0; week < 7; week++){
+                        var strD = "" + (currentDate < 10 ? "0" + currentDate : currentDate;
                         fragment += "<td"
                         + (week == 0 ? " class='week-sun'" : 
                             (week == 6 ? " class='week-sat'" : ""))
                         + ">"
                         + ((currentDate > 0 && currentDate <= lastDate)
                             ? (me.datesHavingLink[currentDate]
-                                ? "<a href='" + me.datesHavingLink[currentDate] + "'>" + currentDate + "</a>"
+                                ? "<a href='/diary/" + strY + "/" + strM + "/" + strD + "'>" + currentDate + "</a>"
                                 : currentDate )
                             : "")
                         + "</td>";
@@ -164,7 +167,9 @@ define(["jquery", "underscore"], function($, _){
             // otherwise, call showPrevMonth immediately.
             if (me.onClickPrevMonth) {
                 me.onClickPrevMonth({
-                    setDates: setDates
+                    setDates: setDates,
+                    year: me.year,
+                    month: me.month
                 });
             } else {
                 me.datesHavingLink = [];
@@ -201,7 +206,9 @@ define(["jquery", "underscore"], function($, _){
             // otherwise, call showNextMonth immediately.
             if (me.onClickNextMonth) {
                 me.onClickNextMonth({
-                    setDates: setDates
+                    setDates: setDates,
+                    year: me.year,
+                    month: me.month
                 });
             } else {
                 me.datesHavingLink = [];
