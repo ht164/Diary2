@@ -62,6 +62,7 @@ define(["jquery", "underscore"], function($, _){
 
                 var tdPrevBtn = $("<td class='prev-month'></td>");
                 var prevBtn = $("<button class='btn btn-default btn-xs'><span class='glyphicon glyphicon-chevron-left'></span></button>");
+                prevBtn.on("click", me._hitch(me._onClickPrevMonth, me));
                 tdPrevBtn.append(prevBtn);
                 tr.append(tdPrevBtn);
 
@@ -70,6 +71,7 @@ define(["jquery", "underscore"], function($, _){
 
                 var tdNextBtn = $("<td class='next-month'></td>");
                 var nextBtn = $("<button class='btn btn-default btn-xs'><span class='glyphicon glyphicon-chevron-right'></button>");
+                nextBtn.on("click", me._hitch(me._onClickNextMonth, me));
                 tdNextBtn.append(nextBtn);
                 tr.append(tdNextBtn);
 
@@ -126,6 +128,38 @@ define(["jquery", "underscore"], function($, _){
         },
 
         /**
+         * called when prevMonth button is clicked.
+         */
+        _onClickPrevMonth: function(){
+            var me = this;
+            // show previous month.
+            me.month--;
+            if (me.month == 0) {
+                me.month = 12;
+                me.year--;
+            }
+
+            var dom = me._createDom();
+            $("#" + me.elementId).empty().append(dom);
+        },
+
+        /**
+         * called when nextMonth button is clicked.
+         */
+        _onClickNextMonth: function(){
+            var me = this;
+            // show previous month.
+            me.month++;
+            if (me.month == 13) {
+                me.month = 1;
+                me.year++;
+            }
+
+            var dom = me._createDom();
+            $("#" + me.elementId).empty().append(dom);
+        },
+
+        /**
          * calculate last date of year/month.
          */
         _getLastDate: function(year, month) {
@@ -138,6 +172,18 @@ define(["jquery", "underscore"], function($, _){
             d.setTime(d.getTime() - 86400000);
 
             return d.getDate();
+        },
+
+        /**
+         * return specified scope function.
+         * similar to dojo.hitch
+         */
+        _hitch: function(func, scope) {
+            return (function(_scope){
+                return function(){
+                    func.apply(_scope, arguments);
+                };
+            })(scope);
         }
     };
 
