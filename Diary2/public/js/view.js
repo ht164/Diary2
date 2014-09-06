@@ -167,6 +167,31 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         },
 
         /**
+         * show recent diary list.
+         */
+        getRecentDiaryList: function(diaryList) {
+            var me = this;
+            if (diaryList.length > 0) {
+                // create html fragment.
+                var fragment = "<ul class='list-unstyled'>";
+                _.each(diaryList, function(diary){
+                    var _date = new Date(diary.date)
+                    var year = _date.getFullYear();
+                    var month = "" + ((_date.getMonth() + 1) < 10 ? "0" : "") + (_date.getMonth() + 1)
+                    var date = "" + (_date.getDate() < 10 ? "0" : "") + _date.getDate();
+                    var dateStr = year + "/" + month + "/" + date;
+                    var href = "/diary/" + year + "/" + month + "/" + date;
+                    fragment += "<li>"
+                        + "<a href='" + href + "'>"
+                        + diary.title + " (" + dateStr + ")"
+                        + "</a></li>";
+                });
+                fragment += "</ul>";
+                $("div#recentDiaryBlock").html(fragment);
+            }
+        },
+
+        /**
          * events
          */
         /**

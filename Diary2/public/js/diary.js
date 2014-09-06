@@ -2,7 +2,7 @@
  * Diary Model
  */
 
-define([], function(){
+define(["jquery"], function($){
     /**
      * private class
      */
@@ -74,6 +74,23 @@ define([], function(){
                 type: "GET",
                 url: "/get",
                 data: condition
+            }).done(function(data){
+                callback(data);
+            }).fail(function(){
+                errCallback();
+            });
+        },
+
+        /**
+         * get recent diary list from web server.
+         *
+         * @param callback callback function if success.
+         * @param errCallback callback function if failure.
+         */
+        getRecentDiaryList: function(callback, errCallback){
+            $.ajax({
+                type: "GET",
+                url: "/recent/diary"
             }).done(function(data){
                 callback(data);
             }).fail(function(){

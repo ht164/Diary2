@@ -32,7 +32,7 @@ requirejs.config({
     },
 
     // TODO: appVer.
-    urlArgs: "v=0.0.4"
+    urlArgs: "v=0.0.5"
 });
 
 // load bootstrap so that navbar toggle works.
@@ -51,4 +51,6 @@ define(["controller"], function(controller){
     } else {
         controller.showRecentDiaries();
     }
+    // show recent diary list.
+    controller.showRecentDiaryList();
 });

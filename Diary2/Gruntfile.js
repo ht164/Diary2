@@ -56,16 +56,6 @@ module.exports = function (grunt) {
         dest: 'release/public/css/style.css'
       }
     },
-    uglify: {
-      minify: {
-        files: [{
-          expand: true,
-          cwd: 'public/js',
-          src: '**/*.js',
-          dest: 'release/public/js'
-        }]
-      }
-    },
     copy: {
       frontend: {
         files: [{
@@ -74,11 +64,8 @@ module.exports = function (grunt) {
           dest: 'release/'
         }, {
           expand: true,
-          src: ['public/components/bootstrap/dist/**', 
-                'public/components/jquery/dist/**',
-                'public/components/jquery.inview/*.js', 
-                'public/components/requirejs/*.js', 
-                'public/components/underscore/*.js'],
+          src: ['public/components/bootstrap/dist/css/**', 
+                'public/components/requirejs/*.js'],
           dest: 'release/'
         }]
       },
@@ -88,6 +75,21 @@ module.exports = function (grunt) {
           src: ['app.js', 'processes.json', 'bin/**', 'config/**', 'log/', 'mymodules/**', 'node_modules/**', 'routes/**', 'views/**'],
           dest: 'release/'
         }]
+      }
+    },
+    requirejs: {
+      compile: {
+        options: {
+          name: "app",
+          baseUrl: "public/js",
+          out: "release/public/js/app.js",
+          paths: {
+            jquery: "../components/jquery/dist/jquery.min",
+            bootstrap: "../components/bootstrap/dist/js/bootstrap",
+            underscore: "../components/underscore/underscore",
+            jquery_inview: "../components/jquery.inview/jquery.inview.min"
+          }
+        }
       }
     }
   });
@@ -111,7 +113,7 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'uglify', 'copy']);
+  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'requirejs', 'copy']);
 
   grunt.registerTask('default', ['develop', 'watch']);
 };
