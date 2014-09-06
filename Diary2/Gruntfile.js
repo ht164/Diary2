@@ -56,16 +56,6 @@ module.exports = function (grunt) {
         dest: 'release/public/css/style.css'
       }
     },
-    uglify: {
-      minify: {
-        files: [{
-          expand: true,
-          cwd: 'public/js',
-          src: '**/*.js',
-          dest: 'release/public/js'
-        }]
-      }
-    },
     copy: {
       frontend: {
         files: [{
