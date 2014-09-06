@@ -80,7 +80,16 @@ div.scroll-to-top-init {
 div.calendar table {
     width: 100%;
 }
-div.calendar td {
+div.calendar td.prev-month {
+    text-align: left;
+}
+div.calendar td.year-month {
+    text-align: center;
+}
+div.calendar td.next-month {
+    text-align: right;
+}
+div.calendar table.dates td {
     border: 1px solid #ccc;
     width: 14.29%;
     height: 2em;
