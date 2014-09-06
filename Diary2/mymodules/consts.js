@@ -15,7 +15,8 @@ var consts = {
     maxAgeMsec: 0,
 
     condMaxNum: 20,
-    condDefaultNum: 10
+    condDefaultNum: 10,
+    condRecentDiaryListNum: 5
 };
 
 module.exports = consts;

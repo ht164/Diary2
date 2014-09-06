@@ -5,6 +5,7 @@ var storage = require('../mymodules/storage');
 var consts = require('../mymodules/consts');
 var mongoose = require('mongoose');
 var marked = require('marked');
+var _ = require('underscore');
 
 function DiaryModel(){
   // properties.
@@ -13,6 +14,13 @@ function DiaryModel(){
   this.date = null,
   this.createDate = null,
   this.contentMarkdown = ""
+}
+
+// TODO: DiaryModel extends DiaryModelLite.
+function DiaryModelLite(){
+  // properties.
+  this.title = "";
+  this.date = null;
 }
 
 /**
@@ -113,8 +121,53 @@ var funcs = {
     _diary.contentMarkdown = diary.contentMarkdown;
 
     return _diary;
+  },
+
+  /**
+   * create DiaryModelLite instance.
+   *
+   * @param diary DiaryMongooseModel instance.
+   * @return DiaryModelLite
+   */
+  createModelLite: function(diary){
+    var _diary = new DiaryModelLite();
+    _diary.title = diary.title;
+    _diary.date = diary.date;
+
+    return _diary;
+  },
+
+  /**
+   * get recent diary list asynchronously.
+   * each diary is DiaryModelLite so that don't contain content property.
+   *
+   * @param callback call when getting diary list is success.
+   * @param errCallback call when getting is failed.
+   */
+  getRecentDiaryList: function(callback, errCallback) {
+    var _mongoose = storage.getMongoose();
+    var me = this;
+
+    var onGetDiarySuccess = function(diaries){
+      var recentDiaryList = [];
+      _.each(diaries, function(diary){
+        recentDiaryList[recentDiaryList.length] = me.createModelLite(diary);
+      });
+      callback(recentDiaryList);
+    }
+
+    DiaryMongooseModel
+    .find()
+    .limit(consts.condRecentDiaryListNum)
+    .sort({ date: "desc" })
+    .exec(function(err, diaries){
+      if (err) {
+        if (errCallback) errCallback(err);
+      } else {
+        if (callback) onGetDiarySuccess(diaries);
+      }
+    });
   }
-  
 };
 
 /**

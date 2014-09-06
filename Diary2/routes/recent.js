@@ -6,7 +6,7 @@ var Controller = require('../mymodules/controller');
 router.get('/diary', function(req, res) {
   // send get request.
   var controller = new Controller();
-  controller.getRecentDiaries(req, res);
+  controller.getRecentDiaryList(req, res);
 });
 
 module.exports = router;
