@@ -173,10 +173,16 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
             var me = this;
             if (diaryList.length > 0) {
                 // create html fragment.
-                var fragment = "";
+                var fragment = "<ul class='list-unstyled'>";
                 _.each(diaryList, function(diary){
-                    fragment += diary.title + " (" + diary.date + ")";
+                    var _date = new Date(diary.date)
+                    fragment += "<li>" + diary.title + " ("
+                        + _date.getFullYear() + "/"
+                        + (_date.getMonth() + 1) + "/"
+                        + _date.getDate()
+                        + ")</li>";
                 });
+                fragment += "</ul>";
                 $("div#recentDiaryBlock").html(fragment);
             }
         },
