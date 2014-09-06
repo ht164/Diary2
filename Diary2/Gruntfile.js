@@ -126,7 +126,7 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'uglify', 'copy']);
+  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'requirejs', 'copy']);
 
   grunt.registerTask('default', ['develop', 'watch']);
 };
