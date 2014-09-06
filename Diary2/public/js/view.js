@@ -167,6 +167,21 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
         },
 
         /**
+         * show recent diary list.
+         */
+        getRecentDiaryList: function(diaryList) {
+            var me = this;
+            if (diaryList.length > 0) {
+                // create html fragment.
+                var fragment = "";
+                _.each(diaryList, function(diary){
+                    fragment += diary.title + " (" + diary.date + ")";
+                });
+                $("div#recentDiaryBlock").html(fragment);
+            }
+        },
+
+        /**
          * events
          */
         /**
