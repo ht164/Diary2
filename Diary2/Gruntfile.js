@@ -56,16 +56,6 @@ module.exports = function (grunt) {
         dest: 'release/public/css/style.css'
       }
     },
-    uglify: {
-      minify: {
-        files: [{
-          expand: true,
-          cwd: 'public/js',
-          src: '**/*.js',
-          dest: 'release/public/js'
-        }]
-      }
-    },
     copy: {
       frontend: {
         files: [{
@@ -89,6 +79,21 @@ module.exports = function (grunt) {
           dest: 'release/'
         }]
       }
+    },
+    requirejs: {
+      compile: {
+        options: {
+          name: "app",
+          baseUrl: "public/js",
+          out: "release/public/js/app.js",
+          paths: {
+            jquery: "../components/jquery/dist/jquery.min",
+            bootstrap: "../components/bootstrap/dist/js/bootstrap",
+            underscore: "../components/underscore/underscore",
+            jquery_inview: "../components/jquery.inview/jquery.inview.min"
+          }
+        }
+      }
     }
   });
 
@@ -111,7 +116,7 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'uglify', 'copy']);
+  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'requirejs', 'copy']);
 
   grunt.registerTask('default', ['develop', 'watch']);
 };
