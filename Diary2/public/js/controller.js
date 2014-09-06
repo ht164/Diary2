@@ -2,7 +2,8 @@
  * front-end side controller.
  */
 
-define(["view", "diary", "underscore"], function(view, diary, _){
+define(["view", "diary", "calendar", "underscore"], 
+    function(view, diary, Calendar, _){
     return {
         // loading date.
         _loadingDate: null,
@@ -104,6 +105,16 @@ define(["view", "diary", "underscore"], function(view, diary, _){
                 view.getRecentDiaryList(diaryList);
             }, function(){
                 // do nothing.
+            });
+        },
+
+        /**
+         * show calendar.
+         */
+        showCalendar: function(){
+            var calendar = new Calendar();
+            calendar.show({
+                elementId: "calendar"
             });
         }
     };
