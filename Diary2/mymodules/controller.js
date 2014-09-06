@@ -129,6 +129,23 @@ Controller.prototype = {
     DiaryFuncs.getRecentDiaryList(function(diaryList){
       res.json(diaryList);
     });
+  },
+
+  /**
+   * call when client requests "/get/dateonly/yyyy/mm".
+   */
+  getDiaryHavingDateList: function(req, res){
+    var me = this;
+    var ret = req.path.match(/\/([0-9]{4})(|(\/[0-9]{2}))/);
+    var year = ret[1];
+    var month = ret[3];
+
+    DiaryFuncs.getDiaryHavingDateList({
+      year: year,
+      month: month
+    }, function(dateList) {
+      res.json(dateList);
+    });
   }
 };
 

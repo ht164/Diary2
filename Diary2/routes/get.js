@@ -9,4 +9,12 @@ router.get('/', function(req, res) {
   controller.get(req, res);
 });
 
+var handlerDateOnly = function(req, res) {
+    var controller = new Controller();
+    controller.getDiaryHavingDateList(req, res);
+}
+
+router.get(/dateonly\/[0-9]{4}/, handlerDateOnly);
+router.get(/dateonly\/[0-9]{4}\/[0-9]{2}/, handlerDateOnly);
+
 module.exports = router;
