@@ -47,6 +47,12 @@ div.diary-date-year {
     font-size: 10px;
 }
 
+/* image auto shrink */
+div.diary img {
+    max-width: 100%;
+    height: auto;
+}
+
 div#infiniteScrollTrigger {
     height: 1px;
 }

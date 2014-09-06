@@ -21,14 +21,17 @@ define([], function(){
         },
 
         /**
-         * get recent diaries and call when loaded or failed.
+         * get diaries and call when loaded or failed.
          *
          * @param [cond] condition.
          *   @param cond.num number of diaries.
+         *   @param cond.year year.
+         *   @param cond.month month.
+         *   @param cond.date date.
          * @param callback callback function if success.
          * @param errCallback callback function if failure.
          */
-        getRecentDiaries: function(cond, callback, errCallback){
+        getDiaries: function(cond, callback, errCallback){
             var me = this;
             me.getDiariesFromServer(cond, callback, errCallback);
         },
@@ -63,7 +66,7 @@ define([], function(){
                     var m = cond.startDate.getMonth() + 1;
                     var d = cond.startDate.getDate();
 
-                    return y + (m < 10 ? "0" + m : m) + (d < 10 ? "0" + d : d);
+                    return "" + y + (m < 10 ? "0" + m : m) + (d < 10 ? "0" + d : d);
                 })();
             }
 
