@@ -17,6 +17,9 @@ define(["jquery", "underscore"], function($, _){
         this.datesHavingLink = [];
 
         this.elementId = null;
+
+        this.onClickPrevMonth = undefined;
+        this.onClickNextMonth = undefined;
     };
 
     /**
@@ -34,6 +37,8 @@ define(["jquery", "underscore"], function($, _){
          * @param options
          *    @param options.elementId element id.
          *    @param options.dates array. each element has "link" property.
+         *    @param options.onClickPrevMonth event fired prev-month button is clicked.
+         *    @param options.onClickNextMonth event fired next-month button is clicked.
          */
         show: function(options){
             var me = this;
@@ -43,6 +48,9 @@ define(["jquery", "underscore"], function($, _){
             if (options.dates) {
                 me.datesHavingLink = _.clone(options.dates);
             }
+            me.onClickPrevMonth = options.onClickPrevMonth;
+            me.onClickNextMonth = options.onClickNextMonth;
+
             var dom = me._createDom();
             $("#" + options.elementId).append(dom);
         },
@@ -62,7 +70,7 @@ define(["jquery", "underscore"], function($, _){
 
                 var tdPrevBtn = $("<td class='prev-month'></td>");
                 var prevBtn = $("<button class='btn btn-default btn-xs'><span class='glyphicon glyphicon-chevron-left'></span></button>");
-                prevBtn.on("click", me._hitch(me._onClickPrevMonth, me));
+                prevBtn.on("click", me._hitch(me._movePrevMonth, me));
                 tdPrevBtn.append(prevBtn);
                 tr.append(tdPrevBtn);
 
@@ -71,7 +79,7 @@ define(["jquery", "underscore"], function($, _){
 
                 var tdNextBtn = $("<td class='next-month'></td>");
                 var nextBtn = $("<button class='btn btn-default btn-xs'><span class='glyphicon glyphicon-chevron-right'></button>");
-                nextBtn.on("click", me._hitch(me._onClickNextMonth, me));
+                nextBtn.on("click", me._hitch(me._moveNextMonth, me));
                 tdNextBtn.append(nextBtn);
                 tr.append(tdNextBtn);
 
@@ -130,33 +138,75 @@ define(["jquery", "underscore"], function($, _){
         /**
          * called when prevMonth button is clicked.
          */
-        _onClickPrevMonth: function(){
+        _movePrevMonth: function(){
             var me = this;
-            // show previous month.
-            me.month--;
-            if (me.month == 0) {
-                me.month = 12;
-                me.year--;
-            }
 
-            var dom = me._createDom();
-            $("#" + me.elementId).empty().append(dom);
+            // function that user of Calendar set dates having link.
+            // after set, begin to show prev month calendar.
+            var setDates = function(dates){
+                me.datesHavingLink = _.clone(dates);
+                showPrevMonth();
+            };
+
+            // function that shows previous month.
+            var showPrevMonth = function(){
+                me.month--;
+                if (me.month == 0) {
+                    me.month = 12;
+                    me.year--;
+                }
+
+                var dom = me._createDom();
+                $("#" + me.elementId).empty().append(dom);
+            };
+
+            // if set onClickPrevMonth, callback and wait until called setDates.
+            // otherwise, call showPrevMonth immediately.
+            if (me.onClickPrevMonth) {
+                me.onClickPrevMonth({
+                    setDates: setDates
+                });
+            } else {
+                me.datesHavingLink = [];
+                showPrevMonth();
+            }
         },
 
         /**
          * called when nextMonth button is clicked.
          */
-        _onClickNextMonth: function(){
+        _moveNextMonth: function(){
             var me = this;
-            // show previous month.
-            me.month++;
-            if (me.month == 13) {
-                me.month = 1;
-                me.year++;
-            }
 
-            var dom = me._createDom();
-            $("#" + me.elementId).empty().append(dom);
+            // function that user of Calendar set dates having link.
+            // after set, begin to show prev month calendar.
+            var setDates = function(dates){
+                me.datesHavingLink = _.clone(dates);
+                showNextMonth();
+            };
+
+            // function that shows previous month.
+            var showNextMonth = function(){
+                me.month++;
+                if (me.month == 13) {
+                    me.month = 1;
+                    me.year++;
+                }
+
+                var dom = me._createDom();
+                $("#" + me.elementId).empty().append(dom);
+            };
+
+            // if set onClickPrevMonth, callback and wait until called setDates.
+            // otherwise, call showNextMonth immediately.
+            if (me.onClickNextMonth) {
+                me.onClickNextMonth({
+                    setDates: setDates
+                });
+            } else {
+                me.datesHavingLink = [];
+                showNextMonth();
+            }
         },
 
         /**
