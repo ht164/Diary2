@@ -89,6 +89,21 @@ module.exports = function (grunt) {
           dest: 'release/'
         }]
       }
+    },
+    requirejs: {
+      compile: {
+        options: {
+          name: "app",
+          baseUrl: "public/js",
+          out: "release/public/js/app.js",
+          paths: {
+            jquery: "../components/jquery/dist/jquery.min",
+            bootstrap: "../components/bootstrap/dist/js/bootstrap",
+            underscore: "../components/underscore/underscore",
+            jquery_inview: "../components/jquery.inview/jquery.inview.min"
+          }
+        }
+      }
     }
   });
 
