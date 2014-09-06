@@ -100,7 +100,7 @@ define(["view", "diary", "underscore"], function(view, diary, _){
          */
         showRecentDiaryList: function(){
             var me = this;
-            diary.getDiaries(cond, function(diaryList){
+            diary.getRecentDiaryList(function(diaryList){
                 view.getRecentDiaryList(diaryList);
             }, function(){
                 // do nothing.
