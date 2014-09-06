@@ -93,6 +93,18 @@ define(["view", "diary", "underscore"], function(view, diary, _){
                     startDate: startDate
                 }, me._loadingDate));
             };
+        },
+
+        /**
+         * show recent diary list.
+         */
+        showRecentDiaryList: function(){
+            var me = this;
+            diary.getRecentDiaryList(function(diaryList){
+                view.getRecentDiaryList(diaryList);
+            }, function(){
+                // do nothing.
+            });
         }
     };
 });

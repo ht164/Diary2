@@ -119,6 +119,16 @@ Controller.prototype = {
 
     // save it.
     diary.save(onSuccess, onFailure);
+  },
+
+  /**
+   * call when client requests "/recent/diary".
+   */
+  getRecentDiaryList: function(req, res){
+    var me = this;
+    DiaryFuncs.getRecentDiaryList(function(diaryList){
+      res.json(diaryList);
+    });
   }
 };
 
