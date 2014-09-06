@@ -41,7 +41,7 @@ define(["jquery", "underscore"], function($, _){
 
             me.elementId = options.elementId;
             if (options.dates) {
-                me.dateHavingLink = _.clone(options.dates);
+                me.datesHavingLink = _.clone(options.dates);
             }
             var dom = me._createDom();
             $("#" + options.elementId).append(dom);
@@ -79,7 +79,11 @@ define(["jquery", "underscore"], function($, _){
                     + (week == 0 ? " class='week-sun'" : 
                         (week == 6 ? " class='week-sat'" : ""))
                     + ">"
-                    + ((currentDate > 0 && currentDate <= lastDate) ? currentDate : "")
+                    + ((currentDate > 0 && currentDate <= lastDate)
+                        ? (me.datesHavingLink[currentDate]
+                            ? "<a href='" + me.datesHavingLink[currentDate] + "'>" + currentDate + "</a>"
+                            : currentDate )
+                        : "")
                     + "</td>";
                     currentDate++;
                 }
