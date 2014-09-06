@@ -136,7 +136,7 @@ Controller.prototype = {
    */
   getDiaryHavingDateList: function(req, res){
     var me = this;
-    var ret = req.path.match(/\/([0-9]{4})(|(\/[0-9]{2}))/);
+    var ret = req.path.match(/\/([0-9]{4})($|\/([0-9]{2}))/);
     var year = ret[1];
     var month = ret[3];
 
