@@ -170,7 +170,7 @@ var funcs = {
         if (callback) onGetDiarySuccess(diaries);
       }
     });
-  }
+  },
 
   /**
    * get diary-having date list asynchronously.
