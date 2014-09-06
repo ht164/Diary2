@@ -11,7 +11,7 @@ var consts = {
     siteIntroduction: "ht164が日記を書き連ねていくだけのサイトです。",
     recentEntryTitle: "最新の日記",
 
-    appVer: "0.0.4",
+    appVer: "0.0.5",
     maxAgeMsec: 0,
 
     condMaxNum: 20,
