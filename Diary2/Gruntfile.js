@@ -64,11 +64,8 @@ module.exports = function (grunt) {
           dest: 'release/'
         }, {
           expand: true,
-          src: ['public/components/bootstrap/dist/**', 
-                'public/components/jquery/dist/**',
-                'public/components/jquery.inview/*.js', 
-                'public/components/requirejs/*.js', 
-                'public/components/underscore/*.js'],
+          src: ['public/components/bootstrap/dist/css/**', 
+                'public/components/requirejs/*.js'],
           dest: 'release/'
         }]
       },
