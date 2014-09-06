@@ -97,7 +97,9 @@ div.calendar table.dates td {
 }
 div.calendar .week-sun {
     color: red;
+    background-color: #ffecec;
 }
 div.calendar .week-sat {
     color: blue;
+    background-color: #ecf0ff;
 }
