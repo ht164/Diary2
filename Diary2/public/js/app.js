@@ -51,4 +51,6 @@ define(["controller"], function(controller){
     } else {
         controller.showRecentDiaries();
     }
+    // show recent diary list.
+    controller.showRecentDiaryList();
 });
