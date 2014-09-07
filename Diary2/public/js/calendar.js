@@ -144,6 +144,12 @@ define(["jquery", "underscore"], function($, _){
         _movePrevMonth: function(){
             var me = this;
 
+            var newYear = me.year;
+            var newMonth = me.month - 1;
+            if (newMonth == 0) {
+                newMonth = 12;
+                newYear--;
+            }
             // function that user of Calendar set dates having link.
             // after set, begin to show prev month calendar.
             var setDates = function(dates){
@@ -153,11 +159,8 @@ define(["jquery", "underscore"], function($, _){
 
             // function that shows previous month.
             var showPrevMonth = function(){
-                me.month--;
-                if (me.month == 0) {
-                    me.month = 12;
-                    me.year--;
-                }
+                me.year = newYear;
+                me.month = newMonth;
 
                 var dom = me._createDom();
                 $("#" + me.elementId).empty().append(dom);
@@ -168,8 +171,8 @@ define(["jquery", "underscore"], function($, _){
             if (me.onClickPrevMonth) {
                 me.onClickPrevMonth({
                     setDates: setDates,
-                    year: me.year,
-                    month: me.month
+                    year: newYear,
+                    month: newMonth
                 });
             } else {
                 me.datesHavingLink = [];
@@ -183,6 +186,13 @@ define(["jquery", "underscore"], function($, _){
         _moveNextMonth: function(){
             var me = this;
 
+            var newYear = me.year;
+            var newMonth = me.month + 1;
+            if (newMonth == 13) {
+                newMonth = 1;
+                newYear++;
+            }
+
             // function that user of Calendar set dates having link.
             // after set, begin to show prev month calendar.
             var setDates = function(dates){
@@ -192,11 +202,8 @@ define(["jquery", "underscore"], function($, _){
 
             // function that shows previous month.
             var showNextMonth = function(){
-                me.month++;
-                if (me.month == 13) {
-                    me.month = 1;
-                    me.year++;
-                }
+                me.year = newYear;
+                me.month = newMonth;
 
                 var dom = me._createDom();
                 $("#" + me.elementId).empty().append(dom);
@@ -207,8 +214,8 @@ define(["jquery", "underscore"], function($, _){
             if (me.onClickNextMonth) {
                 me.onClickNextMonth({
                     setDates: setDates,
-                    year: me.year,
-                    month: me.month
+                    year: newYear,
+                    month: newMonth
                 });
             } else {
                 me.datesHavingLink = [];
