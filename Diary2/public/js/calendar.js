@@ -62,80 +62,90 @@ define(["jquery", "underscore"], function($, _){
             var me = this;
 
             // year/month.
-            var captionElement = 
-            (function(){
-                var table = $("<table></table>");
-                var tr = $("<tr></tr>");
-                table.append(tr);
-
-                var tdPrevBtn = $("<td class='prev-month'></td>");
-                var prevBtn = $("<button class='btn btn-default btn-xs'><span class='glyphicon glyphicon-chevron-left'></span></button>");
-                prevBtn.on("click", me._hitch(me._movePrevMonth, me));
-                tdPrevBtn.append(prevBtn);
-                tr.append(tdPrevBtn);
-
-                var tdYearMonth = $("<td class='year-month'>" + me.year + "/" + me.month + "</td>");
-                tr.append(tdYearMonth);
-
-                var tdNextBtn = $("<td class='next-month'></td>");
-                var nextBtn = $("<button class='btn btn-default btn-xs'><span class='glyphicon glyphicon-chevron-right'></button>");
-                nextBtn.on("click", me._hitch(me._moveNextMonth, me));
-                tdNextBtn.append(nextBtn);
-                tr.append(tdNextBtn);
-
-                return table;
-            })();
-
+            var headerElement = me._createHeaderDom();
             // table.
-            var datesElement =
-            (function(){
-                var fragment = "<table class='dates'>";
-
-                // week.
-                fragment += "<tr>";
-                for (var week = 0; week < 7; week++) {
-                    fragment += "<td"
-                        + (week == 0 ? " class='week-sun'" : 
-                            (week == 6 ? " class='week-sat'" : ""))
-                        + ">" + me.WEEK_STRING[week] + "</td>";
-                }
-                fragment += "</tr>";
-
-                // days.
-                var strY = "" + me.year;
-                var strM = "" + (me.month < 10 ? "0" + me.month : me.month);
-                // what day is year/month/01 ?
-                var day = (new Date(strY + "-" + strM + "-01")).getDay();
-                var currentDate = 0 - day + 1;
-                // last date of month?
-                var lastDate = me._getLastDate(me.year, me.month);
-
-                while(currentDate <= lastDate) {
-                    fragment += "<tr>";
-                    for (var week = 0; week < 7; week++){
-                        var strD = "" + (currentDate < 10 ? "0" + currentDate : currentDate);
-                        fragment += "<td"
-                        + (week == 0 ? " class='week-sun'" : 
-                            (week == 6 ? " class='week-sat'" : ""))
-                        + ">"
-                        + ((currentDate > 0 && currentDate <= lastDate)
-                            ? (me.datesHavingLink[currentDate]
-                                ? "<span class='diary-exists'><a href='/diary/" + strY + "/" + strM + "/" + strD + "'>" + currentDate + "</a></span>"
-                                : currentDate )
-                            : "")
-                        + "</td>";
-                        currentDate++;
-                    }
-                    fragment += "</tr>";
-                }
-                fragment += "</table>";
-
-                return $(fragment);
-            })();
+            var datesElement = me._createDatesDom();
 
             var dom = $("<div></div>");
-            dom.append(captionElement).append(datesElement);
+            dom.append(headerElement).append(datesElement);
             return dom;
+        },
+
+        /**
+         * create header DOM.
+         */
+        _createHeaderDom: function(){
+            var me = this;
+
+            var table = $("<table></table>");
+            var tr = $("<tr></tr>");
+            table.append(tr);
+
+            var tdPrevBtn = $("<td class='prev-month'></td>");
+            var prevBtn = $("<button class='btn btn-default btn-xs'><span class='glyphicon glyphicon-chevron-left'></span></button>");
+            prevBtn.on("click", me._hitch(me._movePrevMonth, me));
+            tdPrevBtn.append(prevBtn);
+            tr.append(tdPrevBtn);
+
+            var tdYearMonth = $("<td class='year-month'>" + me.year + "/" + me.month + "</td>");
+            tr.append(tdYearMonth);
+
+            var tdNextBtn = $("<td class='next-month'></td>");
+            var nextBtn = $("<button class='btn btn-default btn-xs'><span class='glyphicon glyphicon-chevron-right'></button>");
+            nextBtn.on("click", me._hitch(me._moveNextMonth, me));
+            tdNextBtn.append(nextBtn);
+            tr.append(tdNextBtn);
+
+            return table;
+        },
+
+        /**
+         * create dates DOM.
+         */
+        _createDatesDom: function(){
+            var me = this;
+
+            var fragment = "<table class='dates'>";
+
+            // week.
+            fragment += "<tr>";
+            for (var week = 0; week < 7; week++) {
+                fragment += "<td"
+                    + (week == 0 ? " class='week-sun'" : 
+                        (week == 6 ? " class='week-sat'" : ""))
+                    + ">" + me.WEEK_STRING[week] + "</td>";
+            }
+            fragment += "</tr>";
+
+            // days.
+            var strY = "" + me.year;
+            var strM = "" + (me.month < 10 ? "0" + me.month : me.month);
+            // what day is year/month/01 ?
+            var day = (new Date(strY + "-" + strM + "-01")).getDay();
+            var currentDate = 0 - day + 1;
+            // last date of month?
+            var lastDate = me._getLastDate(me.year, me.month);
+            while(currentDate <= lastDate) {
+                fragment += "<tr>";
+                for (var week = 0; week < 7; week++){
+                    var strD = "" + (currentDate < 10 ? "0" + currentDate : currentDate);
+                    fragment += "<td"
+                    + (week == 0 ? " class='week-sun'" : 
+                        (week == 6 ? " class='week-sat'" : ""))
+                    + ">"
+                    + ((currentDate > 0 && currentDate <= lastDate)
+                        ? (me.datesHavingLink[currentDate]
+                            ? "<span class='diary-exists'><a href='/diary/" + strY + "/" + strM + "/" + strD + "'>" + currentDate + "</a></span>"
+                            : currentDate )
+                        : "")
+                    + "</td>";
+                    currentDate++;
+                }
+                fragment += "</tr>";
+            }
+            fragment += "</table>";
+
+            return $(fragment);
         },
 
         /**
