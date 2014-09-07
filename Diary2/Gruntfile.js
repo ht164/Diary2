@@ -53,7 +53,7 @@ module.exports = function (grunt) {
     cssmin: {
       minify: {
         src: ['public/css/*.css'],
-        dest: 'release/public/css/style.css'
+        dest: 'release/public/css/<%= pkg.version %>/style.css'
       }
     },
     copy: {
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
         options: {
           name: "app",
           baseUrl: "public/js",
-          out: "release/public/js/app.js",
+          out: "release/public/js/<%= pkg.version %>/app.js",
           paths: {
             jquery: "../components/jquery/dist/jquery.min",
             bootstrap: "../components/bootstrap/dist/js/bootstrap",
@@ -90,6 +90,19 @@ module.exports = function (grunt) {
             jquery_inview: "../components/jquery.inview/jquery.inview.min"
           }
         }
+      }
+    },
+    replace: {
+      layout_jade: {
+        src: ["release/views/layout.jade"],
+        overwrite: true,
+        replacements: [{
+          from: "/css/style.css",
+          to: "/css/<%= pkg.version %>/style.css"
+        }, {
+          from: "/js/app",
+          to: "/js/<%= pkg.version %>/app"
+        }]
       }
     }
   });
@@ -113,7 +126,7 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'requirejs', 'copy']);
+  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'requirejs', 'copy', 'replace']);
 
   grunt.registerTask('default', ['develop', 'watch']);
 };
