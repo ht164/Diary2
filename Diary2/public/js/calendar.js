@@ -113,7 +113,7 @@ define(["jquery", "underscore"], function($, _){
                 while(currentDate <= lastDate) {
                     fragment += "<tr>";
                     for (var week = 0; week < 7; week++){
-                        var strD = "" + (currentDate < 10 ? "0" + currentDate : currentDate;
+                        var strD = "" + (currentDate < 10 ? "0" + currentDate : currentDate);
                         fragment += "<td"
                         + (week == 0 ? " class='week-sun'" : 
                             (week == 6 ? " class='week-sat'" : ""))
