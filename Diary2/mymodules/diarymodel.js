@@ -3,6 +3,7 @@
  */
 var storage = require('../mymodules/storage');
 var consts = require('../mymodules/consts');
+var util = require('../mymodules/util');
 var mongoose = require('mongoose');
 var marked = require('marked');
 var _ = require('underscore');
@@ -82,8 +83,9 @@ var funcs = {
    *
    * @param cond condition
    * @param callback callback function. function(Array<DiaryMongooseModel>)
+   * @param errCallback callback function if error occurred.
    */
-  getModelFromStorage: function(cond, callback){
+  getModelFromStorage: function(cond, callback, errCallback){
     var _mongoose = storage.getMongoose();
     // create criteria object.
     var condition = {};
@@ -100,9 +102,10 @@ var funcs = {
     .sort({ date: "desc" })
     .exec(function(err, diaries){
     	  if (err) {
-    	  	return console.error(err);
-    	  }
-    	  callback(diaries);
+        if  (errCallback) errCallback(err);
+    	  } else {
+        if (callback) callback(diaries);
+      }
     });
   },
 
@@ -167,6 +170,59 @@ var funcs = {
         if (callback) onGetDiarySuccess(diaries);
       }
     });
+  },
+
+  /**
+   * get diary-having date list asynchronously.
+   * 
+   * @param cond condition.
+   *    @param cond.year
+   *    @param cond.month
+   * @param callback call when getting diary list is success.
+   * @param errCallback call when getting is failed.
+   */
+  getDiaryHavingDateList: function(cond, callback, errCallback) {
+    var _mongoose = storage.getMongoose();
+    var me = this;
+
+    if (!cond.year) return;
+
+    var condition = {};
+    if (!cond.month) {
+      // specify year only.
+      condition.startDate = new Date("" + cond.year + "-12-31");
+      condition.endDate = new Date("" + cond.year + "-01-01");
+      condition.num = 366;  // max number of date of year.
+    } else {
+      // specify year and month.
+      (function(){
+        var strY = "" + cond.year;
+        var m = cond.month;
+        var strM = m < 10 ? "0" + m : "" + m;
+        var d = util.getLastDayOfMonth(cond.year, cond.month);
+        var strD = d < 10 ? "0" + d : "" + d;
+
+        condition.startDate = new Date(strY + "-" + strM + "-" + strD);
+        condition.endDate = new Date(strY + "-" + strM + "-01");
+        condition.num = 31;  // max number of date of month.
+      })();
+    }
+
+    // callback
+    var onSuccess = function(diaries) {
+      var ar = [];
+      _.each(diaries, function(diary){
+        ar[ar.length] = diary.date;
+      });
+      callback(ar);
+    };
+
+    // errCallback
+    var onFailure = function(err) {
+      errCallback(err);
+    };
+
+    me.getModelFromStorage(condition, onSuccess, onFailure);
   }
 };
 
