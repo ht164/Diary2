@@ -120,7 +120,7 @@ define(["jquery", "underscore"], function($, _){
                         + ">"
                         + ((currentDate > 0 && currentDate <= lastDate)
                             ? (me.datesHavingLink[currentDate]
-                                ? "<a href='/diary/" + strY + "/" + strM + "/" + strD + "'>" + currentDate + "</a>"
+                                ? "<span class='diary-exists'><a href='/diary/" + strY + "/" + strM + "/" + strD + "'>" + currentDate + "</a></span>"
                                 : currentDate )
                             : "")
                         + "</td>";
