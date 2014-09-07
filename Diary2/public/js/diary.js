@@ -118,9 +118,7 @@ define(["jquery"], function($){
                 callback(data)
             }).fail(function(){
                 errCallback();
-            })
-
-
+            });
         }
     };
 });
