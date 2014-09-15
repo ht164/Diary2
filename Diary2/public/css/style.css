@@ -68,8 +68,7 @@ div.scroll-to-top {
     position: fixed;
     bottom: 4px;
     right: 4px;
-    background-color: #49e;
-    background-image: url('/img/back-to-top.png');
+    background: #49e url('/img/images.png') no-repeat 0px 0px;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -120,5 +119,5 @@ div.social-link-icon {
 }
 div.social-link-icon-rss {
     display: inline-block;
-    background-image: url('/img/rss_002_d-trans.png');
+    background: url('/img/images.png') no-repeat -80px 0px;
 }
