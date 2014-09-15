@@ -4,6 +4,7 @@
 
 var _ = require('underscore');
 var RSS = require('rss');
+var Atom = require('../mymodules/atom');
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var consts = require('../mymodules/consts');
 
@@ -16,6 +17,22 @@ var Feed = {
     // get recent diaries.
     var onSuccess = function(diaries) {
         callback(me._generateRss20(diaries));
+    };
+    var onFailure = function(err) {
+        errCallback(err);
+    };
+
+    me._getRecentDiaries(onSuccess, onFailure);
+  },
+
+  /**
+   * create Atom feed.
+   */
+  getAtom: function(callback, errCallback){
+    var me = this;
+    // get recent diaries.
+    var onSuccess = function(diaries) {
+        callback(me._generateAtom(diaries));
     };
     var onFailure = function(err) {
         errCallback(err);
@@ -39,14 +56,36 @@ var Feed = {
    */
   _generateRss20: function(diaries) {
     var me = this;
+    return me._generateFeed("rss20", diaries);
+  },
 
-    var feed = new RSS({
+  /**
+   * generate Atom xml.
+   */
+  _generateAtom: function(diaries) {
+    var me = this;
+    return me._generateFeed("atom", diaries);
+  },
+
+  /**
+   * generate feed.
+   */
+  _generateFeed: function(kind, diaries){
+    var me = this;
+    var feed;
+    var feedOptions = {
       title: consts.siteTitle,
       description: consts.siteSubTitle,
       feed_url: consts.feedUrlRss20,
       site_url: consts.siteUrlWithScheme,
       author: consts.siteAuthor
-    });
+    };
+
+    if (kind == "atom"){
+      feed = new Atom(feedOptions);
+    } else {
+      feed = new RSS(feedOptions);
+    }
 
     _.each(diaries, function(diary){
       feed.item({

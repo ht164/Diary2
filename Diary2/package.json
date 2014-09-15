@@ -16,7 +16,8 @@
     "rss": "^0.3.2",
     "serve-favicon": "~2.0.1",
     "serve-static": "^1.5.2",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "xml": "0.0.12"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

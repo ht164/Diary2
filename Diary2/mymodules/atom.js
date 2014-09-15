@@ -35,8 +35,8 @@ Atom.properties = {
       title: options.title || "",
       url: options.url || "",
       id: options.id,
-      updated: options.updated || "",
-      summary: options.summary
+      updated: options.date || "",
+      summary: options.description
     };
     me.items[me.items.length] = item;
 
