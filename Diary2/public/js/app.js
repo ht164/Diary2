@@ -32,7 +32,7 @@ requirejs.config({
     },
 
     // TODO: appVer.
-    urlArgs: "v=0.0.5"
+    urlArgs: "v=0.0.6"
 });
 
 // load bootstrap so that navbar toggle works.
