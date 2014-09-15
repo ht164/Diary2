@@ -146,6 +146,27 @@ Controller.prototype = {
     }, function(dateList) {
       res.json(dateList);
     });
+  },
+
+  /**
+   * call when client requests RSS1.0
+   */
+  getRss10: function(req, res) {
+
+  },
+
+  /**
+   * call when client request RSS2.0
+   */
+  getRss20: function(req, res) {
+
+  },
+
+  /**
+   * call when client request Atom
+   */
+  getAtom: function(req, res) {
+
   }
 };
 
