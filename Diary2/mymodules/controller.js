@@ -163,6 +163,7 @@ Controller.prototype = {
    */
   getRss20: function(req, res) {
     var onSuccess = function(xml) {
+      res.set("Content-type", "application/rss+xml");
       res.send(xml);
     };
     feed.getRss20(onSuccess);
@@ -173,6 +174,7 @@ Controller.prototype = {
    */
   getAtom: function(req, res) {
     var onSuccess = function(xml) {
+      res.set("Content-type", "application/atom+xml");
       res.send(xml);
     };
     feed.getAtom(onSuccess);
