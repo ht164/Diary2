@@ -96,6 +96,29 @@ define(["jquery"], function($){
             }).fail(function(){
                 errCallback();
             });
+        },
+
+        /**
+         * get diary-having date list from web server.
+         *
+         * @param cond
+         * @param callback callback function is success.
+         * @param errCallback callback function if failure.
+         */
+        getDiaryHavingDateList: function(cond, callback, errCallback){
+            var strYM = "" + cond.year
+                + (cond.month 
+                    ? "/" + (cond.month < 10 ? "0" + cond.month : cond.month)
+                    : "");
+
+            $.ajax({
+                type: "GET",
+                url: "/get/dateonly/" + strYM
+            }).done(function(data){
+                callback(data)
+            }).fail(function(){
+                errCallback();
+            });
         }
     };
 });

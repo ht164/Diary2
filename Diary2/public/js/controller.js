@@ -2,7 +2,8 @@
  * front-end side controller.
  */
 
-define(["view", "diary", "underscore"], function(view, diary, _){
+define(["view", "diary", "calendar", "underscore"], 
+    function(view, diary, Calendar, _){
     return {
         // loading date.
         _loadingDate: null,
@@ -104,6 +105,50 @@ define(["view", "diary", "underscore"], function(view, diary, _){
                 view.getRecentDiaryList(diaryList);
             }, function(){
                 // do nothing.
+            });
+        },
+
+        /**
+         * show calendar.
+         */
+        showCalendar: function(){
+            var me = this;
+            var calendar = new Calendar();
+
+            // function that create diary link array.
+            var createDiaryLinkArray = function(dateList){
+                var ar = [];
+                _.each(dateList, function(date){
+                    var d = new Date(date);
+                    ar[d.getDate()] = true;
+                });
+                return ar;
+            };
+
+            // onClickPrevNextMonth
+            var onClickPrevNextMonth = function(arg) {
+                // get date list.
+                diary.getDiaryHavingDateList({
+                    year: arg.year,
+                    month: arg.month
+                }, function(dateList){
+                    arg.setDates(createDiaryLinkArray(dateList));
+                });
+            }
+
+            // get date list of this month.
+            var date = new Date();
+            diary.getDiaryHavingDateList({
+                year: date.getFullYear(),
+                month: date.getMonth() + 1
+            }, function(dateList){
+                // show calendar.
+                calendar.show({
+                    elementId: "calendar",
+                    dates: createDiaryLinkArray(dateList),
+                    onClickPrevMonth: onClickPrevNextMonth,
+                    onClickNextMonth: onClickPrevNextMonth
+                });
             });
         }
     };

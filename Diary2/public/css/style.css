@@ -76,3 +76,36 @@ div.scroll-to-top {
 div.scroll-to-top-init {
     opacity: 0;
 }
+
+div.calendar {
+    font-size: 85%;
+}
+div.calendar table {
+    width: 100%;
+}
+div.calendar td.prev-month {
+    text-align: left;
+}
+div.calendar td.year-month {
+    text-align: center;
+}
+div.calendar td.next-month {
+    text-align: right;
+}
+div.calendar table.dates td {
+    border: 1px solid #ccc;
+    width: 14.29%;
+    height: 2em;
+    text-align: center;
+}
+div.calendar .week-sun {
+    color: red;
+    background-color: #ffecec;
+}
+div.calendar .week-sat {
+    color: blue;
+    background-color: #ecf0ff;
+}
+div.calendar .diary-exists {
+    font-weight: bold;
+}
