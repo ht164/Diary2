@@ -109,3 +109,16 @@ div.calendar .week-sat {
 div.calendar .diary-exists {
     font-weight: bold;
 }
+
+div.social-links {
+    font-size: 125%;
+}
+div.social-link-icon {
+    width: 32px;
+    height: 32px;
+    margin: 0px 2px;
+}
+div.social-link-icon-rss {
+    display: inline-block;
+    background-image: url('/img/rss_002_d-trans.png');
+}
