@@ -153,6 +153,9 @@ Controller.prototype = {
    * call when client requests RSS1.0
    */
   getRss10: function(req, res) {
+    var me = this;
+    // return RSS 2.0.
+    me.getRss20(req, res);
   },
 
   /**
