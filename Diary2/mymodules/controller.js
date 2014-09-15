@@ -7,6 +7,7 @@ var DiaryModel = require('../mymodules/diarymodel').model;
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var util = require('../mymodules/util');
 var consts = require('../mymodules/consts');
+var feed = require('../mymodules/feed');
 
 function Controller() {
 }
@@ -152,7 +153,10 @@ Controller.prototype = {
    * call when client requests RSS1.0
    */
   getRss10: function(req, res) {
-
+    var onSuccess = function(xml) {
+      res.send(xml);
+    };
+    feed.getRss10(onSuccess);
   },
 
   /**

@@ -4,13 +4,10 @@
 
 var _ = require('underscore');
 var RSS = require('rss');
-var DiaryModel = require('../mymodules/diarymodel').model;
+var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var consts = require('../mymodules/consts');
 
-function Feed() {
-}
-
-Feed.prototype = {
+var Feed = {
   /**
    * create RSS1.0 feed.
    */
@@ -61,7 +58,7 @@ Feed.prototype = {
       });
     });
 
-    return feed.xml();
+    return feed.xml("  ");
   },
 
   // TODO move to util module.
@@ -81,5 +78,5 @@ Feed.prototype = {
 };
 
 
-module.exports = Controller;
+module.exports = Feed;
 
