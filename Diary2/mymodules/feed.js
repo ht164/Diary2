@@ -9,13 +9,13 @@ var consts = require('../mymodules/consts');
 
 var Feed = {
   /**
-   * create RSS1.0 feed.
+   * create RSS2.0 feed.
    */
-  getRss10: function(callback, errCallback){
+  getRss20: function(callback, errCallback){
     var me = this;
     // get recent diaries.
     var onSuccess = function(diaries) {
-        callback(me._generateRss10(diaries));
+        callback(me._generateRss20(diaries));
     };
     var onFailure = function(err) {
         errCallback(err);
@@ -35,15 +35,15 @@ var Feed = {
   },
 
   /**
-   * generate RSS1.0 xml.
+   * generate RSS2.0 xml.
    */
-  _generateRss10: function(diaries) {
+  _generateRss20: function(diaries) {
     var me = this;
 
     var feed = new RSS({
       title: consts.siteTitle,
       description: consts.siteSubTitle,
-      feed_url: consts.feedUrlRss10,
+      feed_url: consts.feedUrlRss20,
       site_url: consts.siteUrlWithScheme,
       author: consts.siteAuthor
     });
@@ -58,7 +58,7 @@ var Feed = {
       });
     });
 
-    return feed.xml("  ");
+    return feed.xml();
   },
 
   // TODO move to util module.
