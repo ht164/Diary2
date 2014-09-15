@@ -59,6 +59,9 @@ Atom.prototype = {
     var me = this;
 
     var feedXml = [
+      { _attr: {
+        xmlns: "http://www.w3.org/2005/Atom"
+      }},
       { id: me.id },
       { title: me.title },
       { updated: me.updated },
