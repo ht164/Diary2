@@ -24,7 +24,7 @@ function Atom(options, items) {
 /**
  * functions.
  */
-Atom.properties = {
+Atom.prototype = {
   /**
    * add item.
    */
@@ -33,7 +33,7 @@ Atom.properties = {
     options = options || {};
     var item = {
       title: options.title || "",
-      url: options.url || "",
+      link: options.url || "",
       id: options.id,
       updated: options.date || "",
       summary: options.description
@@ -49,7 +49,7 @@ Atom.properties = {
   xml: function(indent) {
     var me = this;
     return '<?xml version="1.0" encoding="UTF-8"?>\n'
-      + XML(me._generateXML(), indent);
+      + XML(me._generateXml(), indent);
   },
 
   /**
@@ -58,26 +58,34 @@ Atom.properties = {
   _generateXml: function() {
     var me = this;
 
-    var feed = {
-      id: me.id,
-      title: me.title,
-      updated: me.updated,
-      link: { _attr: { href: me.site_url }}
-    };
+    var feedXml = [
+      { id: me.id },
+      { title: me.title },
+      { updated: me.updated },
+      { link: { _attr: { href: me.site_url }}}
+    ];
 
-    var entry = [];
+    /*feedXml.push({
+        entry: [
+        { id: "hoge" },
+        { fw: "fuga" },
+        { moge: "momomo" } 
+        ]
+    });*/
+
     _.each(me.items, function(item) {
-      entry.push({
-        id: item.id,
-        title: item.title,
-        link: item.url,
-        updated: item.updated,
-        summary: item.summary
-      });
+      var itemXml = [
+        { id: item.id },
+        { title: item.title },
+        { link: item.link },
+        { updated: item.updated },
+        { summary: { _cdata: item.summary }}
+      ];
+      feedXml.push({ entry: itemXml });
     });
 
     return {
-      feed: feed
+      feed: feedXml
     };
   }
 };

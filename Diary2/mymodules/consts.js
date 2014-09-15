@@ -23,7 +23,8 @@ var consts = {
     feedItemNum: 10,
     feedUrlRss10: "/feed/rss10.rdf",
     feedUrlRss20: "/feed/rss20.rdf",
-    feedUrlAtom: "/feed/arom.xml"
+    feedUrlAtom: "/feed/atom.xml",
+    feedUrlAtomFull: "http://blog.ht164.jp/feed/atom.xml"
 };
 
 module.exports = consts;

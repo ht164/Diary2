@@ -172,7 +172,10 @@ Controller.prototype = {
    * call when client request Atom
    */
   getAtom: function(req, res) {
-
+    var onSuccess = function(xml) {
+      res.send(xml);
+    };
+    feed.getAtom(onSuccess);
   }
 };
 

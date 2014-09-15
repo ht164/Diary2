@@ -76,8 +76,9 @@ var Feed = {
     var feedOptions = {
       title: consts.siteTitle,
       description: consts.siteSubTitle,
-      feed_url: consts.feedUrlRss20,
+      feed_url: (kind == "atom") ? consts.feedUrlAtom : consts.feedUrlRss20,
       site_url: consts.siteUrlWithScheme,
+      id: (kind == "atom") ? consts.feedUrlAtomFull : consts.feedUrlRss20,
       author: consts.siteAuthor
     };
 
@@ -92,6 +93,7 @@ var Feed = {
         title: diary.title,
         description: diary.content,
         url: me._generateDiaryUri(diary),
+        id: me._generateDiaryUri(diary),
         author: consts.siteAuthor,
         date: diary.date
       });
