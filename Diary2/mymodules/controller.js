@@ -7,6 +7,7 @@ var DiaryModel = require('../mymodules/diarymodel').model;
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var util = require('../mymodules/util');
 var consts = require('../mymodules/consts');
+var feed = require('../mymodules/feed');
 
 function Controller() {
 }
@@ -146,6 +147,37 @@ Controller.prototype = {
     }, function(dateList) {
       res.json(dateList);
     });
+  },
+
+  /**
+   * call when client requests RSS1.0
+   */
+  getRss10: function(req, res) {
+    var me = this;
+    // return RSS 2.0.
+    me.getRss20(req, res);
+  },
+
+  /**
+   * call when client request RSS2.0
+   */
+  getRss20: function(req, res) {
+    var onSuccess = function(xml) {
+      res.set("Content-type", "application/rss+xml");
+      res.send(xml);
+    };
+    feed.getRss20(onSuccess);
+  },
+
+  /**
+   * call when client request Atom
+   */
+  getAtom: function(req, res) {
+    var onSuccess = function(xml) {
+      res.set("Content-type", "application/atom+xml");
+      res.send(xml);
+    };
+    feed.getAtom(onSuccess);
   }
 };
 
