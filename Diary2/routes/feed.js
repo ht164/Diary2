@@ -9,7 +9,7 @@ router.get('/rss10.rdf', function(req, res) {
 });
 
 /* get RSS2.0 */
-router.get('/rss20.rdf', function(req, res) {
+router.get('/rss20.xml', function(req, res) {
     var controller = new Controller();
     controller.getRss20(req, res);
 });
