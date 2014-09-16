@@ -82,6 +82,7 @@ var Feed = {
     };
     if (kind == "atom"){
       feedOptions.id = consts.feedIdScope + consts.feedUrlAtom;
+      feedOptions.updated = new Date();
     }
 
     if (kind == "atom"){
