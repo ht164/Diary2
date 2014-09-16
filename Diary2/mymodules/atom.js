@@ -71,7 +71,7 @@ Atom.prototype = {
     _.each(me.items, function(item) {
       var itemXml = [
         { id: item.id },
-        { title: item.title },
+        { title: { _cdata: item.title }},
         { link: { _attr: { href: item.link }}},
         { updated: item.updated ? item.updated.toISOString() : "" },
         { summary: { _cdata: item.summary }}
