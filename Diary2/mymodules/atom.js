@@ -36,7 +36,8 @@ Atom.prototype = {
       link: options.url || "",
       id: options.id,
       updated: options.date || "",
-      summary: options.description
+      content: options.description,
+      summary: options.summary
     };
     me.items[me.items.length] = item;
 
@@ -74,7 +75,8 @@ Atom.prototype = {
         { title: { _cdata: item.title }},
         { link: { _attr: { href: item.link }}},
         { updated: item.updated ? item.updated.toISOString() : "" },
-        { summary: { _cdata: item.summary }}
+        { summary: { _cdata: item.summary }},
+        { content: { _cdata: item.content }}
       ];
       feedXml.push({ entry: itemXml });
     });
