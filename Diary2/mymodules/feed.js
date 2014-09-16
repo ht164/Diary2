@@ -78,9 +78,11 @@ var Feed = {
       description: consts.siteSubTitle,
       feed_url: (kind == "atom") ? consts.feedUrlAtom : consts.feedUrlRss20,
       site_url: consts.siteUrlWithScheme,
-      id: (kind == "atom") ? consts.feedUrlAtomFull : consts.feedUrlRss20,
       author: consts.siteAuthor
     };
+    if (kind == "atom"){
+      feedOptions.id = consts.feedIdScope + consts.feedUrlAtom;
+    }
 
     if (kind == "atom"){
       feed = new Atom(feedOptions);
@@ -92,14 +94,14 @@ var Feed = {
       feed.item({
         title: diary.title,
         description: diary.content,
-        url: me._generateDiaryUri(diary),
-        id: me._generateDiaryUri(diary),
+        url: consts.siteUrlWithScheme + me._generateDiaryUri(diary),
+        id: consts.feedIdScope + me._generateDiaryUri(diary),
         author: consts.siteAuthor,
         date: diary.date
       });
     });
 
-    return feed.xml();
+    return feed.xml("  ");
   },
 
   // TODO move to util module.
