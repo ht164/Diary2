@@ -80,7 +80,7 @@ Atom.prototype = {
       var itemXml = [
         { id: item.id },
         { title: item.title },
-        { link: item.link },
+        { link: { _attr: { href: item.link }}},
         { updated: item.updated },
         { summary: { _cdata: item.summary }}
       ];
