@@ -77,8 +77,6 @@ Atom.prototype = {
         { summary: { _cdata: item.summary }}
       ];
       feedXml.push({ entry: itemXml });
-
-      console.log(itemXml[3].updated);
     });
 
     return {
