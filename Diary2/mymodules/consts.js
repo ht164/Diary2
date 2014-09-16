@@ -24,7 +24,7 @@ var consts = {
     feedUrlRss10: "/feed/rss10.rdf",
     feedUrlRss20: "/feed/rss20.xml",
     feedUrlAtom: "/feed/atom.xml",
-    feedIdScope: "blog.ht164.jp;"
+    feedIdScope: "tag:blog.ht164.jp,2014:"
 };
 
 module.exports = consts;
