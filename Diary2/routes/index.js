@@ -12,8 +12,7 @@ var handler = function(req, res) {
     siteUrl: consts.siteUrl,
     siteIntroductionTitle: consts.siteIntroductionTitle,
     siteIntroduction: consts.siteIntroduction,
-    recentEntryTitle: consts.recentEntryTitle,
-    appVer: consts.appVer
+    recentEntryTitle: consts.recentEntryTitle
   });
 };
 
