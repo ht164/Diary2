@@ -8,6 +8,11 @@ var Atom = require('../mymodules/atom');
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var consts = require('../mymodules/consts');
 
+/**
+ * consts.
+ */
+var FEED_SUMMARY_LENGTH = 100;
+
 var Feed = {
   /**
    * create RSS2.0 feed.
@@ -78,9 +83,12 @@ var Feed = {
       description: consts.siteSubTitle,
       feed_url: (kind == "atom") ? consts.feedUrlAtom : consts.feedUrlRss20,
       site_url: consts.siteUrlWithScheme,
-      id: (kind == "atom") ? consts.feedUrlAtomFull : consts.feedUrlRss20,
       author: consts.siteAuthor
     };
+    if (kind == "atom"){
+      feedOptions.id = consts.feedIdScope + consts.feedUrlAtom;
+      feedOptions.updated = new Date();
+    }
 
     if (kind == "atom"){
       feed = new Atom(feedOptions);
@@ -92,10 +100,11 @@ var Feed = {
       feed.item({
         title: diary.title,
         description: diary.content,
-        url: me._generateDiaryUri(diary),
-        id: me._generateDiaryUri(diary),
+        summary: me._generateSummary(diary.content),
+        url: consts.siteUrlWithScheme + me._generateDiaryUri(diary),
+        id: consts.feedIdScope + me._generateDiaryUri(diary),
         author: consts.siteAuthor,
-        date: diary.date
+        date: diary.createDate
       });
     });
 
@@ -114,8 +123,20 @@ var Feed = {
     date = (date < 10) ? "0" + date : date;
 
     return "/diary/" + year + "/" + month + "/" + date;
-  }
+  },
 
+  /**
+   * generate summary from html content.
+   *
+   * remove all tag and trim by 100 characters.
+   */
+  _generateSummary: function(content) {
+    var summary = content.replace(/<[^>]*>/g, "");
+    if (summary.length > FEED_SUMMARY_LENGTH) {
+      summary = summary.substr(0, FEED_SUMMARY_LENGTH) + "...";
+    }
+    return summary;
+  }
 };
 
 

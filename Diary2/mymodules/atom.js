@@ -36,7 +36,8 @@ Atom.prototype = {
       link: options.url || "",
       id: options.id,
       updated: options.date || "",
-      summary: options.description
+      content: options.description,
+      summary: options.summary
     };
     me.items[me.items.length] = item;
 
@@ -64,25 +65,18 @@ Atom.prototype = {
       }},
       { id: me.id },
       { title: me.title },
-      { updated: me.updated },
+      { updated: me.updated ? me.updated.toISOString() : "" },
       { link: { _attr: { href: me.site_url }}}
     ];
-
-    /*feedXml.push({
-        entry: [
-        { id: "hoge" },
-        { fw: "fuga" },
-        { moge: "momomo" } 
-        ]
-    });*/
 
     _.each(me.items, function(item) {
       var itemXml = [
         { id: item.id },
-        { title: item.title },
-        { link: item.link },
-        { updated: item.updated },
-        { summary: { _cdata: item.summary }}
+        { title: { _cdata: item.title }},
+        { link: { _attr: { href: item.link }}},
+        { updated: item.updated ? item.updated.toISOString() : "" },
+        { summary: { _cdata: item.summary }},
+        { content: { _cdata: item.content }}
       ];
       feedXml.push({ entry: itemXml });
     });
