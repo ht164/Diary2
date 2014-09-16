@@ -98,7 +98,7 @@ var Feed = {
         url: consts.siteUrlWithScheme + me._generateDiaryUri(diary),
         id: consts.feedIdScope + me._generateDiaryUri(diary),
         author: consts.siteAuthor,
-        date: diary.date
+        date: diary.createDate
       });
     });
 
