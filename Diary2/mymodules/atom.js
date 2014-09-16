@@ -68,14 +68,6 @@ Atom.prototype = {
       { link: { _attr: { href: me.site_url }}}
     ];
 
-    /*feedXml.push({
-        entry: [
-        { id: "hoge" },
-        { fw: "fuga" },
-        { moge: "momomo" } 
-        ]
-    });*/
-
     _.each(me.items, function(item) {
       var itemXml = [
         { id: item.id },
