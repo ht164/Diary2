@@ -64,7 +64,7 @@ Atom.prototype = {
       }},
       { id: me.id },
       { title: me.title },
-      { updated: me.updated },
+      { updated: me.updated ? me.updated.toISOString() : "" },
       { link: { _attr: { href: me.site_url }}}
     ];
 
@@ -73,10 +73,12 @@ Atom.prototype = {
         { id: item.id },
         { title: item.title },
         { link: { _attr: { href: item.link }}},
-        { updated: item.updated },
+        { updated: item.updated ? item.updated.toISOString() : "" },
         { summary: { _cdata: item.summary }}
       ];
       feedXml.push({ entry: itemXml });
+
+      console.log(itemXml[3].updated);
     });
 
     return {
