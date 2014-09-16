@@ -108,7 +108,7 @@ var Feed = {
       });
     });
 
-    return feed.xml("  ");
+    return feed.xml();
   },
 
   // TODO move to util module.
