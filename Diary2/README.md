@@ -11,6 +11,7 @@ $ node bin/www
 ### show diary site
 
 access http://hostname/ .
+write diary in markdown.
 
 ### post diary
 
