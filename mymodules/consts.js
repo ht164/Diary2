@@ -3,15 +3,15 @@
  */
 
 var consts = {
-    siteTitle: "ふにゃふにゃブログ",
-    siteSubTitle: "ht164さんの日常",
-    siteUrl: "//blog.ht164.jp",
-    siteUrlWithScheme: "http://blog.ht164.jp",
-    siteAuthor: "ht164",
+    siteTitle: "site title",
+    siteSubTitle: "site subtitle",
+    siteUrl: "//hostname",
+    siteUrlWithScheme: "http://hostname",
+    siteAuthor: "site author",
 
-    siteIntroductionTitle: "このサイトについて",
-    siteIntroduction: "ht164が日記を書き連ねていくだけのサイトです。",
-    recentEntryTitle: "最新の日記",
+    siteIntroductionTitle: "about this site",
+    siteIntroduction: "site introduction",
+    recentEntryTitle: "recent entries",
 
     maxAgeMsec: 0,
 
@@ -23,7 +23,7 @@ var consts = {
     feedUrlRss10: "/feed/rss10.rdf",
     feedUrlRss20: "/feed/rss20.xml",
     feedUrlAtom: "/feed/atom.xml",
-    feedIdScope: "tag:blog.ht164.jp,2014:"
+    feedIdScope: "tag:hostname,2014:"
 };
 
 module.exports = consts;
