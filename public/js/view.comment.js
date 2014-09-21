@@ -42,9 +42,9 @@ define(["jquery", "underscore"], function($, _){
                     fragment += comment.speaker;
                     fragment += ":</span> <span class='comment-comment'>";
                     fragment += comment.comment;
-                    fragment += "</span> <span class='comment-date'>";
-                    fragment += comment.date;
-                    fragment += "</span>";
+                    fragment += "</span> <span class='comment-date'>(";
+                    fragment += me.getFormattedDateString(new Date(comment.date));
+                    fragment += ")</span>";
                     fragment += "</li>";
                 });
             } else {
@@ -52,6 +52,24 @@ define(["jquery", "underscore"], function($, _){
             }
             fragment += "</ul>";
             return fragment;
+        },
+
+        /**
+         * get formatted date string.
+         * return format "yyyy-mm-dd".
+         *
+         * @param date Date object.
+         * @return formatted date string.
+         */
+        getFormattedDateString: function(date) {
+            console.log(date);
+            var y = date.getFullYear();
+            var m = date.getMonth();
+            var d = date.getDate();
+            m = "" + (m < 10 ? "0" + m : m);
+            d = "" + (d < 10 ? "0" + d : d);
+    
+            return y + "-" + m + "-" + d;
         }
     };
 });
