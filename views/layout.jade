@@ -10,5 +10,8 @@ html(lang='ja')
     block js
       script(src='http://localhost:35729/livereload.js')
       script(data-main='/js/app', src='/components/requirejs/require.js')
+    block feed
+      link(rel='alternate', type='application/atom+xml', href='/feed/atom.xml')
+      link(rel='alternate', type='application/rss+xml', href='/feed/rss20.xml')
   body
     block content

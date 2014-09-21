@@ -14,6 +14,7 @@ var users = require('./routes/user');
 var get = require('./routes/get');
 var post = require('./routes/post');
 var recent = require('./routes/recent');
+var feed = require('./routes/feed');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use('/users', users);
 app.use('/get', get);
 app.use('/post', post);
 app.use('/recent', recent);
+app.use('/feed', feed);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

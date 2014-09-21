@@ -35,4 +35,16 @@ block content
         div.well.well-sm.sidebar-widget
           h2=recentEntryTitle
           div#recentDiaryBlock
+        div.sidebar-widget
+          div.social-links
+            ul.list-unstyled
+              li
+                a(href='/feed/rss20.xml')
+                  div.social-link-icon.social-link-icon-rss
+                  ="RSS2.0"
+              li
+                a(href='/feed/atom.xml')
+                  div.social-link-icon.social-link-icon-rss
+                  ="Atom"
+
   div.scroll-to-top.scroll-to-top-init

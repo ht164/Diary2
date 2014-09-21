@@ -29,10 +29,7 @@ requirejs.config({
         bootstrap: {
             deps: [ "jquery" ]
         }
-    },
-
-    // TODO: appVer.
-    urlArgs: "v=0.0.6"
+    }
 });
 
 // load bootstrap so that navbar toggle works.
