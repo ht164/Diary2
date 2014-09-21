@@ -53,6 +53,14 @@ div.diary img {
     height: auto;
 }
 
+div.comment h3 {
+    font-size: 18px;
+}
+div.comment li {
+    font-size: 80%;
+}
+
+
 div#infiniteScrollTrigger {
     height: 1px;
 }
