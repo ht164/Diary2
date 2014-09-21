@@ -90,8 +90,10 @@ define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewC
             var me = this;
             var diaryBlock = $("#" + me.DIARY_SHOWING_BLOCK_ID);
             _.each(diaries, function(diary) {
-                $(me.createDiaryFragment(diary)).appendTo(diaryBlock);
-                ViewComment.createElement(diary.comments).appendTo(diaryBlock);
+                var diaryElement = $("<div class='" + me.DIARY_CLASS + "'></div>");
+                diaryElement.appendTo(diaryBlock);
+                $(me.createDiaryFragment(diary)).appendTo(diaryElement);
+                ViewComment.createElement(diary.comments).appendTo(diaryElement);
             });
         },
 
@@ -102,7 +104,6 @@ define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewC
             var me = this;
             var diaryDate = new Date(diary.date);
             var fragment = "";
-            fragment += "<div class='" + me.DIARY_CLASS + "'>";
             fragment += me.createDateFragment(diaryDate);
             fragment += "<h2>";
             fragment += diary.title;
@@ -110,7 +111,6 @@ define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewC
             fragment += "<hr>";
             fragment += "<div class='" + me.DIARY_CONTENT_CLASS + "'>";
             fragment += diary.content;
-            fragment += "</div>";
             fragment += "</div>";
             return fragment;
         },
