@@ -9,6 +9,7 @@ define(["jquery", "underscore"], function($, _){
          * consts.
          */
         COMMENT_STRING: "コメント",
+        COMMENT_NOT_EXIST: "コメントはありません",
         COMMENT_CLASS: "comment",
 
         /**
@@ -32,13 +33,15 @@ define(["jquery", "underscore"], function($, _){
             var me = this;
             var fragment = "";
             fragment += "<h3>" + me.COMMENT_STRING + "</h3>";
+            fragment += "<ul>";
             if (comments.length > 0) {
-                fragment += "<ul>";
                 _.each(comments, function(comment){
                     fragment += "<li class='list-unstyled'>" + comment + "</li>";
                 }
-                fragment += "</ul>";
+            } else {
+                fragment + "<li class='list-unstyled'>" + me.COMMENT_NOT_EXIST + "</li>";
             }
+            fragment += "</ul>";
             return fragment;
         }
     };
