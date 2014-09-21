@@ -5,6 +5,7 @@
 var _ = require('underscore');
 var DiaryModel = require('../mymodules/diarymodel').model;
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
+var Comment = require('../mymodules/commentmodel');
 var util = require('../mymodules/util');
 var consts = require('../mymodules/consts');
 var feed = require('../mymodules/feed');
@@ -22,14 +23,32 @@ Controller.prototype = {
   get: function(req, res){
     var me = this;
     var onGetDiaryModels = function(models){
-      // delete unnecessary properties.
+      var loadedComment = 0;
+      var afterLoadingComments = function(){
+        loadedComment++;
+        if (loadedComment == models.length){
+          // all diary models' comment loaded.
+          // return json, so don't use view object.
+          res.json(models);
+        }
+      };
+
       _.each(models, function(model){
+        // delete unnecessary properties.
         delete model.createDate;
         delete model.contentMarkdown;
+        // get comments and add property.
+        me.getCommentModels({
+          date: model.date
+        }, function(comments){
+          model.comments = comments;
+          afterLoadingComments();
+        }, function(err){
+          afterLoadingComments();
+        });
       });
-      // return json, so don't use view object.
-    	  res.json(models);
-    }
+    };
+
     me.getDiaryModels(me.createCondition(req.query), onGetDiaryModels);
   },
 
@@ -94,6 +113,17 @@ Controller.prototype = {
    */
   getDiaryModels: function(cond, callback){
     	DiaryFuncs.createModels(cond, callback);
+  },
+
+  /**
+   * get Comment model.
+   * @param cond condition
+   *   @param cond.date
+   * @param callback
+   * @param errCallback
+   */
+  getCommentModels: function(cond, callback, errCallback){
+    Comment.createModels(cond, callback, errCallback);
   },
 
   /**
