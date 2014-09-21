@@ -17,11 +17,12 @@ define(["jquery", "underscore"], function($, _){
          *
          * @param comments Array<Comment> array of comment object.
          */
-        createCommentElement: function(comments) {
+        createElement: function(comments) {
             var me = this;
+            comments = comments || [];
 
             var el = $("<div class='"+ me.COMMENT_CLASS + "'>");
-            el.add(me._createCommentFragment(comments));
+            $(me._createCommentFragment(comments)).appendTo(el);
 
             return el;
         },
@@ -37,7 +38,7 @@ define(["jquery", "underscore"], function($, _){
             if (comments.length > 0) {
                 _.each(comments, function(comment){
                     fragment += "<li class='list-unstyled'>" + comment + "</li>";
-                }
+                });
             } else {
                 fragment + "<li class='list-unstyled'>" + me.COMMENT_NOT_EXIST + "</li>";
             }

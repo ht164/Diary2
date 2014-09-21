@@ -2,7 +2,7 @@
  * front-end side view.
  */
 
-define(["jquery", "underscore", "jquery_inview"], function($, _){
+define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewComment, $, _){
     var _c = {
         /**
          * consts.
@@ -88,9 +88,10 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
          */
         showDiaries: function(diaries){
             var me = this;
+            var diaryBlock = $("#" + me.DIARY_SHOWING_BLOCK_ID);
             _.each(diaries, function(diary) {
-                var fragment = me.createDiaryFragment(diary);
-                $(fragment).appendTo("#" + me.DIARY_SHOWING_BLOCK_ID);
+                $(me.createDiaryFragment(diary)).appendTo(diaryBlock);
+                ViewComment.createElement(diary.comments).appendTo(diaryBlock);
             });
         },
 
