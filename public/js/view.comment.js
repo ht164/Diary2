@@ -40,7 +40,7 @@ define(["jquery", "underscore"], function($, _){
                     fragment += "<li class='list-unstyled'>" + comment + "</li>";
                 });
             } else {
-                fragment + "<li class='list-unstyled'>" + me.COMMENT_NOT_EXIST + "</li>";
+                fragment += "<li class='list-unstyled'>" + me.COMMENT_NOT_EXIST + "</li>";
             }
             fragment += "</ul>";
             return fragment;
