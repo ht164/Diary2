@@ -37,7 +37,15 @@ define(["jquery", "underscore"], function($, _){
             fragment += "<ul>";
             if (comments.length > 0) {
                 _.each(comments, function(comment){
-                    fragment += "<li class='list-unstyled'>" + comment + "</li>";
+                    fragment += "<li class='list-unstyled'>";
+                    fragment += "<span class='comment-speaker'>";
+                    fragment += comment.speaker;
+                    fragment += ":</span> <span class='comment-comment'>";
+                    fragment += comment.comment;
+                    fragment += "</span> <span class='comment-date'>";
+                    fragment += comment.date;
+                    fragment += "</span>";
+                    fragment += "</li>";
                 });
             } else {
                 fragment += "<li class='list-unstyled'>" + me.COMMENT_NOT_EXIST + "</li>";
