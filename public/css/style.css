@@ -53,6 +53,9 @@ div.diary img {
     height: auto;
 }
 
+div.comment {
+    word-wrap: break-word;
+}
 div.comment h3 {
     font-size: 18px;
 }
