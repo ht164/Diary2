@@ -166,7 +166,9 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             me._postComment(comment, function(){
                 console.log('kokomade kitanoka');
                 // append comment list
-                var fragment = me._generateCommentFragment(comment);
+                var fragment = me._generateCommentFragment(_.extend({
+                    postDate: new Date()
+                }, comment));
                 $(fragment).appendTo($("ul.comment-list", divComment));
             }, function(){
                 // TODO: error occurred.
