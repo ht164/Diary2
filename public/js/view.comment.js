@@ -153,7 +153,8 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             var divComment = $(event.target).parent().parent();
 
             $("input[type=button]", divComment).css("display", "none");
-            $("<img src='img/postloader.gif'>").appendTo($("form.comment-form", divComment));
+            $("<img src='img/postloader.gif' class='comment-post-image'>").appendTo($("form.comment-form", divComment));
+            $("div.comment-post-error", divComment).remove();
 
             // get comment data.
             var comment = {
@@ -175,11 +176,14 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             }, function(){
                 // show comment post button and error message.
                 $("input[type=button]", divComment).css("display", "block");
+                $("img.comment-post-image").remove();
                 $("<div class='comment-post-error'>" + me.COMMENT_POST_FAILED + "</div>")
-                  .appendTo($("ul.comment-list", divComment));
+                  .appendTo($("form.comment-form", divComment));
             });
         },
 
+        // TODO: move this function into other module.
+        // because post is not a function of view.
         /**
          * post comment.
          *
