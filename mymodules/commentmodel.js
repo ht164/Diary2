@@ -67,14 +67,17 @@ CommentModel.prototype = {
     // is date invalid?
     if (isNaN(me.date.getTime())) {
       setTimeout(errCallback, 0);
+      return;
     }
     // is speaker string length less than MAX_SPEAKER_LENGTH?
     if (me.speaker.length > me.MAX_SPEAKER_LENGTH) {
       setTimeout(errCallback, 0);
+      return;
     }
-    // is comment string length less than MAX_COMMENT_LENGTH?
-    if (me.comment.length > me.MAX_COMMENT_LENGTH) {
+    // is comment string empty or length less than MAX_COMMENT_LENGTH?
+    if (me.comment.length == 0 || me.comment.length > me.MAX_COMMENT_LENGTH) {
       setTimeout(errCallback, 0);
+      return;
     }
     // the last, does date diary entry exist?
     var diary = DiaryFuncs.getModelFromStorage({
