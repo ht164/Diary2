@@ -93,7 +93,7 @@ define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewC
                 var diaryElement = $("<div class='" + me.DIARY_CLASS + "'></div>");
                 diaryElement.appendTo(diaryBlock);
                 $(me.createDiaryFragment(diary)).appendTo(diaryElement);
-                ViewComment.createElement(diary.comments).appendTo(diaryElement);
+                ViewComment.createElement(diary.comments, diary.date).appendTo(diaryElement);
             });
         },
 
