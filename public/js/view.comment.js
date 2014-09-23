@@ -13,6 +13,11 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
         COMMENT_CLASS: "comment",
         COMMENT_HOUR_BEFORE: "時間前",
         COMMENT_MINUTE_BEFORE: "分前",
+        COMMENT_FORM_COVER: "コメントを入れる",
+        COMMENT_FORM_NAME: "名前",
+        COMMENT_FORM_COMMENT: "コメント",
+        COMMENT_FORM_SUBMIT: "OK",
+        COMMENT_POST_FAILED: "コメントの投稿に失敗しました。",
 
         /**
          * create comment block element.
@@ -25,6 +30,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
 
             var el = $("<div class='"+ me.COMMENT_CLASS + "'>");
             $(me._createCommentFragment(comments)).appendTo(el);
+            me._generatePostFormElement().appendTo(el);
 
             return el;
         },
@@ -82,6 +88,33 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             fragment += "</span>";
 
             return fragment;
+        },
+
+        /**
+         * generate comment post form element.
+         *
+         * @return object jQueryObject
+         */
+        _generatePostFormElement: function(){
+            var me = this;
+            var cover = $("<div class='comment-cover'><span>" + me.COMMENT_FORM_COVER + "</span></div>");
+            cover.on("click", function(event){
+                // create form and remove cover.
+                var fragment = "<form>";
+                fragment += me.COMMENT_FORM_NAME;
+                fragment += "<input type='text' size='15' maxlength='50'>";
+                fragment += "<br>";
+                fragment += me.COMMENT_FORM_COMMENT;
+                fragment += "<input type='text' size='50' maxlength='500'>";
+                fragment += "<br>";
+                fragment += "<input type='button' value='" + me.COMMENT_FORM_SUBMIT + "'>";
+                var form = $(fragment);
+
+                form.appendTo(cover.parent());
+                cover.remove();
+            });
+
+            return cover;
         }
     };
 });

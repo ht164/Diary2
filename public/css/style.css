@@ -59,7 +59,9 @@ div.comment h3 {
 div.comment li {
     font-size: 100%;
 }
-
+div.comment-cover span {
+    cursor: pointer;
+}
 
 div#infiniteScrollTrigger {
     height: 1px;
