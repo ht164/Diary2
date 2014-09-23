@@ -153,7 +153,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             var divComment = $(event.target).parent().parent();
 
             $("input[type=button]", divComment).remove();
-            $("<img src='img/postloader.gif'>").appendTo(divComment);
+            $("<img src='img/postloader.gif'>").appendTo($("form.comment-form", divComment));
 
             // get comment data.
             var comment = {
@@ -164,12 +164,14 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
 
             // post comment.
             me._postComment(comment, function(){
-                console.log('kokomade kitanoka');
                 // append comment list
                 var fragment = me._generateCommentFragment(_.extend({
                     postDate: new Date()
                 }, comment));
                 $(fragment).appendTo($("ul.comment-list", divComment));
+                // remove form and show cover.
+                $("form.comment-form", divComment).remove();
+                me._generatePostFormElement(comment.date).appendTo(divComment);
             }, function(){
                 // TODO: error occurred.
             });
