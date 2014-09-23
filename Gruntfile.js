@@ -87,7 +87,8 @@ module.exports = function (grunt) {
             jquery: "../components/jquery/dist/jquery.min",
             bootstrap: "../components/bootstrap/dist/js/bootstrap",
             underscore: "../components/underscore/underscore",
-            jquery_inview: "../components/jquery.inview/jquery.inview.min"
+            jquery_inview: "../components/jquery.inview/jquery.inview.min",
+            moment: "../components/momentjs/min/moment.min"
           }
         }
       }
