@@ -3,7 +3,7 @@
  * comment for each diary entry.
  */
 
-define(["jquery", "underscore"], function($, _){
+define(["jquery", "underscore", "moment"], function($, _, moment){
     return {
         /**
          * consts.
@@ -11,6 +11,8 @@ define(["jquery", "underscore"], function($, _){
         COMMENT_STRING: "コメント",
         COMMENT_NOT_EXIST: "コメントはありません",
         COMMENT_CLASS: "comment",
+        COMMENT_HOUR_BEFORE: "時間前",
+        COMMENT_MINUTE_BEFORE: "分前",
 
         /**
          * create comment block element.
@@ -43,7 +45,7 @@ define(["jquery", "underscore"], function($, _){
                     fragment += ":</span> <span class='comment-comment'>";
                     fragment += comment.comment;
                     fragment += "</span> <span class='comment-date'>(";
-                    fragment += me.getFormattedDateString(new Date(comment.date));
+                    fragment += me._generateDateFragment(new Date(comment.date));
                     fragment += ")</span>";
                     fragment += "</li>";
                 });
@@ -55,21 +57,31 @@ define(["jquery", "underscore"], function($, _){
         },
 
         /**
-         * get formatted date string.
-         * return format "yyyy-mm-dd".
+         * generate comment date html.
+         * if date is less than 1 day before, "xx hour before".
+         * if date is less than 1 hour before, "xx minute before".
+         * otherwise, "yyyy-mm-dd".
+         * popup "yyyy-mm-dd hh:mm".
          *
          * @param date Date object.
-         * @return formatted date string.
+         * @return html fragment.
          */
-        getFormattedDateString: function(date) {
-            console.log(date);
-            var y = date.getFullYear();
-            var m = date.getMonth();
-            var d = date.getDate();
-            m = "" + (m < 10 ? "0" + m : m);
-            d = "" + (d < 10 ? "0" + d : d);
-    
-            return y + "-" + m + "-" + d;
+        _generateDateFragment: function(date) {
+            var me = this;
+            var momentDate = new moment(date);
+            var diffNow = (new moment()).diff(momentDate, "minutes");
+
+            var fragment = "<span title='" + momentDate.format("YYYY-MM-DD HH:mm") + "'>";
+            if (diffNow < 60) {
+                fragment += diffNow + me.COMMENT_MINUTE_BEFORE;
+            } else if (diffNow < 144) {
+                fragment += Math.round(diffNow / 60) + me.COMMENT_HOUR_BEFORE;
+            } else {
+                fragment += momentDate.format("YYYY-MM-DD");
+            }
+            fragment += "</span>";
+
+            return fragment;
         }
     };
 });

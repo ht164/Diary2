@@ -19,6 +19,9 @@ requirejs.config({
         ],
         bootstrap: [
             "/components/bootstrap/dist/js/bootstrap.min"
+        ],
+        moment: [
+            "/components/momentjs/moment"
         ]
     },
 
