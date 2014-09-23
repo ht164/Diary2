@@ -113,6 +113,7 @@ var funcs = {
     var _mongoose = storage.getMongoose();
     CommentMongooseModel
     .find(cond)
+    .sort({ postDate: "asc" })
     .exec(function(err, comments){
       if(err) {
         if (errCallback) errCallback(err);
