@@ -104,7 +104,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
                 // create form and remove cover.
                 var momentDate = new moment(date);
 
-                var fragment = "<form>";
+                var fragment = "<form class='comment-form'>";
                 fragment += me.COMMENT_FORM_NAME;
                 fragment += "<input name='speaker' type='text' size='15' maxlength='50'>";
                 fragment += "<br>";
@@ -118,9 +118,27 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
 
                 form.appendTo(cover.parent());
                 cover.remove();
+
+                // on click button
+                $("input[type=button]", form).on("click", me._onClickPostButton);
             });
 
             return cover;
+        },
+
+        /**
+         * call when click comment post button.
+         */
+        _onClickPostButton: function(event){
+            // remove button and show posting image.
+            // event.target's parent's parent is div.comment.
+            // TODO: bad implement. fix later.
+            var divComment = $(event.target).parent().parent();
+
+            $("input[type=button]", divComment).remove();
+            $("<img src='img/postloader.gif'>").appendTo(divComment);
+
+            console.log(divComment);
         }
     };
 });
