@@ -23,14 +23,15 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
          * create comment block element.
          *
          * @param comments Array<Comment> array of comment object.
+         * @param date
          */
-        createElement: function(comments) {
+        createElement: function(comments, date) {
             var me = this;
             comments = comments || [];
 
             var el = $("<div class='"+ me.COMMENT_CLASS + "'>");
             $(me._createCommentFragment(comments)).appendTo(el);
-            me._generatePostFormElement().appendTo(el);
+            me._generatePostFormElement(date).appendTo(el);
 
             return el;
         },
@@ -93,21 +94,26 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
         /**
          * generate comment post form element.
          *
+         * @param date
          * @return object jQueryObject
          */
-        _generatePostFormElement: function(){
+        _generatePostFormElement: function(date){
             var me = this;
             var cover = $("<div class='comment-cover'><span>" + me.COMMENT_FORM_COVER + "</span></div>");
             cover.on("click", function(event){
                 // create form and remove cover.
+                var momentDate = new moment(date);
+
                 var fragment = "<form>";
                 fragment += me.COMMENT_FORM_NAME;
-                fragment += "<input type='text' size='15' maxlength='50'>";
+                fragment += "<input name='speaker' type='text' size='15' maxlength='50'>";
                 fragment += "<br>";
                 fragment += me.COMMENT_FORM_COMMENT;
-                fragment += "<input type='text' size='50' maxlength='500'>";
+                fragment += "<input name='comment' type='text' size='50' maxlength='500'>";
                 fragment += "<br>";
+                fragment += "<input name='date' type='hidden' value='" + momentDate.format("YYYY-MM-DD") + "'>";
                 fragment += "<input type='button' value='" + me.COMMENT_FORM_SUBMIT + "'>";
+                fragment += "</form>";
                 var form = $(fragment);
 
                 form.appendTo(cover.parent());
