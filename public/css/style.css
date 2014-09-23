@@ -62,6 +62,9 @@ div.comment h3 {
 div.comment li {
     font-size: 100%;
 }
+span.comment-speaker {
+    font-weight: bold;
+}
 div.comment-cover span {
     cursor: pointer;
 }
