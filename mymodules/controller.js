@@ -208,6 +208,32 @@ Controller.prototype = {
       res.send(xml);
     };
     feed.getAtom(onSuccess);
+  },
+
+  /**
+   * call when client post comment.
+   */
+  postComment: function(req, res){
+    // create comment model
+    var comment = new Comment.CommentModel();
+    comment.speaker = req.param("speaker");
+    comment.comment = req.param("comment");
+    comment.date = new Date(req.param("date"));
+
+    // create callback
+    var onSuccess = function(){
+      // created response
+      res.status(201);
+      res.send();
+    };
+    var onFailure = function(){
+      // error response
+      res.status(500);
+      res.send();
+    };
+
+    // save it.
+    comment.save(onSuccess, onFailure);
   }
 };
 

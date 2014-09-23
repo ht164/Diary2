@@ -1,5 +1,5 @@
 /**
- * DiaryModel
+ * CommentModel
  */
 var storage = require('../mymodules/storage');
 var consts = require('../mymodules/consts');
@@ -12,6 +12,7 @@ function CommentModel(){
   this.speaker = "",
   this.comment = "",
   this.date = null
+  this.postDate = null;
 }
 
 /**
@@ -22,7 +23,19 @@ CommentModel.prototype = {
    * save to storage.
    */
   save: function(callback, errCallback) {
-    // TODO:
+    var me = this;
+
+    me.postDate = new Date();
+    // save as new comment data.
+    var comment = new CommentMongooseModel(me);
+    console.log(comment);
+    comment.save(function(err){
+      if (err) {
+        errCallback();
+      } else {
+        callback();
+      }
+    });
   }
 };
 
