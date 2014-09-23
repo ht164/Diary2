@@ -45,7 +45,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
                     fragment += ":</span> <span class='comment-comment'>";
                     fragment += comment.comment;
                     fragment += "</span> <span class='comment-date'>(";
-                    fragment += me._generateDateFragment(new Date(comment.date));
+                    fragment += me._generateDateFragment(new Date(comment.postDate));
                     fragment += ")</span>";
                     fragment += "</li>";
                 });
@@ -74,7 +74,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             var fragment = "<span title='" + momentDate.format("YYYY-MM-DD HH:mm") + "'>";
             if (diffNow < 60) {
                 fragment += diffNow + me.COMMENT_MINUTE_BEFORE;
-            } else if (diffNow < 144) {
+            } else if (diffNow < 1440) {
                 fragment += Math.round(diffNow / 60) + me.COMMENT_HOUR_BEFORE;
             } else {
                 fragment += momentDate.format("YYYY-MM-DD");

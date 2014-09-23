@@ -80,7 +80,8 @@ var funcs = {
 var CommentMongooseModel = mongoose.model("Comment", mongoose.Schema({
     speaker: String,
     comment: String,
-    date: Date
+    date: Date,
+    postDate: Date
 }));
 
 module.exports = funcs;
