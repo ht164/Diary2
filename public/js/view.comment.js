@@ -147,12 +147,12 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
          */
         _onClickPostButton: function(event){
             var me = this;
-            // remove button and show posting image.
+            // hide button and show posting image.
             // event.target's parent's parent is div.comment.
             // TODO: bad implement. fix later.
             var divComment = $(event.target).parent().parent();
 
-            $("input[type=button]", divComment).remove();
+            $("input[type=button]", divComment).css("display", "none");
             $("<img src='img/postloader.gif'>").appendTo($("form.comment-form", divComment));
 
             // get comment data.
@@ -173,7 +173,10 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
                 $("form.comment-form", divComment).remove();
                 me._generatePostFormElement(comment.date).appendTo(divComment);
             }, function(){
-                // TODO: error occurred.
+                // show comment post button and error message.
+                $("input[type=button]", divComment).css("display", "block");
+                $("<div class='comment-post-error'>" + me.COMMENT_POST_FAILED + "</div>")
+                  .appendTo($("ul.comment-list", divComment));
             });
         },
 
