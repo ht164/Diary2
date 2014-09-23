@@ -18,6 +18,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
         COMMENT_FORM_COMMENT: "コメント",
         COMMENT_FORM_SUBMIT: "OK",
         COMMENT_POST_FAILED: "コメントの投稿に失敗しました。",
+        POST_URL: "/comment",
 
         /**
          * create comment block element.
@@ -43,23 +44,36 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             var me = this;
             var fragment = "";
             fragment += "<h3>" + me.COMMENT_STRING + "</h3>";
-            fragment += "<ul>";
+            fragment += "<ul class='comment-list'>";
             if (comments.length > 0) {
                 _.each(comments, function(comment){
-                    fragment += "<li class='list-unstyled'>";
-                    fragment += "<span class='comment-speaker'>";
-                    fragment += comment.speaker;
-                    fragment += ":</span> <span class='comment-comment'>";
-                    fragment += comment.comment;
-                    fragment += "</span> <span class='comment-date'>(";
-                    fragment += me._generateDateFragment(new Date(comment.postDate));
-                    fragment += ")</span>";
-                    fragment += "</li>";
+                    fragment += me._generateCommentFragment(comment);
                 });
             } else {
                 fragment += "<li class='list-unstyled'>" + me.COMMENT_NOT_EXIST + "</li>";
             }
             fragment += "</ul>";
+            return fragment;
+        },
+
+        /**
+         * generate comment list html.
+         *
+         * @param comment comment object.
+         * @return fragment.
+         */
+        _generateCommentFragment: function(comment){
+            var me = this;
+            var fragment = "";
+            fragment += "<li class='list-unstyled'>";
+            fragment += "<span class='comment-speaker'>";
+            fragment += comment.speaker;
+            fragment += ":</span> <span class='comment-comment'>";
+            fragment += comment.comment;
+            fragment += "</span> <span class='comment-date'>(";
+            fragment += me._generateDateFragment(new Date(comment.postDate));
+            fragment += ")</span>";
+            fragment += "</li>";
             return fragment;
         },
 
@@ -120,7 +134,9 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
                 cover.remove();
 
                 // on click button
-                $("input[type=button]", form).on("click", me._onClickPostButton);
+                $("input[type=button]", form).on("click", function(event){
+                    me._onClickPostButton(event);
+                });
             });
 
             return cover;
@@ -130,6 +146,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
          * call when click comment post button.
          */
         _onClickPostButton: function(event){
+            var me = this;
             // remove button and show posting image.
             // event.target's parent's parent is div.comment.
             // TODO: bad implement. fix later.
@@ -138,7 +155,44 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             $("input[type=button]", divComment).remove();
             $("<img src='img/postloader.gif'>").appendTo(divComment);
 
-            console.log(divComment);
+            // get comment data.
+            var comment = {
+                speaker: $("input[name=speaker]", divComment).val(),
+                comment: $("input[name=comment]", divComment).val(),
+                date: $("input[name=date]", divComment).val()
+            };
+
+            // post comment.
+            me._postComment(comment, function(){
+                console.log('kokomade kitanoka');
+                // append comment list
+                var fragment = me._generateCommentFragment(comment);
+                $(fragment).appendTo($("ul.comment-list", divComment));
+            }, function(){
+                // TODO: error occurred.
+            });
+        },
+
+        /**
+         * post comment.
+         *
+         * @param comment comment object.
+         * @param callback
+         * @param errCallback
+         */
+        _postComment: function(comment, callback, errCallback){
+            var me = this;
+            // create ajax request.
+
+            $.ajax({
+                type: "POST",
+                url: me.POST_URL,
+                data: comment
+            }).done(function(){
+                callback();
+            }).fail(function(){
+                errCallback();
+            });
         }
     };
 });
