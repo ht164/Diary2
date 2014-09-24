@@ -117,17 +117,25 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             cover.on("click", function(event){
                 // create form and remove cover.
                 var momentDate = new moment(date);
+                var idSuffix = _.random(100000, 999999);
 
-                var fragment = "<form class='comment-form'>";
-                fragment += me.COMMENT_FORM_NAME;
-                fragment += "<input name='speaker' type='text' size='15' maxlength='50'>";
-                fragment += "<br>";
-                fragment += me.COMMENT_FORM_COMMENT;
-                fragment += "<input name='comment' type='text' size='50' maxlength='500'>";
-                fragment += "<br>";
-                fragment += "<input name='date' type='hidden' value='" + momentDate.format("YYYY-MM-DD") + "'>";
-                fragment += "<input type='button' value='" + me.COMMENT_FORM_SUBMIT + "'>";
-                fragment += "</form>";
+                var fragment = "<form class='comment-form form-horizontal' role='form'>"
+                + "<div class='form-group'>"
+                + "<label for='input-speaker-" + idSuffix + "' class='col-sm-2 control-label'>" + me.COMMENT_FORM_NAME + "</label>"
+                + "<div class='col-sm-10'>"
+                + "<input id='input-speaker-" + idSuffix + "' name='speaker' type='text' class='form-control' maxlength='50'>"
+                + "</div></div>"
+                + "<div class='form-group'>"
+                + "<label for='input-comment-" + idSuffix + "' class='col-sm-2 control-label'>" + me.COMMENT_FORM_COMMENT + "</label>"
+                + "<div class='col-sm-10'>"
+                + "<textarea id='input-comment-" + idSuffix + "' name='comment' class='form-control col-sm-10' rows='3' maxlength='500'></textarea>"
+                + "</div></div>"
+                + "<input name='date' type='hidden' value='" + momentDate.format("YYYY-MM-DD") + "'>"
+                + "<div class='form-group'>"
+                + "<div class='col-sm-offset-2 col-sm-10'>"
+                + "<input type='button' class='btn btn-default' value='" + me.COMMENT_FORM_SUBMIT + "'>"
+                + "</div>"
+                + "</form>";
                 var form = $(fragment);
 
                 form.appendTo(cover.parent());
