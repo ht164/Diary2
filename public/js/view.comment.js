@@ -156,9 +156,9 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
         _onClickPostButton: function(event){
             var me = this;
             // hide button and show posting image.
-            // event.target's parent's parent is div.comment.
+            // event.target's parent's parent's parent's parent is div.comment.
             // TODO: bad implement. fix later.
-            var divComment = $(event.target).parent().parent();
+            var divComment = $(event.target).parent().parent().parent().parent();
 
             $("input[type=button]", divComment).css("display", "none");
             $("<img src='img/postloader.gif' class='comment-post-image'>").appendTo($("form.comment-form", divComment));
@@ -167,7 +167,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             // get comment data.
             var comment = {
                 speaker: $("input[name=speaker]", divComment).val(),
-                comment: $("input[name=comment]", divComment).val(),
+                comment: $("textarea[name=comment]", divComment).val(),
                 date: $("input[name=date]", divComment).val()
             };
 
