@@ -77,7 +77,7 @@ define(["view", "diary", "calendar", "underscore"],
             };
             // get recent diaryies.
             cond = cond || {};
-            cond.num = 1;
+            cond.num = 5;
             diary.getDiaries(cond, onLoad, onFail);
         },
 
