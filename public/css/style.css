@@ -53,6 +53,22 @@ div.diary img {
     height: auto;
 }
 
+div.comment {
+    word-wrap: break-word;
+}
+div.comment h3 {
+    font-size: 18px;
+}
+div.comment li {
+    font-size: 100%;
+}
+span.comment-speaker {
+    font-weight: bold;
+}
+div.comment-cover span {
+    cursor: pointer;
+}
+
 div#infiniteScrollTrigger {
     height: 1px;
 }

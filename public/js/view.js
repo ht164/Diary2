@@ -2,7 +2,7 @@
  * front-end side view.
  */
 
-define(["jquery", "underscore", "jquery_inview"], function($, _){
+define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewComment, $, _){
     var _c = {
         /**
          * consts.
@@ -88,9 +88,12 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
          */
         showDiaries: function(diaries){
             var me = this;
+            var diaryBlock = $("#" + me.DIARY_SHOWING_BLOCK_ID);
             _.each(diaries, function(diary) {
-                var fragment = me.createDiaryFragment(diary);
-                $(fragment).appendTo("#" + me.DIARY_SHOWING_BLOCK_ID);
+                var diaryElement = $("<div class='" + me.DIARY_CLASS + "'></div>");
+                diaryElement.appendTo(diaryBlock);
+                $(me.createDiaryFragment(diary)).appendTo(diaryElement);
+                ViewComment.createElement(diary.comments, diary.date).appendTo(diaryElement);
             });
         },
 
@@ -101,7 +104,6 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
             var me = this;
             var diaryDate = new Date(diary.date);
             var fragment = "";
-            fragment += "<div class='" + me.DIARY_CLASS + "'>";
             fragment += me.createDateFragment(diaryDate);
             fragment += "<h2>";
             fragment += diary.title;
@@ -109,7 +111,6 @@ define(["jquery", "underscore", "jquery_inview"], function($, _){
             fragment += "<hr>";
             fragment += "<div class='" + me.DIARY_CONTENT_CLASS + "'>";
             fragment += diary.content;
-            fragment += "</div>";
             fragment += "</div>";
             return fragment;
         },
