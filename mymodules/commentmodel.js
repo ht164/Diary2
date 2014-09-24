@@ -40,7 +40,6 @@ CommentModel.prototype = {
       me.postDate = new Date();
       // save as new comment data.
       var comment = new CommentMongooseModel(me);
-      console.log(comment);
       comment.save(function(err){
         if (err) {
           errCallback();
