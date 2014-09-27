@@ -21,7 +21,7 @@ define(["util", "jquery", "underscore"], function(Util, $, _){
                     var str = "" + diary.year + "-" + diary.month + " (" + diary.count + ")";
                     var href = Util.generateMonthLinkUrl(diary.year, diary.month);
                     fragment += "<li"
-                      + (count >= 5 ? " class='month-overflow'>" : "")
+                      + (count >= 5 ? " class='month-overflow'" : "")
                       + "><a href='" + href + "'>" + str + "</a></li>";
                     count++;
                 });
