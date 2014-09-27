@@ -16,8 +16,8 @@ define(["moment"], function(moment){
          * generate month link url.
          */
         generateMonthLinkUrl: function(year, month) {
-            var momentDate = new moment([year, month + 1, 0]);
-            return "/diary" + momentDate.format("YYYY/MM");
+            var momentDate = new moment([year, month - 1]);
+            return "/diary/" + momentDate.format("YYYY/MM");
         }
     };
 });
