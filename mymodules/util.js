@@ -26,24 +26,32 @@ var util = {
    *
    * @param year
    * @param [month]
+   * @param [date]
    * @return object
    */
-  generateDateCondition: function(year, month) {
+  generateDateCondition: function(year, month, date) {
     var _year = parseInt(year, 10);
     var _month = parseInt(month, 10) - 1;
+    var _date = parseInt(date, 10);
     var start = end = null;
 
     if (isNaN(_month)) {
-      end = new moment([_year]);
-      start = (new moment([_year + 1])).subtract(1, "days");
+      // year only.
+      end = new moment([_year]).toDate();
+      start = (new moment([_year + 1])).subtract(1, "days").toDate();
+    } else if (isNaN(_date)) {
+      // year and month.
+      end = new moment([_year, _month]).toDate();
+      start = new moment([_year, _month, end.daysInMonth()]).toDate();
     } else {
-      end = new moment([year, _month]);
-      start = new moment([year, _month, end.daysInMonth()]);
+      // year, month and date.
+      // don't know why, but moment is not work. use Date object.
+      end = start = new Date(year + "-" + month + "-" + date);
     }
 
     return {
-      startDate: start.toDate(),
-      endDate: end.toDate()
+      startDate: start,
+      endDate: end
     };
   }
 

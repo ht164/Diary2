@@ -3,6 +3,7 @@
  */
 
 var _ = require('underscore');
+var moment = require('moment');
 var DiaryModel = require('../mymodules/diarymodel').model;
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var Comment = require('../mymodules/commentmodel');
@@ -70,35 +71,34 @@ Controller.prototype = {
     }
     cond.num = cond.num || consts.condDefaultNum;
 
-    if (query.startDate) {
-    	  var startDateStr = query.startDate;
-    	  cond.startDate = new Date(startDateStr.substr(0, 4) + "-" + startDateStr.substr(4, 2) + "-" + startDateStr.substr(6, 2));
+    if (query.date) {
+      var dateStr = query.date;
+      var dateCondition = {};
+
+      switch(dateStr.length){
+        case 4:
+          // year only.
+          dateCondition = util.generateDateCondition(dateStr);
+          break;
+        case 6:
+          // year and month.
+          dateCondition = util.generateDateCondition(dateStr.substr(0, 4), dateStr.substr(4, 2));
+          break;
+        case 8:
+          // year, month and date.
+          dateCondition = util.generateDateCondition(
+            dateStr.substr(0, 4),
+            dateStr.substr(4, 2),
+            dateStr.substr(6, 2)
+          );
+          break;
+      }
+      _.extend(cond, dateCondition);
     }
 
-    if (query.date) {
-    	  var dateStr = query.date;
-    	  var startYearStr, startMonthStr, startDateStr;
-    	  var endYearStr, endMonthStr, endDateStr;
-
-    	  // year
-    	  startYearStr = endYearStr = dateStr.substr(0, 4);
-    	  // month
-    	  if (dateStr.length > 4) {
-    	    startMonthStr = endMonthStr = dateStr.substr(4, 2);
-    	  } else {
-    	    startMonthStr = "12";
-    	    endMonthStr = "01";
-    	  }
-    	  // date
-    	  if (dateStr.length > 6) {
-    	    startDateStr = endDateStr = dateStr.substr(6, 2);
-    	  } else {
-         startDateStr = util.getLastDayOfMonth(endYearStr, endMonthStr);
-         endDateStr = "01";
-    	  }
-
-    	  cond.startDate = cond.startDate || new Date(startYearStr + "-" + startMonthStr + "-" + startDateStr);
-    	  cond.endDate = new Date(endYearStr + "-" + endMonthStr + "-" + endDateStr);
+    // if query has startDate, overwrite startDate of condition.
+    if (query.startDate) {
+      cond.startDate = (new moment(query.startDate, "YYYYMMDD")).toDate();
     }
 
     return cond;
