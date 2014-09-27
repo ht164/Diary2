@@ -150,6 +150,19 @@ define(["view", "diary", "calendar", "underscore"],
                     onClickNextMonth: onClickPrevNextMonth
                 });
             });
-        }
+        },
+
+        /**
+         * show monthly diary.
+         */
+        showMonthlyDiaries: function(){
+            var me = this;
+            diary.getMonthlyDiaries(function(monthlydiaries){
+                view.showMonthlyDiaries(monthlydiaries);
+            }, function(){
+                // do nothing.
+            });
+        },
+
     };
 });

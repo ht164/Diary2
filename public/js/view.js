@@ -2,7 +2,8 @@
  * front-end side view.
  */
 
-define(["util", "view.comment", "jquery", "underscore", "jquery_inview"], function(Util, ViewComment, $, _){
+define(["util", "view.comment", "view.monthlydiary", "jquery", "underscore", "jquery_inview"],
+    function(Util, ViewComment, ViewMonthlyDiary, $, _){
     var _c = {
         /**
          * consts.
@@ -194,6 +195,13 @@ define(["util", "view.comment", "jquery", "underscore", "jquery_inview"], functi
                 fragment += "</ul>";
                 $("div#recentDiaryBlock").html(fragment);
             }
+        },
+
+        /**
+         * show monthly diary.
+         */
+        showMonthlyDiaries: function(monthlydiaries){
+            ViewMonthlyDiary.showMonthlyDiaries(monthlydiaries);
         },
 
         /**

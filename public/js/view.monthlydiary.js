@@ -8,7 +8,7 @@ define(["util", "jquery", "underscore"], function(Util, $, _){
         /**
          * show monthly diary entry.
          */
-        showMonthlyDiaryEntry: function(monthlydiaries){
+        showMonthlyDiaries: function(monthlydiaries){
             var me = this;
             if (monthlydiaries.length > 0) {
                 // create html fragment.
