@@ -70,7 +70,7 @@ var funcs = {
     callback = callback || function(){};
 
     var _mongoose = storage.getMongoose();
-    MonthlyDiaryModel.find({}, function(err, monthlydiary){
+    MonthlyDiaryMongooseModel.find({}, function(err, monthlydiary){
       if (err) {
         errCallback(err);
       } else {
