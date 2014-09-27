@@ -8,17 +8,44 @@ var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
-function MonthlyDiaryModel(){
+function MonthlyDiaryModel(_initialData){
   // properties.
   this.year = 0;
   this.month = 0;
   this.count = 0;
+
+  // mixin _initialData
+  _.extend(this, _initialData);
 }
 
 /**
  * Monthly Diary Model functions.
  */
 MonthlyDiaryModel.prototype = {
+  /**
+   * save my properties to storage.
+   *
+   * @param callback callback function if success.
+   * @param errCallback callback function if failed.
+   */
+  save: function(callback, errCallback) {
+    var me = this;
+    callback = callback || function(){};
+    errCallback = errCallback || function(){};
+
+    // find entry that have same year and month.
+    // if diary entry doesn't exist, create new.
+    MonthlyDiaryMongooseModel.findOneAndUpdate({
+      year: me.year,
+      month: me.month
+    }, me, { upsert: true }, function(err) {
+      if (err) {
+        errCallback();
+      } else {
+        callback();
+      }
+    });
+  }
 };
 
 /**
@@ -50,13 +77,41 @@ var funcs = {
         callback(monthlydiary);
       }
     });
+  },
+
+  /**
+   * update count data using diary entry data in mongodb asynchronously.
+   *
+   * @param year
+   * @param month
+   */
+  update: function(year, month){
+    // function when getting diary entries is success.
+    var onGetDiaryEntries = function(diaries){
+      var newCount = diaries.length;
+      var monthlydiary = new MonthlyDiaryModel({
+        year: year,
+        month: month,
+        count: newCount
+      });
+      monthlydiary.save();
+    };
+
+    // TODO: generating condition has to be moved to util function.
+    var strYear = "" + year;
+    var strMonth = "" + month;
+    var cond = {
+      startDate: new Date(strYear + "-" + strMonth + "-" + util.getLastDayOfMonth(strYear, strMonth)),
+      endDate: new Date(strYear + "-" + strMonth + "-01")
+    };
+    DiaryFuncs.createModels(cond, onGetDiaryEntries);
   }
 };
 
 /**
  * Mongoose Model
  */
-var MonthlyDiaryModel = mongoose.model("MonthlyDiary", mongoose.Schema({
+var MonthlyDiaryMongooseModel = mongoose.model("MonthlyDiary", mongoose.Schema({
     year: Number,
     month: Number,
     count: Number
