@@ -14,8 +14,16 @@ function MonthlyDiaryModel(_initialData){
   this.month = 0;
   this.count = 0;
 
-  // mixin _initialData
-  _.extend(this, _initialData);
+  function _constructor(_initialData) {
+    var me = this;
+    _initialData = _initialData || {};
+
+    me.year = _initialData.year || 0;
+    me.month = _initialData.month || 0;
+    me.count = _initialData.count || 0;
+  }
+
+  _constructor(_initialData);
 }
 
 /**
@@ -70,11 +78,15 @@ var funcs = {
     callback = callback || function(){};
 
     var _mongoose = storage.getMongoose();
-    MonthlyDiaryMongooseModel.find({}, function(err, monthlydiary){
+    MonthlyDiaryMongooseModel.find({}, function(err, monthlydiaries){
       if (err) {
         errCallback(err);
       } else {
-        callback(monthlydiary);
+        var ret = [];
+        _.each(monthlydiaries, function(monthlydiary){
+          ret.push(new MonthlyDiaryModel(monthlydiary));
+        });
+        callback(ret);
       }
     });
   },
