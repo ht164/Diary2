@@ -68,10 +68,10 @@ var funcs = {
   createModels: function(cond, callback){
     var me = this;
     var onGetModel = function(diaries) {
-    	  var diaryModels = [];
-    	  for (var i = 0; i < diaries.length; i++) {
-    	  	diaryModels.push(me.createModel(diaries[i]));
-    	  }
+      var diaryModels = [];
+      _.each(diaries, function(diary){
+        diaryModels.push(me.createModel(diary));
+      });
     	  callback(diaryModels);
     };
 
