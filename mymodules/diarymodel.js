@@ -190,22 +190,12 @@ var funcs = {
     var condition = {};
     if (!cond.month) {
       // specify year only.
-      condition.startDate = new Date("" + cond.year + "-12-31");
-      condition.endDate = new Date("" + cond.year + "-01-01");
+      condition = util.generateDateCondition(cond.year);
       condition.num = 366;  // max number of date of year.
     } else {
       // specify year and month.
-      (function(){
-        var strY = "" + cond.year;
-        var m = cond.month;
-        var strM = m < 10 ? "0" + m : "" + m;
-        var d = util.getLastDayOfMonth(cond.year, cond.month);
-        var strD = d < 10 ? "0" + d : "" + d;
-
-        condition.startDate = new Date(strY + "-" + strM + "-" + strD);
-        condition.endDate = new Date(strY + "-" + strM + "-01");
-        condition.num = 31;  // max number of date of month.
-      })();
+      condition = util.generateDateCondition(cond.year, cond.month);
+      condition.num = 31;  // max number of date of month.
     }
 
     // callback

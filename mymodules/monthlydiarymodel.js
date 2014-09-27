@@ -110,14 +110,8 @@ var funcs = {
       monthlydiary.save();
     };
 
-    // TODO: generating condition has to be moved to util function.
-    var strYear = "" + year;
-    var strMonth = "" + month;
-    var cond = {
-      startDate: new Date(strYear + "-" + strMonth + "-" + util.getLastDayOfMonth(strYear, strMonth)),
-      endDate: new Date(strYear + "-" + strMonth + "-01"),
-      num: 31
-    };
+    var cond = util.generateDateCondition(year, month);
+    cond.num = 31;
     DiaryFuncs.createModels(cond, onGetDiaryEntries);
   }
 };
