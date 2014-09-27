@@ -14,16 +14,12 @@ function MonthlyDiaryModel(_initialData){
   this.month = 0;
   this.count = 0;
 
-  function _constructor(_initialData) {
-    var me = this;
-    _initialData = _initialData || {};
+  // initial set.
+  _initialData = _initialData || {};
 
-    me.year = _initialData.year || 0;
-    me.month = _initialData.month || 0;
-    me.count = _initialData.count || 0;
-  }
-
-  _constructor(_initialData);
+  this.year = _initialData.year || 0;
+  this.month = _initialData.month || 0;
+  this.count = _initialData.count || 0;
 }
 
 /**
