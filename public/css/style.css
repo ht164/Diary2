@@ -47,6 +47,11 @@ div.diary-date-year {
     font-size: 10px;
 }
 
+.diary-title a,
+.diary-title a:hover {
+    color: inherit;
+}
+
 /* image auto shrink */
 div.diary img {
     max-width: 100%;
@@ -123,6 +128,13 @@ div.calendar .week-sat {
 }
 div.calendar .diary-exists {
     font-weight: bold;
+}
+
+.monthly-diary-top5-show .month-overflow {
+    display: none;
+}
+div.show-monthly-diary-toggle {
+    cursor: pointer;
 }
 
 div.social-links {

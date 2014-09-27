@@ -6,6 +6,7 @@ var _ = require('underscore');
 var DiaryModel = require('../mymodules/diarymodel').model;
 var DiaryFuncs = require('../mymodules/diarymodel').funcs;
 var Comment = require('../mymodules/commentmodel');
+var MonthlyDiary = require('../mymodules/monthlydiarymodel');
 var util = require('../mymodules/util');
 var consts = require('../mymodules/consts');
 var feed = require('../mymodules/feed');
@@ -47,8 +48,9 @@ Controller.prototype = {
           afterLoadingComments();
         });
       });
-    };
-
+      // return json, so don't use view object.
+    	  res.json(models);
+    }
     me.getDiaryModels(me.createCondition(req.query), onGetDiaryModels);
   },
 
@@ -113,17 +115,6 @@ Controller.prototype = {
    */
   getDiaryModels: function(cond, callback){
     	DiaryFuncs.createModels(cond, callback);
-  },
-
-  /**
-   * get Comment model.
-   * @param cond condition
-   *   @param cond.date
-   * @param callback
-   * @param errCallback
-   */
-  getCommentModels: function(cond, callback, errCallback){
-    Comment.createModels(cond, callback, errCallback);
   },
 
   /**
@@ -234,6 +225,19 @@ Controller.prototype = {
 
     // save it.
     comment.save(onSuccess, onFailure);
+  },
+
+  /**
+   * call when client request number of diary entries of each month.
+   * if error occurred, response empty data.
+   */
+  getMonthlyDiary: function(req, res){
+    var me = this;
+    MonthlyDiary.getNumDiaryEntries(function(d){
+      res.json(d);
+    }, function(err){
+      res.send([]);
+    });
   }
 };
 

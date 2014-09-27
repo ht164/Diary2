@@ -119,6 +119,23 @@ define(["jquery"], function($){
             }).fail(function(){
                 errCallback();
             });
+        },
+
+        /**
+         * get monthly diary from web server.
+         *
+         * @param callback callback function if success.
+         * @param errCallback callback function if failure.
+         */
+        getMonthlyDiaries: function(callback, errCallback){
+            $.ajax({
+                type: "GET",
+                url: "/monthlydiary"
+            }).done(function(data){
+                callback(data);
+            }).fail(function(){
+                errCallback();
+            });
         }
     };
 });

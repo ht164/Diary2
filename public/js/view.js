@@ -2,7 +2,8 @@
  * front-end side view.
  */
 
-define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewComment, $, _){
+define(["util", "view.comment", "view.monthlydiary", "jquery", "underscore", "jquery_inview"],
+    function(Util, ViewComment, ViewMonthlyDiary, $, _){
     var _c = {
         /**
          * consts.
@@ -104,13 +105,19 @@ define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewC
             var me = this;
             var diaryDate = new Date(diary.date);
             var fragment = "";
+            fragment += "<div class='" + me.DIARY_CLASS + "'>";
             fragment += me.createDateFragment(diaryDate);
+            fragment += "<div class='" + me.DIARY_TITLE_CLASS + "'>";
             fragment += "<h2>";
+            fragment += "<a href='" + Util.generateDiaryPermalinkUrl(diary.date) + "'>";
             fragment += diary.title;
+            fragment += "</a>";
             fragment += "</h2>";
+            fragment += "</div>";
             fragment += "<hr>";
             fragment += "<div class='" + me.DIARY_CONTENT_CLASS + "'>";
             fragment += diary.content;
+            fragment += "</div>";
             fragment += "</div>";
             return fragment;
         },
@@ -190,6 +197,13 @@ define(["view.comment", "jquery", "underscore", "jquery_inview"], function(ViewC
                 fragment += "</ul>";
                 $("div#recentDiaryBlock").html(fragment);
             }
+        },
+
+        /**
+         * show monthly diary.
+         */
+        showMonthlyDiaries: function(monthlydiaries){
+            ViewMonthlyDiary.showMonthlyDiaries(monthlydiaries);
         },
 
         /**
