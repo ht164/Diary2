@@ -139,6 +139,8 @@ Controller.prototype = {
 
     // create callback
     var onSuccess = function(){
+      // update monthly diary.
+      MonthlyDiary.update(diary.date.getFullYear(), diary.date.getMonth() + 1);
       // created response
       res.status(201);
       res.send();
