@@ -80,7 +80,9 @@ var funcs = {
       } else {
         var ret = [];
         _.each(monthlydiaries, function(monthlydiary){
-          ret.push(new MonthlyDiaryModel(monthlydiary));
+          if (monthlydiary.count != 0){
+            ret.push(new MonthlyDiaryModel(monthlydiary));
+          }
         });
         callback(ret);
       }
@@ -110,7 +112,8 @@ var funcs = {
     var strMonth = "" + month;
     var cond = {
       startDate: new Date(strYear + "-" + strMonth + "-" + util.getLastDayOfMonth(strYear, strMonth)),
-      endDate: new Date(strYear + "-" + strMonth + "-01")
+      endDate: new Date(strYear + "-" + strMonth + "-01"),
+      num: 31
     };
     DiaryFuncs.createModels(cond, onGetDiaryEntries);
   }
