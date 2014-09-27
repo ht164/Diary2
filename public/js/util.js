@@ -10,6 +10,14 @@ define(["moment"], function(moment){
         generateDiaryPermalinkUrl: function(date) {
             var momentDate = new moment(date);
             return "/diary/" + momentDate.format("YYYY/MM/DD");
+        },
+
+        /**
+         * generate month link url.
+         */
+        generateMonthLinkUrl: function(year, month) {
+            var momentDate = new moment([year, month - 1]);
+            return "/diary/" + momentDate.format("YYYY/MM");
         }
     };
 });
