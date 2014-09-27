@@ -130,6 +130,13 @@ div.calendar .diary-exists {
     font-weight: bold;
 }
 
+div.monthly-diary-top5-show .month-overflow {
+    display: none;
+}
+div.show-monthly-diary-toggle {
+    cursor: pointer;
+}
+
 div.social-links {
     font-size: 125%;
 }
