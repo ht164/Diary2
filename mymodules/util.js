@@ -37,21 +37,22 @@ var util = {
 
     if (isNaN(_month)) {
       // year only.
-      end = new moment([_year]).toDate();
-      start = (new moment([_year + 1])).subtract(1, "days").toDate();
+      end = new moment([_year]);
+      start = (new moment([_year + 1])).subtract(1, "days");
     } else if (isNaN(_date)) {
       // year and month.
-      end = new moment([_year, _month]).toDate();
-      start = new moment([_year, _month, end.daysInMonth()]).toDate();
+      end = new moment([_year, _month]);
+      start = new moment([_year, _month, end.daysInMonth()]);
+
     } else {
       // year, month and date.
       // don't know why, but moment is not work. use Date object.
-      end = start = new Date(year + "-" + month + "-" + date);
+      end = start = new moment(new Date(year + "-" + month + "-" + date));
     }
 
     return {
-      startDate: start,
-      endDate: end
+      startDate: start.toDate(),
+      endDate: end.toDate()
     };
   }
 
