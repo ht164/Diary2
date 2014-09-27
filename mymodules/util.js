@@ -38,6 +38,33 @@ var util = {
       startDate: start.toDate(),
       endDate: end.toDate()
     };
+  },
+
+  /**
+   * generate diary url.
+   *
+   * @param date Date object.
+   * @param [validData] valid data of Date properties(year, month, date). "YMD", "YM", "Y". default: "YMD".
+   * @return url.
+   */
+  generateDiaryUrl: function(date, validData) {
+    var momentDate = new moment(date);
+    validData = validData || "YMD";
+    var url = "/diary/";
+
+    switch(validData){
+      case "YMD":
+        url += momentDate.format("YYYY/MM/DD");
+        break;
+      case "YM":
+        url += momentDate.formatn("YYYY/MM");
+        break;
+      case "Y":
+        url += momentDate.format("YYYY");
+        break;
+    }
+
+    return url;
   }
 
 }
