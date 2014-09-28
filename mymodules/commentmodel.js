@@ -4,7 +4,7 @@
 var storage = require('../mymodules/storage');
 var consts = require('../mymodules/consts');
 var util = require('../mymodules/util');
-var DiaryFuncs = require('../mymodules/diarymodel').funcs;
+var Diary = require('../mymodules/diarymodel');
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
@@ -79,7 +79,7 @@ CommentModel.prototype = {
       return;
     }
     // the last, does date diary entry exist?
-    var diary = DiaryFuncs.getModelFromStorage({
+    var diary = Diary.getModelFromStorage({
       date: me.date
     }, function(){
       // validation succeeded.

@@ -5,7 +5,7 @@
 var _ = require('underscore');
 var RSS = require('rss');
 var Atom = require('../mymodules/atom');
-var DiaryFuncs = require('../mymodules/diarymodel').funcs;
+var Diary = require('../mymodules/diarymodel');
 var consts = require('../mymodules/consts');
 var util = require('../mymodules/util');
 
@@ -54,7 +54,7 @@ var Feed = {
     var cond = {
       num: consts.feedItemNum
     };
-    DiaryFuncs.createModels(cond, callback, errCallback);
+    Diary.createModels(cond, callback, errCallback);
   },
 
   /**

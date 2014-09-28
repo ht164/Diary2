@@ -4,7 +4,7 @@
 var storage = require('../mymodules/storage');
 var consts = require('../mymodules/consts');
 var util = require('../mymodules/util');
-var DiaryFuncs = require('../mymodules/diarymodel').funcs;
+var Diary = require('../mymodules/diarymodel');
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
@@ -112,7 +112,7 @@ var funcs = {
 
     var cond = util.generateDateCondition(year, month);
     cond.num = 31;
-    DiaryFuncs.createModels(cond, onGetDiaryEntries);
+    Diary.createModels(cond, onGetDiaryEntries);
   }
 };
 

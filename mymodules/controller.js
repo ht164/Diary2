@@ -4,8 +4,7 @@
 
 var _ = require('underscore');
 var moment = require('moment');
-var DiaryModel = require('../mymodules/diarymodel').model;
-var DiaryFuncs = require('../mymodules/diarymodel').funcs;
+var Diary = require('../mymodules/diarymodel');
 var Comment = require('../mymodules/commentmodel');
 var MonthlyDiary = require('../mymodules/monthlydiarymodel');
 var util = require('../mymodules/util');
@@ -120,7 +119,7 @@ Controller.prototype = {
    * @param errCallback callback function.
    */
   getDiaryModels: function(cond, callback, errCallback){
-    	DiaryFuncs.createModels(cond, callback, errCallback);
+    	Diary.createModels(cond, callback, errCallback);
   },
 
   /**
@@ -139,7 +138,7 @@ Controller.prototype = {
    */
   post: function(req, res){
     // create diary model
-    var diary = new DiaryModel();
+    var diary = new Diary.DiaryModel();
     diary.title = req.param("title");
     diary.contentMarkdown = req.param("contents");
     diary.date = new Date(req.param("date"));
@@ -167,7 +166,7 @@ Controller.prototype = {
    */
   getRecentDiaryList: function(req, res){
     var me = this;
-    DiaryFuncs.getRecentDiaryList(function(diaryList){
+    Diary.getRecentDiaryList(function(diaryList){
       res.json(diaryList);
     });
   },
@@ -181,7 +180,7 @@ Controller.prototype = {
     var year = ret[1];
     var month = ret[3];
 
-    DiaryFuncs.getDiaryHavingDateList({
+    Diary.getDiaryHavingDateList({
       year: year,
       month: month
     }, function(dateList) {

@@ -214,7 +214,12 @@ var funcs = {
     };
 
     me.getModelFromStorage(condition, onSuccess, onFailure);
-  }
+  },
+
+  /**
+   * class
+   */
+  DiaryModel: DiaryModel
 };
 
 /**
@@ -228,7 +233,4 @@ var DiaryMongooseModel = mongoose.model("Diary", mongoose.Schema({
 	createDate: Date
 }));
 
-module.exports = {
-  model: DiaryModel,
-  funcs: funcs
-};
+module.exports = funcs;
