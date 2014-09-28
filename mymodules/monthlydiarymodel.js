@@ -2,7 +2,6 @@
  * Monthly Diary Model
  */
 var storage = require('../mymodules/storage');
-var consts = require('../mymodules/consts');
 var util = require('../mymodules/util');
 var Diary = require('../mymodules/diarymodel');
 var mongoose = require('mongoose');
