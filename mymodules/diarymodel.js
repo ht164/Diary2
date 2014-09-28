@@ -96,7 +96,6 @@ var funcs = {
       if (cond.endDate) condition_date["$gte"] = cond.endDate;
       condition.date = condition_date;
     }
-    console.log(condition);
     DiaryMongooseModel
     .find(condition)
     .limit(cond.num || consts.condDefaultNum)
