@@ -4,7 +4,7 @@
  * show calendar and link of year, month, date.
  */
 
-define(["jquery", "underscore"], function($, _){
+define(["util", "jquery", "underscore", "moment"], function(Util, $, _, moment){
     /**
      * Calendar class
      *
@@ -118,24 +118,22 @@ define(["jquery", "underscore"], function($, _){
             fragment += "</tr>";
 
             // days.
-            var strY = "" + me.year;
-            var strM = "" + (me.month < 10 ? "0" + me.month : me.month);
-            // what day is year/month/01 ?
-            var day = (new Date(strY + "-" + strM + "-01")).getDay();
+            var _moment = new moment([me.year, me.month - 1, 1]);
+            var day = _moment.day();  // what day is year/month/01 ?
             var currentDate = 0 - day + 1;
-            // last date of month?
-            var lastDate = me._getLastDate(me.year, me.month);
+            var lastDate = _moment.daysInMonth();
             while(currentDate <= lastDate) {
                 fragment += "<tr>";
                 for (var week = 0; week < 7; week++){
-                    var strD = "" + (currentDate < 10 ? "0" + currentDate : currentDate);
                     fragment += "<td"
                     + (week == 0 ? " class='week-sun'" : 
                         (week == 6 ? " class='week-sat'" : ""))
                     + ">"
                     + ((currentDate > 0 && currentDate <= lastDate)
                         ? (me.datesHavingLink[currentDate]
-                            ? "<span class='diary-exists'><a href='/diary/" + strY + "/" + strM + "/" + strD + "'>" + currentDate + "</a></span>"
+                            ? "<span class='diary-exists'><a href='"
+                              + Util.generateDiaryPermalinkUrl(new Date(me.year, me.month - 1, currentDate))
+                              + "'>" + currentDate + "</a></span>"
                             : currentDate )
                         : "")
                     + "</td>";
@@ -231,21 +229,6 @@ define(["jquery", "underscore"], function($, _){
                 me.datesHavingLink = [];
                 showNextMonth();
             }
-        },
-
-        /**
-         * calculate last date of year/month.
-         */
-        _getLastDate: function(year, month) {
-            var d = new Date();
-            d.setYear(year);
-            d.setMonth(month);
-            d.setDate(1);
-
-            // decrement 1 day (86400000msec)
-            d.setTime(d.getTime() - 86400000);
-
-            return d.getDate();
         },
 
         /**

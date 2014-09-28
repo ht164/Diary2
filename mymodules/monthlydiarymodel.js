@@ -2,9 +2,8 @@
  * Monthly Diary Model
  */
 var storage = require('../mymodules/storage');
-var consts = require('../mymodules/consts');
 var util = require('../mymodules/util');
-var DiaryFuncs = require('../mymodules/diarymodel').funcs;
+var Diary = require('../mymodules/diarymodel');
 var mongoose = require('mongoose');
 var _ = require('underscore');
 
@@ -74,7 +73,10 @@ var funcs = {
     callback = callback || function(){};
 
     var _mongoose = storage.getMongoose();
-    MonthlyDiaryMongooseModel.find({}, function(err, monthlydiaries){
+    MonthlyDiaryMongooseModel
+    .find({})
+    .sort({ year: "desc", month: "desc" })
+    .exec(function(err, monthlydiaries){
       if (err) {
         errCallback(err);
       } else {
@@ -107,15 +109,9 @@ var funcs = {
       monthlydiary.save();
     };
 
-    // TODO: generating condition has to be moved to util function.
-    var strYear = "" + year;
-    var strMonth = "" + month;
-    var cond = {
-      startDate: new Date(strYear + "-" + strMonth + "-" + util.getLastDayOfMonth(strYear, strMonth)),
-      endDate: new Date(strYear + "-" + strMonth + "-01"),
-      num: 31
-    };
-    DiaryFuncs.createModels(cond, onGetDiaryEntries);
+    var cond = util.generateDateCondition(year, month);
+    cond.num = 31;
+    Diary.createModels(cond, onGetDiaryEntries);
   }
 };
 

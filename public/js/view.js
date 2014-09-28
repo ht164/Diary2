@@ -104,21 +104,19 @@ define(["util", "view.comment", "view.monthlydiary", "jquery", "underscore", "jq
         createDiaryFragment: function(diary) {
             var me = this;
             var diaryDate = new Date(diary.date);
-            var fragment = "";
-            fragment += "<div class='" + me.DIARY_CLASS + "'>";
-            fragment += me.createDateFragment(diaryDate);
-            fragment += "<div class='" + me.DIARY_TITLE_CLASS + "'>";
-            fragment += "<h2>";
-            fragment += "<a href='" + Util.generateDiaryPermalinkUrl(diary.date) + "'>";
-            fragment += diary.title;
-            fragment += "</a>";
-            fragment += "</h2>";
-            fragment += "</div>";
-            fragment += "<hr>";
-            fragment += "<div class='" + me.DIARY_CONTENT_CLASS + "'>";
-            fragment += diary.content;
-            fragment += "</div>";
-            fragment += "</div>";
+            var fragment = ""
+              + me.createDateFragment(diaryDate)
+              + "<div class='" + me.DIARY_TITLE_CLASS + "'>"
+              + "<h2>"
+              + "<a href='" + Util.generateDiaryPermalinkUrl(diary.date) + "'>"
+              + diary.title
+              + "</a>"
+              + "</h2>"
+              + "</div>"
+              + "<hr>"
+              + "<div class='" + me.DIARY_CONTENT_CLASS + "'>"
+              + diary.content
+              + "</div>";
             return fragment;
         },
 
@@ -131,17 +129,17 @@ define(["util", "view.comment", "view.monthlydiary", "jquery", "underscore", "jq
         createDateFragment: function(date) {
             var me = this;
             var monthStr = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-            var fragment = "";
-            fragment += "<div class='" + me.DIARY_DATE_CLASS + "'>";
-            fragment += "<div class='" + me.DIARY_DATE_MONTH_CLASS + "'>";
-            fragment += monthStr[date.getMonth()];
-            fragment += "</div>";
-            fragment += "<div class='" + me.DIARY_DATE_DATE_CLASS + "'>";
-            fragment += date.getDate();
-            fragment += "</div>";
-            fragment += "<div class='" + me.DIARY_DATE_YEAR_CLASS + "'>";
-            fragment += date.getFullYear();
-            fragment += "</div></div>";
+            var fragment = ""
+              + "<div class='" + me.DIARY_DATE_CLASS + "'>"
+              + "<div class='" + me.DIARY_DATE_MONTH_CLASS + "'>"
+              + monthStr[date.getMonth()]
+              + "</div>"
+              + "<div class='" + me.DIARY_DATE_DATE_CLASS + "'>"
+              + date.getDate()
+              + "</div>"
+              + "<div class='" + me.DIARY_DATE_YEAR_CLASS + "'>"
+              + date.getFullYear()
+              + "</div></div>";
             return fragment;
         },
 
@@ -183,12 +181,9 @@ define(["util", "view.comment", "view.monthlydiary", "jquery", "underscore", "jq
                 // create html fragment.
                 var fragment = "<ul class='list-unstyled'>";
                 _.each(diaryList, function(diary){
-                    var _date = new Date(diary.date)
-                    var year = _date.getFullYear();
-                    var month = "" + ((_date.getMonth() + 1) < 10 ? "0" : "") + (_date.getMonth() + 1)
-                    var date = "" + (_date.getDate() < 10 ? "0" : "") + _date.getDate();
-                    var dateStr = year + "/" + month + "/" + date;
-                    var href = "/diary/" + year + "/" + month + "/" + date;
+                    var _date = new Date(diary.date);
+                    var href = Util.generateDiaryPermalinkUrl(_date);
+                    var dateStr = Util.generateDateStr(_date);
                     fragment += "<li>"
                         + "<a href='" + href + "'>"
                         + diary.title + " (" + dateStr + ")"

@@ -8,6 +8,14 @@ define(["util", "jquery", "underscore"], function(Util, $, _){
         // consts.
         SHOW_ALL_MONTHS: "全ての月を表示",
         HIDE_MONTHS: "月を隠す",
+
+        ID_DISPLAY_BLOCK: "monthlyDiaryBlock",
+        CLASS_MONTHLY_DIARY_LIST: "monthly-diary-list",
+        CLASS_SHOW_TOP5: "monthly-diary-top5-show",
+        CLASS_SHOW_ALL: "monthly-diary-all-show",
+        CLASS_TOGGLE: "show-monthly-diary-toggle",
+        CLASS_OVERFLOWED_MONTH: "month-overflow",
+
         /**
          * show monthly diary entry.
          */
@@ -15,24 +23,24 @@ define(["util", "jquery", "underscore"], function(Util, $, _){
             var me = this;
             if (monthlydiaries.length > 0) {
                 // create html fragment.
-                var fragment = "<ul class='list-unstyled monthly-diary-list monthly-diary-top5-show'>";
+                var fragment = "<ul class='list-unstyled " + me.CLASS_MONTHLY_DIARY_LIST + " " + me.CLASS_SHOW_TOP5 + "'>";
                 var count = 0;
                 _.each(monthlydiaries, function(diary){
                     var str = "" + diary.year + "-" + diary.month + " (" + diary.count + ")";
                     var href = Util.generateMonthLinkUrl(diary.year, diary.month);
                     fragment += "<li"
-                      + (count >= 5 ? " class='month-overflow'" : "")
+                      + (count >= 5 ? " class='" + me.CLASS_OVERFLOWED_MONTH + "'" : "")
                       + "><a href='" + href + "'>" + str + "</a></li>";
                     count++;
                 });
                 fragment += "</ul>";
                 
-                var block = $("div#monthlyDiaryBlock");
+                var block = $("div#" + me.ID_DISPLAY_BLOCK);
                 block.html(fragment);
 
                 // toggle switch
                 if (count >= 5) {
-                    var toggle = $("<div class='show-monthly-diary-toggle'></div");
+                    var toggle = $("<div class='" + me.CLASS_TOGGLE + "'></div");
                     toggle.html(me.SHOW_ALL_MONTHS);
                     toggle.on("click", function(event){
                         me._showAllMonths(event);
@@ -48,11 +56,11 @@ define(["util", "jquery", "underscore"], function(Util, $, _){
         _showAllMonths: function(){
             var me = this;
 
-            $("div#monthlyDiaryBlock .monthly-diary-list")
-            .addClass('monthly-diary-all-show')
-            .removeClass('monthly-diary-top5-show');
+            $("div#" + me.ID_DISPLAY_BLOCK + " ." + me.CLASS_MONTHLY_DIARY_LIST)
+            .addClass(me.CLASS_SHOW_ALL)
+            .removeClass(me.CLASS_SHOW_TOP5);
 
-            $("div#monthlyDiaryBlock div.show-monthly-diary-toggle")
+            $("div#" + me.ID_DISPLAY_BLOCK + " div." + me.CLASS_TOGGLE)
             .off()
             .on("click", function(event){
                 me._hideMonths(event);
@@ -66,11 +74,11 @@ define(["util", "jquery", "underscore"], function(Util, $, _){
         _hideMonths: function(){
             var me = this;
 
-            $("div#monthlyDiaryBlock .monthly-diary-list")
-            .addClass('monthly-diary-top5-show')
-            .removeClass('monthly-diary-all-show');
+            $("div#" + me.ID_DISPLAY_BLOCK + " ." + me.CLASS_MONTHLY_DIARY_LIST)
+            .addClass(me.CLASS_SHOW_TOP5)
+            .removeClass(me.CLASS_SHOW_ALL);
 
-            $("div#monthlyDiaryBlock div.show-monthly-diary-toggle")
+            $("div#" + me.ID_DISPLAY_BLOCK + " div." + me.CLASS_TOGGLE)
             .off()
             .on("click", function(event){
                 me._showAllMonths(event);

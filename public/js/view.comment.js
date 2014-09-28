@@ -10,7 +10,6 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
          */
         COMMENT_STRING: "コメント",
         COMMENT_NOT_EXIST: "コメントはありません",
-        COMMENT_CLASS: "comment",
         COMMENT_HOUR_BEFORE: "時間前",
         COMMENT_MINUTE_BEFORE: "分前",
         COMMENT_FORM_COVER: "コメントを入れる",
@@ -19,6 +18,16 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
         COMMENT_FORM_SUBMIT: "OK",
         COMMENT_POST_FAILED: "コメントの投稿に失敗しました。",
         POST_URL: "/comment",
+
+        CLASS_COMMENT_BLOCK: "comment",
+        CLASS_LIST: "comment-list",
+        CLASS_COMMENT: "comment-comment",
+        CLASS_DATE: "comment-date",
+        CLASS_SPEAKER: "comment-speaker",
+        CLASS_COVER: "comment-cover",
+        CLASS_FORM: "comment-form",
+        CLASS_POST_IMAGE: "comment-post-image",
+        CLASS_POST_ERROR: "comment-post-error",
 
         /**
          * create comment block element.
@@ -30,7 +39,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             var me = this;
             comments = comments || [];
 
-            var el = $("<div class='"+ me.COMMENT_CLASS + "'>");
+            var el = $("<div class='"+ me.CLASS_COMMENT_BLOCK + "'>");
             $(me._createCommentFragment(comments)).appendTo(el);
             me._generatePostFormElement(date).appendTo(el);
 
@@ -44,7 +53,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             var me = this;
             var fragment = "";
             fragment += "<h3>" + me.COMMENT_STRING + "</h3>";
-            fragment += "<ul class='comment-list'>";
+            fragment += "<ul class='" + me.CLASS_LIST + "'>";
             if (comments.length > 0) {
                 _.each(comments, function(comment){
                     fragment += me._generateCommentFragment(comment);
@@ -64,16 +73,16 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
          */
         _generateCommentFragment: function(comment){
             var me = this;
-            var fragment = "";
-            fragment += "<li class='list-unstyled'>";
-            fragment += "<span class='comment-speaker'>";
-            fragment += comment.speaker;
-            fragment += ":</span> <span class='comment-comment'>";
-            fragment += comment.comment;
-            fragment += "</span> <span class='comment-date'>(";
-            fragment += me._generateDateFragment(new Date(comment.postDate));
-            fragment += ")</span>";
-            fragment += "</li>";
+            var fragment = ""
+              + "<li class='list-unstyled'>"
+              + "<span class='" + me.CLASS_SPEAKER + "'>"
+              + comment.speaker
+              + ":</span> <span class='" + me.CLASS_COMMENT + "'>"
+              + comment.comment
+              + "</span> <span class='" + me.CLASS_DATE + "'>("
+              + me._generateDateFragment(new Date(comment.postDate))
+              + ")</span>"
+              + "</li>";
             return fragment;
         },
 
@@ -113,13 +122,13 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
          */
         _generatePostFormElement: function(date){
             var me = this;
-            var cover = $("<div class='comment-cover'><span>" + me.COMMENT_FORM_COVER + "</span></div>");
+            var cover = $("<div class='" + me.CLASS_COVER + "'><span>" + me.COMMENT_FORM_COVER + "</span></div>");
             cover.on("click", function(event){
                 // create form and remove cover.
                 var momentDate = new moment(date);
                 var idSuffix = _.random(100000, 999999);
 
-                var fragment = "<form class='comment-form form-horizontal' role='form'>"
+                var fragment = "<form class='" + me.CLASS_FORM + " form-horizontal' role='form'>"
                 + "<div class='form-group'>"
                 + "<label for='input-speaker-" + idSuffix + "' class='col-sm-2 control-label'>" + me.COMMENT_FORM_NAME + "</label>"
                 + "<div class='col-sm-10'>"
@@ -161,8 +170,8 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             var divComment = $(event.target).parent().parent().parent().parent();
 
             $("input[type=button]", divComment).css("display", "none");
-            $("<img src='img/postloader.gif' class='comment-post-image'>").appendTo($("form.comment-form", divComment));
-            $("div.comment-post-error", divComment).remove();
+            $("<img src='img/postloader.gif' class='" + me.CLASS_POST_IMAGE + "'>").appendTo($("form." + me.CLASS_FORM, divComment));
+            $("div." + me.CLASS_POST_ERROR, divComment).remove();
 
             // get comment data.
             var comment = {
@@ -177,16 +186,16 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
                 var fragment = me._generateCommentFragment(_.extend({
                     postDate: new Date()
                 }, comment));
-                $(fragment).appendTo($("ul.comment-list", divComment));
+                $(fragment).appendTo($("ul." + me.CLASS_LIST , divComment));
                 // remove form and show cover.
-                $("form.comment-form", divComment).remove();
+                $("form." + me.CLASS_FORM, divComment).remove();
                 me._generatePostFormElement(comment.date).appendTo(divComment);
             }, function(){
                 // show comment post button and error message.
                 $("input[type=button]", divComment).css("display", "block");
-                $("img.comment-post-image").remove();
-                $("<div class='comment-post-error'>" + me.COMMENT_POST_FAILED + "</div>")
-                  .appendTo($("form.comment-form", divComment));
+                $("img." + me.CLASS_POST_IMAGE).remove();
+                $("<div class='" + me.CLASS_POST_ERROR + "'>" + me.COMMENT_POST_FAILED + "</div>")
+                  .appendTo($("form." + me.CLASS_FORM, divComment));
             });
         },
 
