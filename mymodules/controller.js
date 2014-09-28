@@ -51,7 +51,13 @@ Controller.prototype = {
       });
     };
 
-    me.getDiaryModels(me.createCondition(req.query), onGetDiaryModels);
+    var onFailure = function(err){
+      // error response.
+      res.status(500);
+      res.send("Failed to get diary.");
+    };
+
+    me.getDiaryModels(me.createCondition(req.query), onGetDiaryModels, onFailure);
   },
 
   /**
@@ -111,9 +117,10 @@ Controller.prototype = {
    *   @param cond.startDate
    *   @param cond.endDate
    * @param callback callback function. function(Array<DiaryModel>)
+   * @param errCallback callback function.
    */
-  getDiaryModels: function(cond, callback){
-    	DiaryFuncs.createModels(cond, callback);
+  getDiaryModels: function(cond, callback, errCallback){
+    	DiaryFuncs.createModels(cond, callback, errCallback);
   },
 
   /**
@@ -179,6 +186,9 @@ Controller.prototype = {
       month: month
     }, function(dateList) {
       res.json(dateList);
+    }, function(err) {
+      res.status(500);
+      res.send("Failed to get date list.");
     });
   },
 
@@ -199,6 +209,10 @@ Controller.prototype = {
       res.set("Content-type", "application/rss+xml");
       res.send(xml);
     };
+    var onFailure = function(err) {
+      res.status(500);
+      res.send();
+    }
     feed.getRss20(onSuccess);
   },
 
@@ -210,7 +224,11 @@ Controller.prototype = {
       res.set("Content-type", "application/atom+xml");
       res.send(xml);
     };
-    feed.getAtom(onSuccess);
+    var onFailure = function(err) {
+      res.status(500);
+      res.send();
+    }
+    feed.getAtom(onSuccess, onFailure);
   },
 
   /**
@@ -248,7 +266,8 @@ Controller.prototype = {
     MonthlyDiary.getNumDiaryEntries(function(d){
       res.json(d);
     }, function(err){
-      res.send([]);
+      res.status(500);
+      res.send();
     });
   }
 };

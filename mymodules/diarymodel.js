@@ -64,8 +64,9 @@ var funcs = {
    *   @param cond.startDate
    *   @param cond.endDate
    * @param callback callback function. function(Array<DiaryModel>)
+   * @param errCallback callback function.
    */
-  createModels: function(cond, callback){
+  createModels: function(cond, callback, errCallback){
     var me = this;
     var onGetModel = function(diaries) {
       var diaryModels = [];
@@ -75,7 +76,7 @@ var funcs = {
     	  callback(diaryModels);
     };
 
-    me.getModelFromStorage(cond, onGetModel);
+    me.getModelFromStorage(cond, onGetModel, errCallback);
   },
 
   /**
