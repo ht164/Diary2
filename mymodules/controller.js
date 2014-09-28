@@ -3,8 +3,8 @@
  */
 
 var _ = require('underscore');
-var DiaryModel = require('../mymodules/diarymodel').model;
-var DiaryFuncs = require('../mymodules/diarymodel').funcs;
+var moment = require('moment');
+var Diary = require('../mymodules/diarymodel');
 var Comment = require('../mymodules/commentmodel');
 var MonthlyDiary = require('../mymodules/monthlydiarymodel');
 var util = require('../mymodules/util');
@@ -50,7 +50,13 @@ Controller.prototype = {
       });
     };
 
-    me.getDiaryModels(me.createCondition(req.query), onGetDiaryModels);
+    var onFailure = function(err){
+      // error response.
+      res.status(500);
+      res.send("Failed to get diary.");
+    };
+
+    me.getDiaryModels(me.createCondition(req.query), onGetDiaryModels, onFailure);
   },
 
   /**
@@ -70,35 +76,34 @@ Controller.prototype = {
     }
     cond.num = cond.num || consts.condDefaultNum;
 
-    if (query.startDate) {
-    	  var startDateStr = query.startDate;
-    	  cond.startDate = new Date(startDateStr.substr(0, 4) + "-" + startDateStr.substr(4, 2) + "-" + startDateStr.substr(6, 2));
+    if (query.date) {
+      var dateStr = query.date;
+      var dateCondition = {};
+
+      switch(dateStr.length){
+        case 4:
+          // year only.
+          dateCondition = util.generateDateCondition(dateStr);
+          break;
+        case 6:
+          // year and month.
+          dateCondition = util.generateDateCondition(dateStr.substr(0, 4), dateStr.substr(4, 2));
+          break;
+        case 8:
+          // year, month and date.
+          dateCondition = util.generateDateCondition(
+            dateStr.substr(0, 4),
+            dateStr.substr(4, 2),
+            dateStr.substr(6, 2)
+          );
+          break;
+      }
+      _.extend(cond, dateCondition);
     }
 
-    if (query.date) {
-    	  var dateStr = query.date;
-    	  var startYearStr, startMonthStr, startDateStr;
-    	  var endYearStr, endMonthStr, endDateStr;
-
-    	  // year
-    	  startYearStr = endYearStr = dateStr.substr(0, 4);
-    	  // month
-    	  if (dateStr.length > 4) {
-    	    startMonthStr = endMonthStr = dateStr.substr(4, 2);
-    	  } else {
-    	    startMonthStr = "12";
-    	    endMonthStr = "01";
-    	  }
-    	  // date
-    	  if (dateStr.length > 6) {
-    	    startDateStr = endDateStr = dateStr.substr(6, 2);
-    	  } else {
-         startDateStr = util.getLastDayOfMonth(endYearStr, endMonthStr);
-         endDateStr = "01";
-    	  }
-
-    	  cond.startDate = cond.startDate || new Date(startYearStr + "-" + startMonthStr + "-" + startDateStr);
-    	  cond.endDate = new Date(endYearStr + "-" + endMonthStr + "-" + endDateStr);
+    // if query has startDate, overwrite startDate of condition.
+    if (query.startDate) {
+      cond.startDate = (new moment(query.startDate, "YYYYMMDD")).toDate();
     }
 
     return cond;
@@ -111,9 +116,10 @@ Controller.prototype = {
    *   @param cond.startDate
    *   @param cond.endDate
    * @param callback callback function. function(Array<DiaryModel>)
+   * @param errCallback callback function.
    */
-  getDiaryModels: function(cond, callback){
-    	DiaryFuncs.createModels(cond, callback);
+  getDiaryModels: function(cond, callback, errCallback){
+    	Diary.createModels(cond, callback, errCallback);
   },
 
   /**
@@ -132,7 +138,7 @@ Controller.prototype = {
    */
   post: function(req, res){
     // create diary model
-    var diary = new DiaryModel();
+    var diary = new Diary.DiaryModel();
     diary.title = req.param("title");
     diary.contentMarkdown = req.param("contents");
     diary.date = new Date(req.param("date"));
@@ -160,7 +166,7 @@ Controller.prototype = {
    */
   getRecentDiaryList: function(req, res){
     var me = this;
-    DiaryFuncs.getRecentDiaryList(function(diaryList){
+    Diary.getRecentDiaryList(function(diaryList){
       res.json(diaryList);
     });
   },
@@ -174,11 +180,14 @@ Controller.prototype = {
     var year = ret[1];
     var month = ret[3];
 
-    DiaryFuncs.getDiaryHavingDateList({
+    Diary.getDiaryHavingDateList({
       year: year,
       month: month
     }, function(dateList) {
       res.json(dateList);
+    }, function(err) {
+      res.status(500);
+      res.send("Failed to get date list.");
     });
   },
 
@@ -199,6 +208,10 @@ Controller.prototype = {
       res.set("Content-type", "application/rss+xml");
       res.send(xml);
     };
+    var onFailure = function(err) {
+      res.status(500);
+      res.send();
+    }
     feed.getRss20(onSuccess);
   },
 
@@ -210,7 +223,11 @@ Controller.prototype = {
       res.set("Content-type", "application/atom+xml");
       res.send(xml);
     };
-    feed.getAtom(onSuccess);
+    var onFailure = function(err) {
+      res.status(500);
+      res.send();
+    }
+    feed.getAtom(onSuccess, onFailure);
   },
 
   /**
@@ -248,7 +265,8 @@ Controller.prototype = {
     MonthlyDiary.getNumDiaryEntries(function(d){
       res.json(d);
     }, function(err){
-      res.send([]);
+      res.status(500);
+      res.send();
     });
   }
 };

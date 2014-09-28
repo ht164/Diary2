@@ -64,18 +64,19 @@ var funcs = {
    *   @param cond.startDate
    *   @param cond.endDate
    * @param callback callback function. function(Array<DiaryModel>)
+   * @param errCallback callback function.
    */
-  createModels: function(cond, callback){
+  createModels: function(cond, callback, errCallback){
     var me = this;
     var onGetModel = function(diaries) {
-    	  var diaryModels = [];
-    	  for (var i = 0; i < diaries.length; i++) {
-    	  	diaryModels.push(me.createModel(diaries[i]));
-    	  }
+      var diaryModels = [];
+      _.each(diaries, function(diary){
+        diaryModels.push(me.createModel(diary));
+      });
     	  callback(diaryModels);
     };
 
-    me.getModelFromStorage(cond, onGetModel);
+    me.getModelFromStorage(cond, onGetModel, errCallback);
   },
 
   /**
@@ -95,7 +96,6 @@ var funcs = {
       if (cond.endDate) condition_date["$gte"] = cond.endDate;
       condition.date = condition_date;
     }
-    console.log(condition);
     DiaryMongooseModel
     .find(condition)
     .limit(cond.num || consts.condDefaultNum)
@@ -190,22 +190,12 @@ var funcs = {
     var condition = {};
     if (!cond.month) {
       // specify year only.
-      condition.startDate = new Date("" + cond.year + "-12-31");
-      condition.endDate = new Date("" + cond.year + "-01-01");
+      condition = util.generateDateCondition(cond.year);
       condition.num = 366;  // max number of date of year.
     } else {
       // specify year and month.
-      (function(){
-        var strY = "" + cond.year;
-        var m = cond.month;
-        var strM = m < 10 ? "0" + m : "" + m;
-        var d = util.getLastDayOfMonth(cond.year, cond.month);
-        var strD = d < 10 ? "0" + d : "" + d;
-
-        condition.startDate = new Date(strY + "-" + strM + "-" + strD);
-        condition.endDate = new Date(strY + "-" + strM + "-01");
-        condition.num = 31;  // max number of date of month.
-      })();
+      condition = util.generateDateCondition(cond.year, cond.month);
+      condition.num = 31;  // max number of date of month.
     }
 
     // callback
@@ -223,7 +213,12 @@ var funcs = {
     };
 
     me.getModelFromStorage(condition, onSuccess, onFailure);
-  }
+  },
+
+  /**
+   * class
+   */
+  DiaryModel: DiaryModel
 };
 
 /**
@@ -237,7 +232,4 @@ var DiaryMongooseModel = mongoose.model("Diary", mongoose.Schema({
 	createDate: Date
 }));
 
-module.exports = {
-  model: DiaryModel,
-  funcs: funcs
-};
+module.exports = funcs;

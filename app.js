@@ -10,7 +10,6 @@ var logger = require('./mymodules/logger');
 var consts = require('./mymodules/consts');
 
 var routes = require('./routes/index');
-var users = require('./routes/user');
 var get = require('./routes/get');
 var post = require('./routes/post');
 var recent = require('./routes/recent');
@@ -40,7 +39,6 @@ app.use(serveStatic(path.join(__dirname, 'public'), {
 }));
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/get', get);
 app.use('/post', post);
 app.use('/recent', recent);

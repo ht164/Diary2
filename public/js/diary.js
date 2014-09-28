@@ -2,7 +2,7 @@
  * Diary Model
  */
 
-define(["jquery"], function($){
+define(["jquery", "moment"], function($, moment){
     /**
      * private class
      */
@@ -61,13 +61,7 @@ define(["jquery"], function($){
                 }
             }
             if (cond.startDate) {
-                condition.startDate = (function(){
-                    var y = cond.startDate.getFullYear();
-                    var m = cond.startDate.getMonth() + 1;
-                    var d = cond.startDate.getDate();
-
-                    return "" + y + (m < 10 ? "0" + m : m) + (d < 10 ? "0" + d : d);
-                })();
+                condition.startDate = (new moment(cond.startDate)).format("YYYYMMDD");
             }
 
             $.ajax({
@@ -102,6 +96,8 @@ define(["jquery"], function($){
          * get diary-having date list from web server.
          *
          * @param cond
+         *   @param cond.year
+         *   @param cond.month
          * @param callback callback function is success.
          * @param errCallback callback function if failure.
          */

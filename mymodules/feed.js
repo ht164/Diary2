@@ -5,8 +5,9 @@
 var _ = require('underscore');
 var RSS = require('rss');
 var Atom = require('../mymodules/atom');
-var DiaryFuncs = require('../mymodules/diarymodel').funcs;
+var Diary = require('../mymodules/diarymodel');
 var consts = require('../mymodules/consts');
+var util = require('../mymodules/util');
 
 /**
  * consts.
@@ -53,7 +54,7 @@ var Feed = {
     var cond = {
       num: consts.feedItemNum
     };
-    DiaryFuncs.createModels(cond, callback, errCallback);
+    Diary.createModels(cond, callback, errCallback);
   },
 
   /**
@@ -101,28 +102,14 @@ var Feed = {
         title: diary.title,
         description: diary.content,
         summary: me._generateSummary(diary.content),
-        url: consts.siteUrlWithScheme + me._generateDiaryUri(diary),
-        id: consts.feedIdScope + me._generateDiaryUri(diary),
+        url: consts.siteUrlWithScheme + util.generateDiaryUrl(diary.date),
+        id: consts.feedIdScope + util.generateDiaryUrl(diary.date),
         author: consts.siteAuthor,
         date: diary.createDate
       });
     });
 
     return feed.xml();
-  },
-
-  // TODO move to util module.
-  /**
-   * generate diary uri.
-   */
-  _generateDiaryUri: function(diary) {
-    var year = diary.date.getFullYear();
-    var month = diary.date.getMonth() + 1;
-    month = (month < 10 ) ? "0" + month : month;
-    var date = diary.date.getDate();
-    date = (date < 10) ? "0" + date : date;
-
-    return "/diary/" + year + "/" + month + "/" + date;
   },
 
   /**

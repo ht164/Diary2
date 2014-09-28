@@ -5,12 +5,20 @@
 define(["view", "diary", "calendar", "underscore"], 
     function(view, diary, Calendar, _){
     return {
+        /**
+         * properties.
+         */
         // loading date.
         _loadingDate: null,
         // last loaded diary's date.
         _lastDiaryDate: null,
         // end date.
         _endDate: null,
+
+        /**
+         * consts.
+         */
+        NUM_DIARY_PER_LOAD: 5,
 
         /**
          * show recent diaries.
@@ -77,7 +85,7 @@ define(["view", "diary", "calendar", "underscore"],
             };
             // get recent diaryies.
             cond = cond || {};
-            cond.num = 5;
+            cond.num = me.NUM_DIARY_PER_LOAD;
             diary.getDiaries(cond, onLoad, onFail);
         },
 
