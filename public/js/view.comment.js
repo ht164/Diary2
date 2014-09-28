@@ -73,16 +73,16 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
          */
         _generateCommentFragment: function(comment){
             var me = this;
-            var fragment = "";
-            fragment += "<li class='list-unstyled'>";
-            fragment += "<span class='" + me.CLASS_SPEAKER + "'>";
-            fragment += comment.speaker;
-            fragment += ":</span> <span class='" + me.CLASS_COMMENT + "'>";
-            fragment += comment.comment;
-            fragment += "</span> <span class='" + me.CLASS_DATE + "'>(";
-            fragment += me._generateDateFragment(new Date(comment.postDate));
-            fragment += ")</span>";
-            fragment += "</li>";
+            var fragment = ""
+              + "<li class='list-unstyled'>"
+              + "<span class='" + me.CLASS_SPEAKER + "'>"
+              + comment.speaker
+              + ":</span> <span class='" + me.CLASS_COMMENT + "'>"
+              + comment.comment
+              + "</span> <span class='" + me.CLASS_DATE + "'>("
+              + me._generateDateFragment(new Date(comment.postDate))
+              + ")</span>"
+              + "</li>";
             return fragment;
         },
 
