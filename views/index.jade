@@ -48,5 +48,15 @@ block content
                 a(href='/feed/atom.xml')
                   div.social-link-icon.social-link-icon-rss
                   ="Atom"
+              if twitterUserName !== undefined
+                li
+                  a(href='https://twitter.com/#{twitterUserName}')
+                    div.social-link-icon.social-link-icon-twitter
+                    ="Twitter"
+              if githubUserName !== undefined
+                li
+                  a(href='https://github.com/#{githubUserName}')
+                    div.social-link-icon.social-link-icon-github
+                    ="GitHub"
 
   div.scroll-to-top.scroll-to-top-init
