@@ -23,7 +23,10 @@ var consts = {
     feedUrlRss10: "/feed/rss10.rdf",
     feedUrlRss20: "/feed/rss20.xml",
     feedUrlAtom: "/feed/atom.xml",
-    feedIdScope: "tag:hostname,2014:"
+    feedIdScope: "tag:hostname,2014:",
+
+    twitterUserName: "ht164",
+    githubUserName: "ht164"
 };
 
 module.exports = consts;

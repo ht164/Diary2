@@ -48,5 +48,9 @@ block content
                 a(href='/feed/atom.xml')
                   div.social-link-icon.social-link-icon-rss
                   ="Atom"
+              if twitterUserName !== undefined
+                li
+                  a(href='http://twitter.com/#{twitterUserName}')
+                    div="Twitter"
 
   div.scroll-to-top.scroll-to-top-init
