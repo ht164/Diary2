@@ -14,7 +14,9 @@ var handler = function(req, res) {
     siteIntroduction: consts.siteIntroduction,
     recentEntryTitle: consts.recentEntryTitle,
     // show twitter link.
-    twitterUserName: consts.twitterUserName
+    twitterUserName: consts.twitterUserName,
+    // show github link.
+    githubUserName: consts.githubUserName
   });
 };
 

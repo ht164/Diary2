@@ -53,5 +53,10 @@ block content
                   a(href='https://twitter.com/#{twitterUserName}')
                     div.social-link-icon.social-link-icon-twitter
                     ="Twitter"
+              if githubUserName !== undefined
+                li
+                  a(href='https://github.com/#{githubUserName}')
+                    div.social-link-icon.social-link-icon-github
+                    ="GitHub"
 
   div.scroll-to-top.scroll-to-top-init

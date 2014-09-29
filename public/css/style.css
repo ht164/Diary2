@@ -157,3 +157,6 @@ div.social-link-icon-rss {
 div.social-link-icon-twitter {
     background: url('/img/images.png') no-repeat -80px -32px;
 }
+div.social-link-icon-github {
+    background: url('/img/images.png') no-repeat -112px 0px;
+}
