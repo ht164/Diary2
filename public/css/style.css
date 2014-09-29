@@ -140,12 +140,23 @@ div.show-monthly-diary-toggle {
 div.social-links {
     font-size: 125%;
 }
+div.social-links li {
+    margin: 10px 0;
+}
+
 div.social-link-icon {
     width: 32px;
     height: 32px;
-    margin: 0px 2px;
+    margin: 0px 8px 0px 2px;
+    display: inline-block;
+    vertical-align: middle;
 }
 div.social-link-icon-rss {
-    display: inline-block;
     background: url('/img/images.png') no-repeat -80px 0px;
+}
+div.social-link-icon-twitter {
+    background: url('/img/images.png') no-repeat -80px -32px;
+}
+div.social-link-icon-github {
+    background: url('/img/images.png') no-repeat -112px 0px;
 }

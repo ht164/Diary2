@@ -12,7 +12,11 @@ var handler = function(req, res) {
     siteUrl: consts.siteUrl,
     siteIntroductionTitle: consts.siteIntroductionTitle,
     siteIntroduction: consts.siteIntroduction,
-    recentEntryTitle: consts.recentEntryTitle
+    recentEntryTitle: consts.recentEntryTitle,
+    // show twitter link.
+    twitterUserName: consts.twitterUserName,
+    // show github link.
+    githubUserName: consts.githubUserName
   });
 };
 
