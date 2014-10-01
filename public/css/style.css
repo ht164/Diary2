@@ -152,11 +152,14 @@ div.social-link-icon {
     vertical-align: middle;
 }
 div.social-link-icon-rss {
-    background: url('/img/images.png') no-repeat -80px 0px;
+    background: url('/img/images.png') no-repeat -40px 0px;
+    background-size: 135px 40px;
 }
 div.social-link-icon-twitter {
-    background: url('/img/images.png') no-repeat -80px -32px;
+    background: url('/img/images.png') no-repeat -72px 0px;
+    background-size: 135px 40px;
 }
 div.social-link-icon-github {
-    background: url('/img/images.png') no-repeat -112px 0px;
+    background: url('/img/images.png') no-repeat -103px 0px;
+    background-size: 135px 40px;
 }
