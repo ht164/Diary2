@@ -60,7 +60,10 @@ module.exports = function (grunt) {
       frontend: {
         files: [{
           expand: true,
-          src: ['public/img/**', 'public/html/**'],
+          src: [
+            'public/img/images.png',
+            'public/img/*.gif',
+            'public/html/**'],
           dest: 'release/'
         }, {
           expand: true,
