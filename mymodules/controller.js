@@ -23,14 +23,26 @@ Controller.prototype = {
    */
   get: function(req, res){
     var me = this;
+
+    // response function.
+    // called when all diary's comment loaded or no diary.
+    var response = function(models){
+      // return json, so don't use view object.
+      res.json(models);
+    };
+
     var onGetDiaryModels = function(models){
+      // if no diary, response immediately.
+      if (models.length == 0) {
+        response(models);
+      }
+
       var loadedComment = 0;
       var afterLoadingComments = function(){
         loadedComment++;
         if (loadedComment == models.length){
           // all diary models' comment loaded.
-          // return json, so don't use view object.
-          res.json(models);
+          response(models);
         }
       };
 
