@@ -24,6 +24,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
         CLASS_COMMENT: "comment-comment",
         CLASS_DATE: "comment-date",
         CLASS_SPEAKER: "comment-speaker",
+        CLASS_NOT_EXIST: "comment-not-exist",
         CLASS_COVER: "comment-cover",
         CLASS_FORM: "comment-form",
         CLASS_POST_IMAGE: "comment-post-image",
@@ -59,7 +60,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
                     fragment += me._generateCommentFragment(comment);
                 });
             } else {
-                fragment += "<li class='list-unstyled'>" + me.COMMENT_NOT_EXIST + "</li>";
+                fragment += "<li class='list-unstyled " + me.CLASS_NOT_EXIST + "'>" + me.COMMENT_NOT_EXIST + "</li>";
             }
             fragment += "</ul>";
             return fragment;
@@ -172,6 +173,7 @@ define(["jquery", "underscore", "moment"], function($, _, moment){
             $("input[type=button]", divComment).css("display", "none");
             $("<img src='img/postloader.gif' class='" + me.CLASS_POST_IMAGE + "'>").appendTo($("form." + me.CLASS_FORM, divComment));
             $("div." + me.CLASS_POST_ERROR, divComment).remove();
+            $("li." + me.CLASS_NOT_EXIST, divComment).remove();
 
             // get comment data.
             var comment = {
