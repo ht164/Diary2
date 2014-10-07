@@ -107,6 +107,9 @@ module.exports = function (grunt) {
         }, {
           from: "/js/app",
           to: "/js/<%= pkg.version %>/app"
+        }, {
+          from: "      script(src='http://localhost:35729/livereload.js')\n",
+          to: ""
         }]
       }
     }
