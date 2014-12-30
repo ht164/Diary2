@@ -41,6 +41,9 @@ DiaryModel.prototype = {
     // set create date.
     me.createDate = new Date();
 
+    // connect mongodb if not connected.
+    storage.getMongoose();
+
     // find diary entry that have same date.
     // if diary entry doesn't exist, create new.
     DiaryMongooseModel.findOneAndUpdate({ date: me.date }, me, { upsert: true }, function(err) {
