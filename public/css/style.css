@@ -52,6 +52,27 @@ div.diary-date-year {
     color: inherit;
 }
 
+div.diary-content p {
+    font-size: 16px;
+}
+
+div.diary-content h1,
+div.diary-content h2 {
+    border-left: 7px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    padding: .2em .3em;
+}
+div.diary-content h3 {
+    border-left: 4px solid #ccc;
+    border-bottom: 1.5px solid #ccc;
+    padding: .2em .3em;
+}
+div.diary-content h4 {
+    border-left: 3px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: .15em .25em;
+}
+
 /* image auto shrink */
 div.diary img {
     max-width: 100%;
