@@ -5,6 +5,7 @@ var serveStatic = require('serve-static');
 //var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var basicAuth = require('basic-auth-connect');
 
 var logger = require('./mymodules/logger');
 var consts = require('./mymodules/consts');
@@ -29,6 +30,14 @@ app.use(logger.loggerHttp);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+
+// use BASIC authentication for posting diary page.
+app.all('/html/*', basicAuth(function(user, password){
+    console.log('user: ' + user + ', password: ' + password);
+    return user === 'user' && password === 'pass';
+}));
+
+// add static file paths.
 app.use(serveStatic(path.join(__dirname, 'public'), {
     maxAge: consts.maxAgeMsec,
     setHeaders: function(res, path) {
