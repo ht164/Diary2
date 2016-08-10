@@ -1,0 +1,6 @@
+div.drop-area {
+    width: 400px;
+    height: 200px;
+    border: 4px dotted #AABBFF;
+    border-radius: 16px;
+}

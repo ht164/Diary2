@@ -3,6 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Diary Post</title>
+    <link rel="stylesheet" href="/css/editstyle.css">
+    <script type="text/javascript" src="/components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // can use File API?
+            if (!window.FileReader) {
+                console.log("cannot upload file because File API is not available.");
+                return false;
+            }
+            var d = $("#fileDropArea");
+
+            // event canceller.
+            var cancelEvent = function(ev) {
+                ev.preventDefault();
+                ev.stopPropagation();
+                return false;
+            };
+
+            // cancel event handler.
+            var cancelEventHandler = function(ev) {
+                return cancelEvent(ev);
+            };
+
+            // event handler on drop.
+            var dropEventHandler = function(ev) {
+                var f = ev.originalEvent.dataTransfer.files[0];
+
+                // read file.
+                var fr = new FileReader();
+                fr.onload = function(_ev) {
+                    d.text("[" + f.name + "]" + _ev.target.result);
+                };
+                fr.readAsText(f);
+
+                // cancel default event.
+                cancelEvent(ev);
+                return false;
+            }
+
+            d.bind("dragenter", cancelEventHandler);
+            d.bind("dragover", cancelEventHandler);
+            d.bind("drop", dropEventHandler);
+        });
+    </script>
 </head>
 <body>
 <form method="POST" action="/post">
@@ -22,5 +66,8 @@
 </table>
 <input type="submit" value="Create!!">
 </form>
+<div class="drop-area" id="fileDropArea">
+    Drag and drop file here to upload.
+</div>
 </body>
 </html>
