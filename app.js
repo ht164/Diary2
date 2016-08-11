@@ -6,9 +6,11 @@ var serveStatic = require('serve-static');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var basicAuth = require('basic-auth-connect');
+var multer = require('multer');
 
 var logger = require('./mymodules/logger');
 var consts = require('./mymodules/consts');
+var controller = require('./mymodules/controller');
 
 var routes = require('./routes/index');
 var get = require('./routes/get');
@@ -54,6 +56,12 @@ app.use('/recent', recent);
 app.use('/feed', feed);
 app.use('/comment', comment);
 app.use('/monthlydiary', monthlydiary);
+// handle file-uploading using multer.
+var upload = multer();
+app.post('/upload', upload.array('f'), function(req, res, next) {
+    var c = new controller();
+    c.upload(req, res, next);
+});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
