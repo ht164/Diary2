@@ -2,6 +2,7 @@
  * File Storage
  */
 var fs = require('fs');
+var crypto = require('crypto');
 var consts = require('../mymodules/consts');
 var imagemagick = require('imagemagick-native');
 
@@ -23,7 +24,10 @@ var FileStorage = {
       var buf = files[i].buffer;
       // if image file.
       buf = me.resizeImage(buf);
-      fs.writeFile(consts.uploadFileStore + '/' + i + '.dat', buf, function(err) {
+      var ext = me.getExtension(files[i].originalname);
+      var fname = me.createSha1(buf) + (ext !== '' ? '.' + ext : '');
+
+      fs.writeFile(consts.uploadFileStore + '/' + fname, buf, function(err) {
         if (err) numError++;
         numFinished++;
         if (numFinished === numFiles) {
@@ -78,6 +82,27 @@ var FileStorage = {
       rotate: rotate,
       strip: true
     });
+  },
+
+  /**
+   * create sha-1 hash.
+   */
+  createSha1: function(buffer) {
+    var hash = crypto.createHash('sha1');
+    hash.update(buffer);
+    return hash.digest('hex');
+  },
+
+  /**
+   * get file extension.
+   */
+  getExtension: function(filename) {
+    var p = filename.lastIndexOf('.');
+    if (p == -1) {
+      return "";
+    } else {
+      return filename.substr(p + 1).toLowerCase();
+    }
   }
 };
 
