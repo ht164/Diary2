@@ -26,7 +26,9 @@ var consts = {
     feedIdScope: "tag:hostname,2014:",
 
     twitterUserName: "ht164",
-    githubUserName: "ht164"
+    githubUserName: "ht164",
+
+    uploadFileStore: "public/files"
 };
 
 module.exports = consts;
