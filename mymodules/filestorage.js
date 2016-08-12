@@ -41,10 +41,42 @@ var FileStorage = {
    * resize image.
    */
   resizeImage: function(buffer) {
+    // get image info.
+    var img_info = imagemagick.identify({
+      srcData: buffer
+    });
+    // size.
+    var w, h;
+    if (img_info.width < img_info.height) { 
+      h = 1024;
+      w = 1024 * (img_info.width / img_info.height);
+    } else {
+      w = 1024;
+      h = 1024 * (img_info.height / img_info.width);
+    }
+    // orientation.
+    var rotate = 0;
+    switch (img_info.exif.orientation) {
+      case 1:
+        rotate = 0;
+        break;
+      case 3:
+        rotate = 180;
+        break;
+      case 6:
+        rotate = 90;
+        break;
+      case 8:
+        rotate = 270;
+        break;
+    }
+
     return imagemagick.convert({
       srcData: buffer,
-      width: 1024,
-      height: 768
+      width: w,
+      height: h,
+      rotate: rotate,
+      strip: true
     });
   }
 };
