@@ -16,18 +16,19 @@ var FileStorage = {
   saveFiles: function(files, callback, errCallback) {
     var me = this;
     var numFinished = 0;
-    var numFiles = files.length;
+    var numFiles = files.length * 2; // main and thumbnail.
     var numError = 0;
 
     for (var i = 0; i < files.length; i++) {
       // save file.
       var buf = files[i].buffer;
       // if image file.
-      buf = me.resizeImage(buf);
+      var bufs = me.resizeImage(buf);
       var ext = me.getExtension(files[i].originalname);
       var fname = me.createSha1(buf) + (ext !== '' ? '.' + ext : '');
+      var t_fname = 'thumb_' + fname;
 
-      fs.writeFile(consts.uploadFileStore + '/' + fname, buf, function(err) {
+      var cb = function(err) {
         if (err) numError++;
         numFinished++;
         if (numFinished === numFiles) {
@@ -37,7 +38,10 @@ var FileStorage = {
             errCallback();
           }
         }
-      });
+      };
+
+      fs.writeFile(consts.uploadFileStore + '/' + fname, bufs.data, cb);
+      fs.writeFile(consts.uploadFileStore + '/' + t_fname, bufs.thumbnail, cb);
     }
   },
 
@@ -50,13 +54,17 @@ var FileStorage = {
       srcData: buffer
     });
     // size.
-    var w, h;
+    var w, h, t_w, t_h;
     if (img_info.width < img_info.height) { 
       h = 1024;
       w = 1024 * (img_info.width / img_info.height);
+      t_h = 96;
+      t_w = 96 * (img_info.width / img_info.height);
     } else {
       w = 1024;
       h = 1024 * (img_info.height / img_info.width);
+      t_w = 96;
+      t_h = 96 * (img_info.height / img_info.width);
     }
     // orientation.
     var rotate = 0;
@@ -75,13 +83,22 @@ var FileStorage = {
         break;
     }
 
-    return imagemagick.convert({
-      srcData: buffer,
-      width: w,
-      height: h,
-      rotate: rotate,
-      strip: true
-    });
+    return {
+      data: imagemagick.convert({
+        srcData: buffer,
+        width: w,
+        height: h,
+        rotate: rotate,
+        strip: true
+      }),
+      thumbnail: imagemagick.convert({
+        srcData: buffer,
+        width: t_w,
+        height: t_h,
+        rotate: rotate,
+        strip: true
+      })
+    };
   },
 
   /**

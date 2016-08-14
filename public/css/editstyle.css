@@ -1,6 +1,12 @@
 div.drop-area {
     width: 400px;
-    height: 200px;
+    height: 120px;
     border: 4px dotted #AABBFF;
     border-radius: 16px;
+}
+
+div.thumbnails-area {
+    width: 400px;
+    height: 150px;
+    border: 2px solid #AABBEE;
 }
