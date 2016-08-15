@@ -10,3 +10,13 @@ div.thumbnails-area {
     height: 150px;
     border: 2px solid #AABBEE;
 }
+
+div.edit-area {
+    min-width: 400px;
+    width: 50%;
+    float: left;
+}
+
+div.preview-area {
+    overflow: hidden;
+}

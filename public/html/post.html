@@ -5,6 +5,7 @@
     <title>Diary Post</title>
     <link rel="stylesheet" href="/css/editstyle.css">
     <script type="text/javascript" src="/components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/components/marked/marked.min.js"></script>
     <script type="text/javascript">
         $(function(){
             // can use File API and Drag and Drop API?
@@ -71,14 +72,24 @@
                 }
             });
         });
-
         function addUrl(url) {
             var elm = $("#contents");
             elm.val(elm.val() + url);
         }
+        $(function(){
+            var prev = "";
+            $("#contents").keyup(function(e){
+                var c = $("#contents").val();
+                if (prev != c) {
+                    $("#previewArea").html(marked(c));
+                    prev = c;
+                }
+            });
+        });
     </script>
 </head>
 <body>
+<div class="edit-area">
 <form method="POST" action="/post">
 <table>
 <tr>
@@ -101,5 +112,7 @@
 </div>
 <div class="thumbnails-area" id="thumbnailsArea">
 </div>
+</div>
+<div class="preview-area" id="previewArea"></div>
 </body>
 </html>

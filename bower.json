@@ -1,6 +1,6 @@
 {
   "name": "diary2",
-  "version": "0.0.11.1",
+  "version": "0.0.12.0",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -12,6 +12,7 @@
     "underscore": "~1.6.0",
     "bootstrap": "~3.2.0",
     "jquery.inview": "~1.0.0",
-    "momentjs": "~2.8.3"
+    "momentjs": "~2.8.3",
+    "marked": "~0.3.6"
   }
 }
