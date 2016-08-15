@@ -295,6 +295,20 @@ Controller.prototype = {
       res.status(500);
       res.send();
     });
+  },
+
+  /**
+   * call when request thumbnail list.
+   */
+  getThumbnailList: function(req, res) {
+    // get thumbnail list.
+    FileStorage.getThumbnailList(function(json) {
+      res.status(200);
+      res.send(json);
+    }, function() {
+      res.status(500);
+      res.send();
+    });
   }
 };
 

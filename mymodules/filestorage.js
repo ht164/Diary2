@@ -120,6 +120,31 @@ var FileStorage = {
     } else {
       return filename.substr(p + 1).toLowerCase();
     }
+  },
+
+  /**
+   * get thumbnail list.
+   * return value is an array of object(thumbnail url, and real object url).
+   */
+  getThumbnailList: function(callback, errCallback) {
+    var ar = [];
+    // get files named with "thumb_".
+    var dn = consts.uploadFileStore;
+    var files = fs.readdirSync(dn);
+    // filter "thumb_", and sort.
+    files = files.filter(function(a) {
+      return fs.statSync(dn + '/' + a).isFile() && !(/^thumb_.*/.test(a));
+    }).sort(function(a, b) {
+      return fs.statSync(dn + '/' + b).mtime.getTime() - 
+             fs.statSync(dn + '/' + a).mtime.getTime();
+    }).forEach(function(a) {
+      ar.push({
+        thumbnailUrl: '/files/thumb_' + a,
+        url: '/files/' + a
+      });
+    });
+
+    callback(ar);
   }
 };
 

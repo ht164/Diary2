@@ -57,6 +57,25 @@
             .bind("dragover", cancelEventHandler)
             .bind("drop", dropEventHandler);
         });
+        $(function(){
+            $.ajax({
+                method: "GET",
+                url: "/thumbnaillist",
+                success: function(data) {
+                    // place thumbnails in line.
+                    var fr = "";
+                    for (var i = 0; i < data.length; i++) {
+                        fr += "<span><img src='" + data[i].thumbnailUrl + "' onclick='addUrl(\"" + data[i].url + "\");'></span>";
+                    }
+                    $("#thumbnailsArea").html(fr);
+                }
+            });
+        });
+
+        function addUrl(url) {
+            var elm = $("#contents");
+            elm.val(elm.val() + url);
+        }
     </script>
 </head>
 <body>
@@ -72,7 +91,7 @@
 </tr>
 <tr>
 <td>content (markdown)</td>
-<td><textarea cols="40" rows="10" name="contents"></textarea></td>
+<td><textarea cols="40" rows="10" name="contents" id="contents"></textarea></td>
 </tr>
 </table>
 <input type="submit" value="Create!!">
@@ -80,7 +99,7 @@
 <div class="drop-area" id="fileDropArea">
     Drag and drop file here to upload.
 </div>
-<div class="thumbnails-area" id="thunbmailsArea">
+<div class="thumbnails-area" id="thumbnailsArea">
 </div>
 </body>
 </html>

@@ -19,6 +19,7 @@ var recent = require('./routes/recent');
 var feed = require('./routes/feed');
 var comment = require('./routes/comment');
 var monthlydiary = require('./routes/monthlydiary');
+var thumbnaillist = require('./routes/thumbnaillist');
 
 var app = express();
 
@@ -56,6 +57,7 @@ app.use('/recent', recent);
 app.use('/feed', feed);
 app.use('/comment', comment);
 app.use('/monthlydiary', monthlydiary);
+app.use('/thumbnaillist', thumbnaillist);
 // handle file-uploading using multer.
 var upload = multer();
 app.post('/upload', upload.array('f'), function(req, res, next) {
