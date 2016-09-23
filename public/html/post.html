@@ -86,6 +86,17 @@
                 }
             });
         });
+        $(function(){
+            $("#syntax_show").click(function(){
+                $("#syntax_hide").show();
+                $("#syntax_show").hide();
+            });
+            $("#syntax_hide").click(function(){
+                $("#syntax_show").show();
+                $("#syntax_hide").hide();
+            });
+            $("#syntax_hide").hide();
+        });
     </script>
 </head>
 <body>
@@ -114,5 +125,35 @@
 </div>
 </div>
 <div class="preview-area" id="previewArea"></div>
+<div class="syntax-area" id="syntax_show">
+    show help
+</div>
+<div class="syntax-area" id="syntax_hide">
+    <h2>headers</h2>
+    <ul>
+        <li># header1</li>
+        <li>## header2</li>
+    </ul>
+    <h2>emphasis</h2>
+    <ul>
+        <li>_ this text is emphasized _</li>
+        <li>__ this text is strong __</li>
+    </ul>
+    <h2>strikethrough</h2>
+    <ul>
+        <li>~~ this text is striked ~~</li>
+    </ul>
+    <h2>link</h2>
+    <ul>
+        <li>[link_text](url "title")</li>
+        <li>[link_text](url)</li>
+    </ul>
+    <h2>image</h2>
+    <ul>
+        <li>![alternative_text](image_url)</li>
+        <li>![alternative_text](image_url "image_title")</li>
+    </ul>
+</div>
+
 </body>
 </html>

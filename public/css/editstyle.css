@@ -20,3 +20,14 @@ div.edit-area {
 div.preview-area {
     overflow: hidden;
 }
+
+div.syntax-area {
+    position: fixed;
+    border: 1px solid #DDAAFF;
+    background: #FAF9FF;
+    border-radius: 20px;
+    padding: 6px;
+    right: 2px;
+    top: 2px;
+}
+
