@@ -51,9 +51,25 @@ module.exports = function (grunt) {
       }
     },
     cssmin: {
-      minify: {
-        src: ['public/css/*.css'],
-        dest: 'release/public/css/<%= pkg.version %>/style.css'
+      target: {
+        files: [{
+          src: 'public/css/style.css',
+          dest: 'release/public/css/<%= pkg.version %>/style.css'
+        }, {
+          src: 'public/css/editstyle.css',
+          dest: 'release/public/css/<%= pkg.version %>/editstyle.css'
+        }]
+      }
+    },
+    htmlmin: {
+      target: {
+        files: [{
+          src: 'public/html/post.html',
+          dest: 'release/public/html/post.html'
+        }]
+      },
+      options: {
+        minifyJS: true
       }
     },
     copy: {
@@ -62,8 +78,7 @@ module.exports = function (grunt) {
           expand: true,
           src: [
             'public/img/images.png',
-            'public/img/*.gif',
-            'public/html/**'],
+            'public/img/*.gif'],
           dest: 'release/'
         }, {
           expand: true,
@@ -134,7 +149,7 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'requirejs', 'copy', 'replace']);
+  grunt.registerTask('deploy', 'Deploy web application, compress CSS, JavaScript...', ['cssmin', 'htmlmin', 'requirejs', 'copy', 'replace']);
 
   grunt.registerTask('default', ['develop', 'watch']);
 };
