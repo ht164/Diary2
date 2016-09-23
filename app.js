@@ -36,7 +36,6 @@ app.use(cookieParser());
 
 // use BASIC authentication for posting diary page.
 app.all('/html/*', basicAuth(function(user, password){
-    console.log('user: ' + user + ', password: ' + password);
     return user === 'user' && password === 'pass';
 }));
 
