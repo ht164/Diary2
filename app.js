@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var basicAuth = require('basic-auth-connect');
 var multer = require('multer');
+var crypto = require('crypto');
 
 var logger = require('./mymodules/logger');
 var consts = require('./mymodules/consts');
@@ -36,7 +37,15 @@ app.use(cookieParser());
 
 // use BASIC authentication for posting diary page.
 app.all('/html/*', basicAuth(function(user, password){
-    return user === 'user' && password === 'pass';
+    // user is "user" hashed by SHA256.
+    // password is "pass" hashed by SHA256.
+    var f = function(text) {
+        var sha256sum = crypto.createHash('sha256');
+        sha256sum.update(text);
+        return sha256sum.digest('hex');
+    }
+    return f(user) === '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb'
+     && f(password) === 'd74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1';
 }));
 
 // add static file paths.
