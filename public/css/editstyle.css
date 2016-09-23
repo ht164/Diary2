@@ -9,6 +9,8 @@ div.thumbnails-area {
     width: 400px;
     height: 150px;
     border: 2px solid #AABBEE;
+    white-space: nowrap;
+    overflow: auto;
 }
 
 div.edit-area {
@@ -31,3 +33,7 @@ div.syntax-area {
     top: 2px;
 }
 
+img {
+    max-width: 100%;
+    max-height: auto;
+}

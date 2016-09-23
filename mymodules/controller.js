@@ -288,9 +288,9 @@ Controller.prototype = {
    */
   upload: function(req, res, next) {
     // save each files.
-    FileStorage.saveFiles(req.files, function(){
+    FileStorage.saveFiles(req.files, function(url, thumburl){
       res.status(200);
-      res.send();
+      res.send("{\"url\":\"" + url + "\",\"thumb\":\"" + thumburl + "\"}");
     }, function(){
       res.status(500);
       res.send();

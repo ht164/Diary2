@@ -28,7 +28,11 @@
                     type: "POST",
                     data: fd,
                     processData: false,
-                    contentType: false
+                    contentType: false,
+                    dataType: "json"
+                }).done(function(data) {
+                    var fr = "<span><img src='" + data.thumb + "' onclick='addUrl(\"" + data.url + "\");'></span>";
+                    $("#thumbnailsArea").prepend(fr);
                 });
             }
 
