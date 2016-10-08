@@ -128,6 +128,8 @@ var FileStorage = {
    */
   getThumbnailList: function(callback, errCallback) {
     var ar = [];
+    var cnt = 0;
+    var maxCount = 100;
     // get files named with "thumb_".
     var dn = consts.uploadFileStore;
     var files = fs.readdirSync(dn);
@@ -138,10 +140,13 @@ var FileStorage = {
       return fs.statSync(dn + '/' + b).mtime.getTime() - 
              fs.statSync(dn + '/' + a).mtime.getTime();
     }).forEach(function(a) {
-      ar.push({
-        thumbnailUrl: '/files/thumb_' + a,
-        url: '/files/' + a
-      });
+      if (cnt < maxCount) {
+        ar.push({
+          thumbnailUrl: consts.fileStoreSiteUri + '/files/thumb_' + a,
+          url: consts.fileStoreSiteUri + '/files/' + a
+        });
+      cnt++;
+      }
     });
 
     callback(ar);

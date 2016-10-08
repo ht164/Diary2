@@ -28,7 +28,8 @@ var consts = {
     twitterUserName: "ht164",
     githubUserName: "ht164",
 
-    uploadFileStore: "public/files"
+    uploadFileStore: "public/files",
+    fileStoreSiteUri: ""
 };
 
 module.exports = consts;
