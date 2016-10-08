@@ -126,7 +126,22 @@ module.exports = function (grunt) {
           from: "      script(src='http://localhost:35729/livereload.js')\n",
           to: ""
         }]
+      },
+      post_html: {
+        src: ["release/public/html/post.html"],
+        overwrite: true,
+        replacements: [{
+          from: "/css/editstyle.css",
+          to: "/css/<%= pkg.version %>/editstyle.css"
+        }, {
+          from: /<script type=\"text\/javascript\" src=\"\/components.*\"><\/script>/g,
+          to: ""
+        }, {
+          from: "/js/app",
+          to: "/js/<%= pkg.version %>/app"
+        }]
       }
+
     }
   });
 
