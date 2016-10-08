@@ -10,6 +10,7 @@ var MonthlyDiary = require('../mymodules/monthlydiarymodel');
 var util = require('../mymodules/util');
 var consts = require('../mymodules/consts');
 var feed = require('../mymodules/feed');
+var FileStorage = require('../mymodules/filestorage');
 
 function Controller() {
 }
@@ -277,6 +278,34 @@ Controller.prototype = {
     MonthlyDiary.getNumDiaryEntries(function(d){
       res.json(d);
     }, function(err){
+      res.status(500);
+      res.send();
+    });
+  },
+
+  /**
+   * call when uploading files.
+   */
+  upload: function(req, res, next) {
+    // save each files.
+    FileStorage.saveFiles(req.files, function(url, thumburl){
+      res.status(200);
+      res.send("{\"url\":\"" + url + "\",\"thumb\":\"" + thumburl + "\"}");
+    }, function(){
+      res.status(500);
+      res.send();
+    });
+  },
+
+  /**
+   * call when request thumbnail list.
+   */
+  getThumbnailList: function(req, res) {
+    // get thumbnail list.
+    FileStorage.getThumbnailList(function(json) {
+      res.status(200);
+      res.send(json);
+    }, function() {
       res.status(500);
       res.send();
     });

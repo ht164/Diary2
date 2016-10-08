@@ -3,8 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <title>Diary Post</title>
+    
+    <link rel="stylesheet" href="/css/editstyle.css">
+
+    <script type="text/javascript" src="/components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/components/marked/marked.min.js"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // can use File API and Drag and Drop API?
+            if (!window.FileReader || !window.FormData) {
+                console.log("cannot upload file because File API and/or Drag and Drop are not available.");
+                return false;
+            }
+            var d = $("#fileDropArea");
+
+            // upload file.
+            var uploadFiles = function(files) {
+                var fd = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    fd.append("f", files[i]);
+                }
+
+                // send.
+                $.ajax({
+                    url: "/upload",
+                    type: "POST",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json"
+                }).done(function(data) {
+                    var fr = "<span><img src='" + data.thumb + "' onclick='addUrl(\"" + data.url + "\");'></span>";
+                    $("#thumbnailsArea").prepend(fr);
+                });
+            }
+
+            // event canceller.
+            var cancelEvent = function(ev) {
+                ev.preventDefault();
+                ev.stopPropagation();
+                return false;
+            };
+
+            // cancel event handler.
+            var cancelEventHandler = function(ev) {
+                return cancelEvent(ev);
+            };
+
+            // event handler on drop.
+            var dropEventHandler = function(ev) {
+                var files = ev.originalEvent.dataTransfer.files;
+                uploadFiles(files);
+
+                // cancel default event.
+                cancelEvent(ev);
+                return false;
+            }
+
+            d.bind("dragenter", cancelEventHandler)
+            .bind("dragover", cancelEventHandler)
+            .bind("drop", dropEventHandler);
+        });
+        $(function(){
+            $.ajax({
+                method: "GET",
+                url: "/thumbnaillist",
+                success: function(data) {
+                    // place thumbnails in line.
+                    var fr = "";
+                    for (var i = 0; i < data.length; i++) {
+                        fr += "<span><img src='" + data[i].thumbnailUrl + "' onclick='addUrl(\"" + data[i].url + "\");'></span>";
+                    }
+                    $("#thumbnailsArea").html(fr);
+                }
+            });
+        });
+        function addUrl(url) {
+            var elm = $("#contents");
+            elm.val(elm.val() + url);
+        }
+        $(function(){
+            var prev = "";
+            $("#contents").keyup(function(e){
+                var c = $("#contents").val();
+                if (prev != c) {
+                    $("#previewArea").html(marked(c));
+                    prev = c;
+                }
+            });
+        });
+        $(function(){
+            $("#syntax_show").click(function(){
+                $("#syntax_hide").show();
+                $("#syntax_show").hide();
+            });
+            $("#syntax_hide").click(function(){
+                $("#syntax_show").show();
+                $("#syntax_hide").hide();
+            });
+            $("#syntax_hide").hide();
+        });
+    </script>
 </head>
 <body>
+<div class="edit-area">
 <form method="POST" action="/post">
 <table>
 <tr>
@@ -17,10 +120,47 @@
 </tr>
 <tr>
 <td>content (markdown)</td>
-<td><textarea cols="40" rows="10" name="contents"></textarea></td>
+<td><textarea cols="40" rows="10" name="contents" id="contents"></textarea></td>
 </tr>
 </table>
 <input type="submit" value="Create!!">
 </form>
+<div class="drop-area" id="fileDropArea">
+    Drag and drop file here to upload.
+</div>
+<div class="thumbnails-area" id="thumbnailsArea">
+</div>
+</div>
+<div class="preview-area" id="previewArea"></div>
+<div class="syntax-area" id="syntax_show">
+    show help
+</div>
+<div class="syntax-area" id="syntax_hide">
+    <h2>headers</h2>
+    <ul>
+        <li># header1</li>
+        <li>## header2</li>
+    </ul>
+    <h2>emphasis</h2>
+    <ul>
+        <li>_ this text is emphasized _</li>
+        <li>__ this text is strong __</li>
+    </ul>
+    <h2>strikethrough</h2>
+    <ul>
+        <li>~~ this text is striked ~~</li>
+    </ul>
+    <h2>link</h2>
+    <ul>
+        <li>[link_text](url "title")</li>
+        <li>[link_text](url)</li>
+    </ul>
+    <h2>image</h2>
+    <ul>
+        <li>![alternative_text](image_url)</li>
+        <li>![alternative_text](image_url "image_title")</li>
+    </ul>
+</div>
+
 </body>
 </html>

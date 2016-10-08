@@ -1,0 +1,39 @@
+div.drop-area {
+    width: 400px;
+    height: 120px;
+    border: 4px dotted #AABBFF;
+    border-radius: 16px;
+}
+
+div.thumbnails-area {
+    width: 400px;
+    height: 150px;
+    border: 2px solid #AABBEE;
+    white-space: nowrap;
+    overflow: auto;
+}
+
+div.edit-area {
+    min-width: 400px;
+    width: 50%;
+    float: left;
+}
+
+div.preview-area {
+    overflow: hidden;
+}
+
+div.syntax-area {
+    position: fixed;
+    border: 1px solid #DDAAFF;
+    background: #FAF9FF;
+    border-radius: 20px;
+    padding: 6px;
+    right: 2px;
+    top: 2px;
+}
+
+img {
+    max-width: 100%;
+    max-height: auto;
+}
