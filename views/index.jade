@@ -38,6 +38,11 @@ block content
         div.well.well-sm.sidebar-widget
           div#monthlyDiaryBlock
         div.sidebar-widget
+          if twitterUserName !== undefined
+            div.twitter-widgets
+              a.twitter-timeline(href='https://twitter.com/#{twitterUserName}', data-height='480')
+                Tweets by #{twitterUserName}
+              script(src='//platform.twitter.com/widgets.js', charset='utf-8', async)
           div.social-links
             ul.list-unstyled
               li
