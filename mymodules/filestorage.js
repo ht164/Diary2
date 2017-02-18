@@ -33,7 +33,7 @@ var FileStorage = {
         numFinished++;
         if (numFinished === numFiles) {
           if (numError === 0) {
-            callback("/files/" + fname, "/files/" + t_fname);
+            callback(consts.fileStoreSiteUri + "/files/" + fname, "/files/" + t_fname);
           } else {
             errCallback();
           }
