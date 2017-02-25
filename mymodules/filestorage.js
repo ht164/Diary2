@@ -33,7 +33,7 @@ var FileStorage = {
         numFinished++;
         if (numFinished === numFiles) {
           if (numError === 0) {
-            callback("/files/" + fname, "/files/" + t_fname);
+            callback(consts.fileStoreSiteUri + "/files/" + fname, "/files/" + t_fname);
           } else {
             errCallback();
           }
@@ -56,13 +56,23 @@ var FileStorage = {
     // size.
     var w, h, t_w, t_h;
     if (img_info.width < img_info.height) { 
-      h = 1024;
-      w = 1024 * (img_info.width / img_info.height);
+      if (img_info.height <= 1024) {
+        h = img_info.height;
+        w = img_info.width;
+      } else {
+        h = 1024;
+        w = 1024 * (img_info.width / img_info.height);
+      }
       t_h = 96;
       t_w = 96 * (img_info.width / img_info.height);
     } else {
-      w = 1024;
-      h = 1024 * (img_info.height / img_info.width);
+      if (img_info.width <= 1024) {
+        w = img_info.width;
+        h = img_info.height;
+      } else {
+        w = 1024;
+        h = 1024 * (img_info.height / img_info.width);
+      }
       t_w = 96;
       t_h = 96 * (img_info.height / img_info.width);
     }

@@ -97,7 +97,7 @@ module.exports = function (grunt) {
       }
     },
     requirejs: {
-      compile: {
+      compile_app: {
         options: {
           name: "app",
           baseUrl: "public/js",
@@ -108,6 +108,17 @@ module.exports = function (grunt) {
             underscore: "../components/underscore/underscore",
             jquery_inview: "../components/jquery.inview/jquery.inview.min",
             moment: "../components/momentjs/min/moment.min"
+          }
+        }
+      },
+      compile_edit: {
+        options: {
+          name: "edit",
+          baseUrl: "public/js",
+          out: "release/public/js/<%= pkg.version %>/edit.js",
+          paths: {
+            jquery: "../components/jquery/dist/jquery.min",
+            marked: "../components/marked/lib/marked"
           }
         }
       }
@@ -137,8 +148,8 @@ module.exports = function (grunt) {
           from: /<script type=\"text\/javascript\" src=\"\/components.*\"><\/script>/g,
           to: ""
         }, {
-          from: "/js/app",
-          to: "/js/<%= pkg.version %>/app"
+          from: "/js/edit",
+          to: "/js/<%= pkg.version %>/edit"
         }]
       }
 
